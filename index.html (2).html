@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MiVia & Via Compras — Dashboard</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --g1: #077C14;
+  --g2: #05A318;
+  --g3: #004D0A;
+  --g4: #0A5E1A;
+  --g5: #E8F5E9;
+  --g6: #C8E6C9;
+  --accent: #00E676;
+  --white: #FFFFFF;
+  --bg: #F4F7F5;
+  --surface: #FFFFFF;
+  --surface2: #F0F7F1;
+  --navy: #0F1F12;
+  --gray: #5A6B5C;
+  --muted: #9EB09F;
+  --border: #DFF0DF;
+  --red: #D32F2F;
+  --amber: #F57F17;
+  --blue: #1565C0;
+  --shadow-sm: 0 1px 4px rgba(7,124,20,.07);
+  --shadow: 0 4px 24px rgba(7,124,20,.10);
+  --shadow-lg: 0 12px 48px rgba(7,124,20,.14);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  background: var(--bg);
+  color: var(--navy);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── SIDEBAR ─────────────────────────────── */
+.sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 240px;
+  background: #FFFFFF;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  padding: 28px 0 24px;
+  box-shadow: 2px 0 12px rgba(7,124,20,.06);
+}
+
+.sidebar-logo {
+  padding: 0 24px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.logo-badge {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--g1);
+  letter-spacing: .5px;
+  line-height: 1.2;
+}
+.logo-sub {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 3px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.nav-section {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 12px 12px 6px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .2s;
+  color: var(--gray);
+  font-size: 13.5px;
+  font-weight: 400;
+  text-decoration: none;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+.nav-item:hover { background: var(--g5); color: var(--g1); }
+.nav-item.active { background: var(--g1); color: #fff; font-weight: 600; }
+.nav-icon { font-size: 16px; width: 20px; text-align: center; }
+
+.sidebar-footer {
+  padding: 20px 24px 0;
+  border-top: 1px solid var(--border);
+}
+.update-badge {
+  background: var(--g5);
+  border: 1px solid var(--g6);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.update-label { font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+.update-date { font-size: 13px; color: var(--g1); font-weight: 600; margin-top: 2px; }
+.update-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--g1);
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .3; }
+}
+
+/* ── MAIN ────────────────────────────────── */
+.main {
+  margin-left: 240px;
+  min-height: 100vh;
+}
+
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.topbar-title {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.topbar-period {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.period-chip {
+  background: var(--g5);
+  color: var(--g1);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--g6);
+}
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-action {
+  background: var(--g1);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: inherit;
+}
+.btn-action:hover { background: var(--g2); transform: translateY(-1px); }
+
+/* ── SECTIONS ────────────────────────────── */
+.section {
+  display: none;
+  padding: 36px 40px 60px;
+  animation: fadeIn .3s ease;
+}
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+.section-title {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.section-sub {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+
+/* ── KPI CARDS ───────────────────────────── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.kpi {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 24px 22px 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+.kpi:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.kpi::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--g1);
+}
+.kpi.amber::after { background: var(--amber); }
+.kpi-icon {
+  width: 36px; height: 36px;
+  background: var(--g5);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-bottom: 14px;
+}
+.kpi-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 6px;
+}
+.kpi-value {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.kpi-tags { display: flex; flex-direction: column; gap: 3px; }
+.kpi-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.kpi-tag.up { color: var(--g1); }
+.kpi-tag.down { color: var(--red); }
+.kpi-tag.neutral { color: var(--gray); }
+
+/* ── CHART CARDS ─────────────────────────── */
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.chart-grid.single { grid-template-columns: 1fr; }
+.chart-grid.wide { grid-template-columns: 2fr 1fr; }
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 28px 28px 24px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--g1);
+}
+.card-badge {
+  background: var(--g5);
+  color: var(--g1);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+.chart-wrap {
+  position: relative;
+}
+
+/* ── RANKING BARS ────────────────────────── */
+.rank-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.rank-row:last-child { border-bottom: none; }
+.rank-num {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--muted);
+  width: 24px;
+  flex-shrink: 0;
+}
+.rank-row:first-child .rank-num { color: var(--g1); }
+.rank-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  width: 155px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rank-bar-wrap {
+  flex: 1;
+  height: 10px;
+  background: var(--g5);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.rank-bar {
+  height: 100%;
+  border-radius: 5px;
+  transition: width .8s cubic-bezier(.4,0,.2,1);
+}
+.rank-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  width: 70px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── CAIDAS ──────────────────────────────── */
+.caida-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.caida-item {
+  background: var(--surface);
+  border: 1px solid #FECACA;
+  border-left: 4px solid var(--red);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  transition: transform .2s;
+}
+.caida-item:hover { transform: translateX(4px); }
+.caida-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 4px; }
+.caida-name { font-size: 14px; font-weight: 700; color: var(--navy); }
+.caida-diff { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif; font-size: 20px; font-weight: 700; color: var(--red); white-space: nowrap; }
+.caida-flow { font-size: 12px; color: var(--gray); margin-bottom: 3px; }
+.caida-causa { font-size: 11.5px; color: var(--muted); font-style: italic; }
+
+/* ── CANAL PILLS ─────────────────────────── */
+.canal-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+.canal-pill {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  transition: transform .2s;
+}
+.canal-pill:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.canal-pct {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.canal-name { font-size: 13px; font-weight: 600; color: var(--gray); margin-bottom: 8px; }
+.canal-num { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+.canal-sub { font-size: 11px; color: var(--muted); }
+
+/* ── IPC STRIP ───────────────────────────── */
+.ipc-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+.ipc-card {
+  border-radius: var(--radius);
+  padding: 24px 26px;
+}
+.ipc-card.amber { background: #FFFDE7; border: 1px solid #FFE082; }
+.ipc-card.green { background: #E8F5E9; border: 1px solid #A5D6A7; }
+.ipc-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.ipc-card.amber .ipc-label { color: #E65100; }
+.ipc-card.green .ipc-label { color: var(--g3); }
+.ipc-val { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif; font-size: 52px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+.ipc-card.amber .ipc-val { color: #F57F17; }
+.ipc-card.green .ipc-val { color: var(--g1); }
+.ipc-sub { font-size: 13px; line-height: 1.5; }
+.ipc-card.amber .ipc-sub { color: #BF360C; }
+.ipc-card.green .ipc-sub { color: var(--g3); font-weight: 600; }
+
+/* ── MP METRICS ──────────────────────────── */
+.mp-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.mp-kpi {
+  background: var(--g5);
+  border: 1px solid var(--g6);
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+  text-align: center;
+}
+.mp-kpi-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--g4); margin-bottom: 8px; }
+.mp-kpi-val { font-size: 28px; font-weight: 700; color: var(--g1); }
+.mp-kpi-sub { font-size: 12px; color: var(--gray); margin-top: 4px; }
+
+/* ── VEND TABLE ──────────────────────────── */
+.vend-totals-row { display: flex; gap: 14px; margin-bottom: 22px; }
+.vend-total {
+  background: var(--g3);
+  border-radius: var(--radius);
+  padding: 22px 28px;
+  text-align: center;
+  flex: 1;
+  transition: transform .2s;
+}
+.vend-total:hover { transform: translateY(-2px); }
+.vend-total.active { background: var(--g1); }
+.vend-year { font-size: 11px; color: rgba(255,255,255,.5); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.vend-num { font-size: 52px; font-weight: 700; color: #fff; line-height: 1; letter-spacing: -1px; }
+.vend-sub { font-size: 11px; color: rgba(255,255,255,.45); margin-top: 4px; }
+
+table { width: 100%; border-collapse: collapse; }
+thead tr { background: var(--g3); }
+th { color: rgba(255,255,255,.7); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 12px 14px; text-align: center; }
+tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+tbody tr:hover { background: var(--g5); }
+tbody tr:last-child { border-bottom: none; }
+td { font-size: 13.5px; padding: 11px 14px; text-align: center; color: var(--navy); }
+td.year-cell { font-weight: 700; color: var(--g1); background: var(--g5); }
+td.highlight { font-weight: 700; color: var(--g1); }
+td.dim { color: var(--muted); }
+
+/* ── PUNTOS ──────────────────────────────── */
+.puntos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.punto {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: border-color .2s, transform .2s;
+}
+.punto:hover { border-color: var(--g6); transform: translateX(3px); }
+.punto-ico { font-size: 22px; flex-shrink: 0; }
+.punto-txt { font-size: 13.5px; line-height: 1.6; color: var(--navy); }
+.punto-txt strong { color: var(--g1); }
+
+/* ── P&L STYLES ─────────────────────────── */
+.pl-table { width:100%; border-collapse:collapse; }
+.pl-table tr { border-bottom: 1px solid var(--border); }
+.pl-table tr:last-child { border-bottom: none; }
+.pl-table td { padding: 11px 14px; font-size: 14px; }
+.pl-table td:last-child { text-align: right; font-weight: 600; }
+.pl-row-header td { background: var(--g3); color: #A7F3D0; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+.pl-row-section td:first-child { font-weight: 700; color: var(--navy); padding-left: 14px; }
+.pl-row-item td:first-child { padding-left: 28px; color: var(--gray); font-size: 13px; }
+.pl-row-item td:last-child { color: var(--gray); font-size: 13px; }
+.pl-row-subtotal td { background: var(--g5); font-weight: 700; }
+.pl-row-subtotal td:first-child { color: var(--g1); padding-left: 14px; }
+.pl-row-subtotal td:last-child { color: var(--g1); }
+.pl-row-result td { background: var(--g3); color: #fff; font-weight: 700; font-size: 15px; }
+.pl-row-result td:first-child { border-radius: 0 0 0 var(--radius-sm); }
+.pl-row-result td:last-child { font-size: 18px; border-radius: 0 0 var(--radius-sm) 0; }
+.pl-row-result.negative td { background: #B71C1C; }
+.pl-row-partial td { background: #FFF8E1; }
+.pl-row-partial td:first-child { color: var(--amber); padding-left: 14px; font-style: italic; }
+.pl-row-partial td:last-child { color: var(--amber); font-style: italic; }
+.kpi-result { background: var(--surface); border-radius: var(--radius); padding: 24px 22px 20px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); position: relative; overflow: hidden; transition: transform .2s; }
+.kpi-result::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.kpi-result.positive::after { background: var(--g1); }
+.kpi-result.negative::after { background: var(--red); }
+.kpi-result.partial::after { background: var(--amber); }
+.margin-bar { height: 8px; background: var(--g5); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+.margin-fill { height: 100%; border-radius: 4px; background: var(--g1); transition: width .8s; }
+
+/* ── SCROLLBAR ───────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--g6); border-radius: 3px; }
+
+/* ── HAMBURGER & MOBILE MENU ─────────────────────────────── */
+/* Por defecto (desktop): hamburguesa oculta, overlay oculto */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--navy);
+  border-radius: 2px;
+}
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 299;
+}
+.mobile-overlay.open { display: block; }
+.mobile-menu {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: 280px;
+  background: #fff;
+  border-right: 1px solid var(--border);
+  z-index: 300;
+  transform: translateX(-100%);
+  transition: transform .3s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 32px rgba(0,0,0,.3);
+}
+.mobile-menu.open { transform: translateX(0); }
+.mobile-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.mobile-close {
+  background: var(--g5);
+  border: none;
+  color: var(--g1);
+  font-size: 16px;
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .2s;
+  font-family: inherit;
+}
+.mobile-close:hover { background: var(--g6); }
+.mobile-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.mobile-menu-footer {
+  padding: 16px 20px 28px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── RESPONSIVE ──────────────────────────── */
+@media (max-width: 1100px) {
+  .sidebar { width: 200px; }
+  .main { margin-left: 200px; }
+  .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 800px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; }
+  .hamburger { display: flex !important; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .chart-grid, .chart-grid.wide { grid-template-columns: 1fr; }
+  .caida-grid, .puntos-grid, .canal-grid, .ipc-strip { grid-template-columns: 1fr; }
+  .section { padding: 20px 16px 48px; }
+  .topbar { padding: 0 16px; gap: 10px; }
+  .topbar-actions { display: none; }
+  .mp-kpi-row { grid-template-columns: 1fr; }
+  .vend-totals-row { flex-direction: column; }
+}
+@media (max-width: 480px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+  .topbar-period { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-badge">MiVia & Via Compras</div>
+    <div class="logo-sub">REPORTE OPERATIVO</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">General</div>
+    <button class="nav-item active" onclick="showSection('resumen')">
+      <span class="nav-icon">📊</span> Resumen Ejecutivo
+    </button>
+    <div class="nav-section">Análisis</div>
+    <button class="nav-item" onclick="showSection('recargas')">
+      <span class="nav-icon">💳</span> Recargas
+    </button>
+    <button class="nav-item" onclick="showSection('envios')">
+      <span class="nav-icon">📦</span> Envíos & Logística
+    </button>
+    <button class="nav-item" onclick="showSection('marketplace')">
+      <span class="nav-icon">🛒</span> Marketplace
+    </button>
+    <button class="nav-item" onclick="showSection('vendedores')">
+      <span class="nav-icon">👥</span> Vendedores
+    </button>
+    <div class="nav-section">Diagnóstico</div>
+    <button class="nav-item" onclick="showSection('pl')">
+      <span class="nav-icon">💼</span> P&L Operativo
+    </button>
+    <button class="nav-item" onclick="showSection('caidas')">
+      <span class="nav-icon">📉</span> Análisis de Caídas
+    </button>
+    <button class="nav-item" onclick="showSection('puntos')">
+      <span class="nav-icon">⚡</span> Puntos Clave
+    </button>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="update-badge">
+      <div class="update-label">Última actualización</div>
+      <div class="update-date"><span class="update-dot"></span>27 Mar 2026</div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="topbar-title" id="topbar-title">Resumen Ejecutivo</div>
+    <div class="topbar-period">
+      <span class="period-chip">Marzo 2026</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn-action" onclick="window.print()">↓ Exportar</button>
+    </div>
+  </div>
+
+  <!-- Mobile overlay menu -->
+  <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <div class="logo-badge" style="color:var(--g1)">MiVia & Via Compras</div>
+      <button class="mobile-close" onclick="toggleMobileMenu()">✕</button>
+    </div>
+    <nav class="mobile-nav">
+      <div class="nav-section">General</div>
+      <button class="nav-item active" onclick="showSection('resumen');toggleMobileMenu()"><span class="nav-icon">📊</span> Resumen Ejecutivo</button>
+      <div class="nav-section">Análisis</div>
+      <button class="nav-item" onclick="showSection('recargas');toggleMobileMenu()"><span class="nav-icon">💳</span> Recargas</button>
+      <button class="nav-item" onclick="showSection('envios');toggleMobileMenu()"><span class="nav-icon">📦</span> Envíos & Logística</button>
+      <button class="nav-item" onclick="showSection('marketplace');toggleMobileMenu()"><span class="nav-icon">🛒</span> Marketplace</button>
+      <button class="nav-item" onclick="showSection('vendedores');toggleMobileMenu()"><span class="nav-icon">👥</span> Vendedores</button>
+      <div class="nav-section">Diagnóstico</div>
+      <button class="nav-item" onclick="showSection('pl');toggleMobileMenu()"><span class="nav-icon">💼</span> P&L Operativo</button>
+      <button class="nav-item" onclick="showSection('caidas');toggleMobileMenu()"><span class="nav-icon">📉</span> Análisis de Caídas</button>
+      <button class="nav-item" onclick="showSection('puntos');toggleMobileMenu()"><span class="nav-icon">⚡</span> Puntos Clave</button>
+    </nav>
+    <div class="mobile-menu-footer">
+      <div class="update-badge">
+        <div class="update-label">Última actualización</div>
+        <div class="update-date"><span class="update-dot"></span>27 Mar 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECCIÓN: RESUMEN ═══ -->
+  <section class="section active" id="sec-resumen">
+    <div class="section-title">Resumen Ejecutivo</div>
+    <div class="section-sub">Vista consolidada del período · Datos al 27 de Marzo 2026</div>
+
+    <div class="kpi-grid">
+      <div class="kpi" style="grid-column: span 2">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <div class="kpi-icon">💳</div>
+            <div class="kpi-label">Recargas — Marzo 2026</div>
+            <div class="kpi-value">$346,2M</div>
+            <div class="kpi-tags">
+              <span class="kpi-tag up">▲ 4,2% vs Febrero</span>
+              <span class="kpi-tag up">▲ 56,7% vs Mar 2025</span>
+            </div>
+          </div>
+          <div style="text-align:right;padding-left:20px;border-left:1px solid var(--border);margin-left:20px">
+            <div style="font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">TOTAL ACUMULADO</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:4px">Mar 2024 → Mar 2026</div>
+            <div style="font-family:-apple-system,sans-serif;font-size:32px;font-weight:700;color:var(--g1);letter-spacing:-1px;line-height:1">$4.473,1M</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:6px">25 meses consecutivos</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-icon">🛒</div>
+        <div class="kpi-label">Marketplace</div>
+        <div class="kpi-value">$56,7M</div>
+        <div class="kpi-tags">
+          <span class="kpi-tag neutral">mes actual</span>
+          <span class="kpi-tag neutral">41 órdenes · 48 unds</span>
+        </div>
+      </div>
+      <div class="kpi amber">
+        <div class="kpi-icon">💰</div>
+        <div class="kpi-label">Ing. Marginal</div>
+        <div class="kpi-value">$679.518</div>
+        <div class="kpi-tags">
+          <span class="kpi-tag neutral">Comisiones Marzo 2026</span>
+          <span class="kpi-tag neutral">17 transacciones</span>
+        </div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-icon">📦</div>
+        <div class="kpi-label">Envíos</div>
+        <div class="kpi-value">7.497</div>
+        <div class="kpi-tags">
+          <span class="kpi-tag up">▲ 10,1% vs Febrero</span>
+          <span class="kpi-tag up">▲ 9,1% vs Mar 2025</span>
+        </div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-icon">📫</div>
+        <div class="kpi-label">Bultos</div>
+        <div class="kpi-value">18.397</div>
+        <div class="kpi-tags">
+          <span class="kpi-tag up">▲ 10,1% vs Febrero</span>
+          <span class="kpi-tag up">▲ 9,1% vs Mar 2025</span>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="chart-grid">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Evolución Recargas</span>
+          <span class="card-badge">Mar24 → Mar26</span>
+        </div>
+        <div class="chart-wrap"><canvas id="chartEvo" height="180"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Envíos por Canal</span>
+          <span class="card-badge">Marzo 2026</span>
+        </div>
+        <div class="canal-grid" style="margin-bottom:0;margin-top:8px">
+          <div class="canal-pill">
+            <div class="canal-pct" style="color:#077C14">62%</div>
+            <div class="canal-name">Seller Center</div>
+            <div class="canal-num">4.652</div>
+            <div class="canal-sub">envíos</div>
+          </div>
+          <div class="canal-pill">
+            <div class="canal-pct" style="color:#22C55E">24%</div>
+            <div class="canal-name">TiendaNube</div>
+            <div class="canal-num">1.787</div>
+            <div class="canal-sub">envíos</div>
+          </div>
+          <div class="canal-pill">
+            <div class="canal-pct" style="color:#F57F17">14%</div>
+            <div class="canal-name">Urbano</div>
+            <div class="canal-num">1.058</div>
+            <div class="canal-sub">envíos</div>
+          </div>
+        </div>
+        <div class="ipc-strip">
+          <div class="ipc-card amber">
+            <div class="ipc-label">IPC Acumulado</div>
+            <div class="ipc-val">+230%</div>
+            <div class="ipc-sub">Mar 2024 → Mar 2026 · Los precios se triplicaron</div>
+          </div>
+          <div class="ipc-card green">
+            <div class="ipc-label">Crecimiento Recargas</div>
+            <div class="ipc-val">+40.000%</div>
+            <div class="ipc-sub">x175 por encima de la inflación</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECCIÓN: RECARGAS ═══ -->
+  <section class="section" id="sec-recargas">
+    <div class="section-title">Recargas</div>
+    <div class="section-sub">Análisis detallado de recargas — Marzo 2026</div>
+    <div class="chart-grid wide">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Evolución Mar 2024 → Mar 2026</span>
+          <span class="card-badge">$M</span>
+        </div>
+        <div class="chart-wrap"><canvas id="chartEvo2" height="220"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Top 10 Vendedores</span>
+          <span class="card-badge">Mar vs Feb</span>
+        </div>
+        <div id="topRecRanking"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECCIÓN: ENVÍOS ═══ -->
+  <section class="section" id="sec-envios">
+    <div class="section-title">Envíos & Logística</div>
+    <div class="section-sub">Análisis de envíos — Marzo 2026</div>
+    <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="kpi"><div class="kpi-icon">📦</div><div class="kpi-label">Envíos Mar 2026</div><div class="kpi-value">7.497</div><div class="kpi-tags"><span class="kpi-tag up">▲ 10,1% vs Feb</span><span class="kpi-tag up">▲ 9,1% vs Mar25</span></div></div>
+      <div class="kpi"><div class="kpi-icon">📫</div><div class="kpi-label">Bultos Mar 2026</div><div class="kpi-value">18.397</div><div class="kpi-tags"><span class="kpi-tag up">▲ 11,3% vs Feb</span><span class="kpi-tag up">▲ 36,4% vs Mar25</span></div></div>
+      <div class="kpi"><div class="kpi-icon">🗓</div><div class="kpi-label">Feb 2026</div><div class="kpi-value">6.807</div><div class="kpi-tags"><span class="kpi-tag neutral">16.526 bultos</span></div></div>
+    </div>
+    <div class="chart-grid">
+      <div class="card">
+        <div class="card-header"><span class="card-title">Top 10 Remitentes</span><span class="card-badge">Mar 2026</span></div>
+        <div id="topEnvRanking"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Top 15 Localidades</span><span class="card-badge">Destino</span></div>
+        <div id="topLocRanking"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <div class="card-header"><span class="card-title">Evolución Envíos & Bultos</span><span class="card-badge">18 meses</span></div>
+      <div class="chart-wrap"><canvas id="chartEnv" height="160"></canvas></div>
+    </div>
+  </section>
+
+  <!-- ═══ SECCIÓN: MARKETPLACE ═══ -->
+  <section class="section" id="sec-marketplace">
+    <div class="section-title">Marketplace Vía Compras</div>
+    <div class="section-sub">Ventas, sellers y análisis — Marzo 2026</div>
+    <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
+      <div class="kpi"><div class="kpi-icon">📈</div><div class="kpi-label">Ventas Mar 2026</div><div class="kpi-value">$56,7M</div><div class="kpi-tags"><span class="kpi-tag neutral">mes actual</span></div></div>
+      <div class="kpi"><div class="kpi-icon">📅</div><div class="kpi-label">Ventas Feb 2026</div><div class="kpi-value">$48,3M</div><div class="kpi-tags"><span class="kpi-tag up">▲ +17,4% vs Ene</span></div></div>
+      <div class="kpi"><div class="kpi-icon">📅</div><div class="kpi-label">Ventas Ene 2026</div><div class="kpi-value">$20,5M</div><div class="kpi-tags"><span class="kpi-tag up">▲ +148% vs Dic</span></div></div>
+      <div class="kpi"><div class="kpi-icon">💹</div><div class="kpi-label">Total 2026</div><div class="kpi-value">$125,5M</div><div class="kpi-tags"><span class="kpi-tag neutral">Ene + Feb + Mar</span></div></div>
+    </div>
+    <div class="chart-grid wide">
+      <div class="card">
+        <div class="card-header"><span class="card-title">Top Sellers</span><span class="card-badge">Marzo 2026</span></div>
+        <div id="topSellersRank"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Análisis</span><span class="card-badge">Métricas</span></div>
+        <div class="mp-kpi-row">
+          <div class="mp-kpi"><div class="mp-kpi-label">Ticket Prom.</div><div class="mp-kpi-val">$1.381.930</div></div>
+          <div class="mp-kpi"><div class="mp-kpi-label">Unidades</div><div class="mp-kpi-val">48</div></div>
+          <div class="mp-kpi"><div class="mp-kpi-label">Órdenes</div><div class="mp-kpi-val">41</div></div>
+        </div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g1);margin-bottom:10px">Medio de Pago</div>
+        <div id="mp-pagos-list"></div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g1);margin:16px 0 10px">Top Ciudades</div>
+        <div id="mp-ciudades-list"></div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g1);margin:16px 0 10px">Distribución Cuotas</div>
+        <div id="mp-cuotas-chart-wrap">
+          <canvas id="chartCuotas" height="120"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECCIÓN: VENDEDORES ═══ -->
+  <section class="section" id="sec-vendedores">
+    <div class="section-title">Vendedores Dados de Alta</div>
+    <div class="section-sub">Evolución de incorporaciones — 2024 a 2026</div>
+    <div class="vend-totals-row">
+      <div class="vend-total"><div class="vend-year">2024</div><div class="vend-num">98</div><div class="vend-sub">Mar–Dic</div></div>
+      <div class="vend-total"><div class="vend-year">2025</div><div class="vend-num">393</div><div class="vend-sub">Año completo</div></div>
+      <div class="vend-total active"><div class="vend-year">2026*</div><div class="vend-num">151</div><div class="vend-sub">Ene–Mar</div></div>
+    </div>
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-header"><span class="card-title">Altas Mensuales</span><span class="card-badge">2024–2026</span></div>
+      <canvas id="chartVend" height="160"></canvas>
+    </div>
+    <div class="card">
+      <table>
+        <thead><tr><th>AÑO</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th><th>TOTAL</th></tr></thead>
+        <tbody>
+          <tr><td class="year-cell">2024</td><td class="dim">—</td><td class="dim">—</td><td>4</td><td>6</td><td>53</td><td>5</td><td>6</td><td>5</td><td>3</td><td>1</td><td>4</td><td>11</td><td class="highlight">98</td></tr>
+          <tr><td class="year-cell">2025</td><td>9</td><td>22</td><td>35</td><td>30</td><td>31</td><td>29</td><td>28</td><td>52</td><td>46</td><td>42</td><td>41</td><td>28</td><td class="highlight">393</td></tr>
+          <tr><td class="year-cell">2026*</td><td>49</td><td>68</td><td class="highlight">34</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="highlight">151</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ═══ SECCIÓN: P&L ═══ -->
+  <section class="section" id="sec-pl">
+    <div class="section-title">P&L Operativo</div>
+    <div class="section-sub">Dos centros de costo — Marketplace Via Compras · MiVia & Recargas</div>
+
+    <!-- ── CARDS RESULTADO POR CENTRO ── -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:28px">
+
+      <!-- Marketplace -->
+      <div class="kpi-result positive" style="border:1px solid var(--border)">
+        <div class="kpi-icon">🛒</div>
+        <div class="kpi-label">Marketplace — Marzo</div>
+        <div class="kpi-value" style="font-size:22px;color:var(--amber)">Pendiente*</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px">Esperando costos Vtex de Marzo</div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray)"><span>Ingresos</span><span style="font-weight:600;color:var(--navy)">$56,7M</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-top:4px"><span>Costos Vtex</span><span style="color:var(--amber)">⏳</span></div>
+        </div>
+      </div>
+
+      <!-- MiVia -->
+      <div class="kpi-result positive" style="border:1px solid var(--border)">
+        <div class="kpi-icon">💳</div>
+        <div class="kpi-label">MiVia — Resultado Marzo</div>
+        <div class="kpi-value" style="font-size:22px">$391,5M*</div>
+        <div class="kpi-tag up" style="font-size:11px;margin-top:4px">Margen 97,1%*</div>
+        <div class="margin-bar"><div class="margin-fill" style="width:97%"></div></div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray)"><span>Ingresos</span><span style="font-weight:600;color:var(--navy)">$403,5M</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-top:4px"><span>Azure + Quickcomm</span><span style="font-weight:600;color:var(--red)">-$12,0M</span></div>
+        </div>
+      </div>
+
+      <!-- Consolidado -->
+      <div class="kpi-result partial" style="border:1px solid #FFE082">
+        <div class="kpi-icon">💼</div>
+        <div class="kpi-label">Consolidado — Marzo</div>
+        <div class="kpi-value" style="font-size:22px;color:var(--amber)">$391,5M+*</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">Sin costos Vtex Mar</div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid #FFE082">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray)"><span>Total Ingresos</span><span style="font-weight:600;color:var(--navy)">$460,2M</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-top:4px"><span>Costos confirmados</span><span style="font-weight:600;color:var(--red)">-$12,0M</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TABLAS POR CENTRO DE COSTO ── -->
+    <div class="chart-grid" style="margin-bottom:20px">
+
+      <!-- CENTRO 1: MARKETPLACE -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title" style="color:#1565C0">🛒 Marketplace — Via Compras</span>
+          <span class="card-badge" style="background:#E3F2FD;color:#1565C0;border:1px solid #90CAF9">Vtex</span>
+        </div>
+        <table class="pl-table">
+          <!-- ENERO -->
+          <tr class="pl-row-header"><td colspan="2">ENERO 2026 · USD $1.465</td></tr>
+          <tr class="pl-row-item"><td>↑ Ventas Marketplace</td><td>$20.500.000</td></tr>
+          <tr class="pl-row-item" style="color:var(--red)"><td>↓ Vtex Plataforma</td><td style="color:var(--red)">-$1.291.415</td></tr>
+          <tr class="pl-row-item" style="color:var(--red)"><td>↓ Vtex Comisiones</td><td style="color:var(--red)">-$805.103</td></tr>
+          <tr class="pl-row-subtotal"><td>Resultado Enero</td><td style="color:var(--g1)">$18.403.482</td></tr>
+          <tr style="height:4px"><td colspan="2"></td></tr>
+
+          <!-- FEBRERO -->
+          <tr class="pl-row-header"><td colspan="2">FEBRERO 2026 · USD $1.426</td></tr>
+          <tr class="pl-row-item"><td>↑ Ventas Marketplace</td><td>$48.300.000</td></tr>
+          <tr class="pl-row-item"><td>↓ Vtex Plataforma</td><td style="color:var(--red)">-$1.516.515</td></tr>
+          <tr class="pl-row-item"><td>↓ Vtex Comisiones</td><td style="color:var(--red)">-$1.242.011</td></tr>
+          <tr class="pl-row-subtotal"><td>Resultado Febrero</td><td style="color:var(--g1)">$45.541.474</td></tr>
+          <tr style="height:4px"><td colspan="2"></td></tr>
+
+          <!-- MARZO -->
+          <tr class="pl-row-header"><td colspan="2">MARZO 2026 · USD $1.415</td></tr>
+          <tr class="pl-row-item"><td>↑ Ventas Marketplace</td><td>$56.700.000</td></tr>
+          <tr class="pl-row-partial"><td>↓ Vtex Plataforma</td><td>⏳ Pendiente</td></tr>
+          <tr class="pl-row-partial"><td>↓ Vtex Comisiones</td><td>⏳ Pendiente</td></tr>
+          <tr class="pl-row-partial"><td>Resultado Marzo</td><td>Pendiente</td></tr>
+
+          <tr class="pl-row-result positive"><td>💼 TOTAL MARKETPLACE</td><td>$63,9M + Mar</td></tr>
+        </table>
+
+        <!-- Margen por mes -->
+        <div style="margin-top:16px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g1);margin-bottom:10px">Margen por mes</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
+              <div style="font-size:10px;color:var(--gray)">Enero</div>
+              <div style="font-size:20px;font-weight:700;color:var(--g1)">89,8%</div>
+            </div>
+            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
+              <div style="font-size:10px;color:var(--gray)">Febrero</div>
+              <div style="font-size:20px;font-weight:700;color:var(--g1)">94,3%</div>
+            </div>
+            <div style="text-align:center;background:#FFF8E1;border-radius:8px;padding:10px;border:1px solid #FFE082">
+              <div style="font-size:10px;color:var(--gray)">Marzo</div>
+              <div style="font-size:20px;font-weight:700;color:var(--amber)">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTRO 2: MIVIA -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title" style="color:var(--g1)">💳 MiVia & Recargas</span>
+          <span class="card-badge">Azure · Quickcomm</span>
+        </div>
+        <table class="pl-table">
+          <!-- ENERO -->
+          <tr class="pl-row-header"><td colspan="2">ENERO 2026 · USD $1.465</td></tr>
+          <tr class="pl-row-item"><td>↑ Recargas</td><td>$383.310.000</td></tr>
+          <tr class="pl-row-item"><td>↓ Azure (2.500 USD)</td><td style="color:var(--red)">-$3.662.500</td></tr>
+          <tr class="pl-row-item"><td>↓ Quickcomm (6.000 USD)</td><td style="color:var(--red)">-$8.790.000</td></tr>
+          <tr class="pl-row-subtotal"><td>Resultado Enero</td><td style="color:var(--g1)">$370.857.500</td></tr>
+          <tr style="height:4px"><td colspan="2"></td></tr>
+
+          <!-- FEBRERO -->
+          <tr class="pl-row-header"><td colspan="2">FEBRERO 2026 · USD $1.426</td></tr>
+          <tr class="pl-row-item"><td>↑ Recargas</td><td>$332.180.000</td></tr>
+          <tr class="pl-row-item"><td>↓ Azure (2.500 USD)</td><td style="color:var(--red)">-$3.565.000</td></tr>
+          <tr class="pl-row-item"><td>↓ Quickcomm (6.000 USD)</td><td style="color:var(--red)">-$8.556.000</td></tr>
+          <tr class="pl-row-subtotal"><td>Resultado Febrero</td><td style="color:var(--g1)">$320.059.000</td></tr>
+          <tr style="height:4px"><td colspan="2"></td></tr>
+
+          <!-- MARZO -->
+          <tr class="pl-row-header"><td colspan="2">MARZO 2026 · USD $1.415</td></tr>
+          <tr class="pl-row-item"><td>↑ Recargas</td><td>$346.160.000</td></tr>
+          <tr class="pl-row-item"><td>↑ Ingreso Marginal</td><td>$679.518</td></tr>
+          <tr class="pl-row-item"><td>↓ Azure (2.500 USD)</td><td style="color:var(--red)">-$3.537.500</td></tr>
+          <tr class="pl-row-item"><td>↓ Quickcomm (6.000 USD)</td><td style="color:var(--red)">-$8.490.000</td></tr>
+          <tr class="pl-row-subtotal"><td>Resultado Marzo</td><td style="color:var(--g1)">$334.812.018</td></tr>
+
+          <tr class="pl-row-result positive"><td>💼 TOTAL MIVIA</td><td>$1.025,7M</td></tr>
+        </table>
+
+        <!-- Margen por mes -->
+        <div style="margin-top:16px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g1);margin-bottom:10px">Margen por mes</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
+              <div style="font-size:10px;color:var(--gray)">Enero</div>
+              <div style="font-size:20px;font-weight:700;color:var(--g1)">96,7%</div>
+            </div>
+            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
+              <div style="font-size:10px;color:var(--gray)">Febrero</div>
+              <div style="font-size:20px;font-weight:700;color:var(--g1)">96,4%</div>
+            </div>
+            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
+              <div style="font-size:10px;color:var(--gray)">Marzo</div>
+              <div style="font-size:20px;font-weight:700;color:var(--g1)">97,1%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── GRÁFICO CONSOLIDADO ── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Resultado por Centro de Costo</span>
+        <span class="card-badge">Ene–Mar 2026</span>
+      </div>
+      <canvas id="chartPL" height="110"></canvas>
+      <div style="margin-top:16px;padding:14px;background:var(--g5);border-radius:var(--radius-sm);display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;text-align:center">
+        <div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:4px">Cotización Enero</div>
+          <div style="font-size:22px;font-weight:700;color:var(--navy)">$1.465</div>
+          <div style="font-size:10px;color:var(--muted)">BNA venta</div>
+        </div>
+        <div style="border-left:1px solid var(--border);border-right:1px solid var(--border)">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:4px">Cotización Febrero</div>
+          <div style="font-size:22px;font-weight:700;color:var(--navy)">$1.426</div>
+          <div style="font-size:10px;color:var(--muted)">BNA venta</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:4px">Cotización Marzo</div>
+          <div style="font-size:22px;font-weight:700;color:var(--navy)">$1.415</div>
+          <div style="font-size:10px;color:var(--muted)">BNA venta</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECCIÓN: CAÍDAS ═══ -->
+  <section class="section" id="sec-caidas">
+    <div class="section-title">Análisis de Caídas</div>
+    <div class="section-sub">Causas identificadas — Comparativo Marzo 2026</div>
+    <div class="chart-grid">
+      <div class="card">
+        <div class="card-header"><span class="card-title" style="color:var(--red)">Recargas vs Febrero 2026</span></div>
+        <div class="caida-grid" style="grid-template-columns:1fr">
+          <div class="caida-item"><div class="caida-top"><span class="caida-name">Roberto Picca e Hijos</span><span class="caida-diff">-$13,5M</span></div><div class="caida-flow">$90M → $76,5M</div><div class="caida-causa">Menor volumen de recarga mensual respecto a febrero</div></div>
+          <div class="caida-item"><div class="caida-top"><span class="caida-name">Magnolias</span><span class="caida-diff">-$2,5M</span></div><div class="caida-flow">$10,5M → $8M</div><div class="caida-causa">Reducción vs su recarga habitual</div></div>
+          <div class="caida-item"><div class="caida-top"><span class="caida-name">Editorial Río Negro S.A.</span><span class="caida-diff">-$3M</span></div><div class="caida-flow">$3M → $0</div><div class="caida-causa">No realizó recargas en marzo</div></div>
+          <div class="caida-item"><div class="caida-top"><span class="caida-name">Grupo Deco Home</span><span class="caida-diff">-$3M</span></div><div class="caida-flow">$6M → $3M</div><div class="caida-causa">Recarga reducida a la mitad vs febrero</div></div>
+          <div class="caida-item"><div class="caida-top"><span class="caida-name">Matías Javier Andrés</span><span class="caida-diff">-$2,5M</span></div><div class="caida-flow">$4,5M → $2M</div><div class="caida-causa">Baja en volumen de operaciones</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title" style="color:var(--red)">Envíos vs Marzo 2025</span></div>
+        <div class="caida-grid" style="grid-template-columns:1fr">
+          <div class="caida-item"><div class="caida-top"><span class="caida-name">Garden Life S.A.</span><span class="caida-diff">-1.647</span></div><div class="caida-flow">1.649 → 2</div><div class="caida-causa">Prácticamente sin actividad en marzo 2026</div></div>
+          <div class="caida-item"><div class="caida-top"><span class="caida-name">ElectroYHogar.com</span><span class="caida-diff">-1.315</span></div><div class="caida-flow">1.379 → 64</div><div class="caida-causa">Fuerte reducción de operaciones vs año anterior</div></div>
+          <div class="caida-item"><div class="caida-top"><span class="caida-name">Seller Center (canal)</span><span class="caida-diff">-3.525</span></div><div class="caida-flow">7.652 → 4.127</div><div class="caida-causa">Baja de operadores como Garden Life y ElectroYHogar</div></div>
+          <div class="caida-item"><div class="caida-top"><span class="caida-name">Geraldine</span><span class="caida-diff">-215</span></div><div class="caida-flow">457 → 242</div><div class="caida-causa">Reducción de volumen respecto a marzo 2025</div></div>
+          <div class="caida-item"><div class="caida-top"><span class="caida-name">Pamela</span><span class="caida-diff">-150 vs Feb</span></div><div class="caida-flow">368 (feb) → 218 (mar)</div><div class="caida-causa">Reducción de envíos respecto a febrero 2026</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECCIÓN: PUNTOS CLAVE ═══ -->
+  <section class="section" id="sec-puntos">
+    <div class="section-title">Puntos Clave</div>
+    <div class="section-sub">Highlights del período — Marzo 2026</div>
+    <div class="puntos-grid">
+      <div class="punto"><div class="punto-ico">📈</div><div class="punto-txt">Recargas <strong>+56,7% interanual</strong> vs Mar 2025 y <strong>+4,2% vs Febrero</strong> — crecimiento sostenido y acelerado.</div></div>
+      <div class="punto"><div class="punto-ico">⭐</div><div class="punto-txt"><strong>Roberto Picca</strong> lidera con <strong>$76,5M</strong>, representando el 22% del total mensual de recargas.</div></div>
+      <div class="punto"><div class="punto-ico">🚚</div><div class="punto-txt">Envíos <strong>+9,1% interanual</strong> vs Mar 2025. <strong>Seller Center</strong> representa el 62% del volumen logístico.</div></div>
+      <div class="punto"><div class="punto-ico">📍</div><div class="punto-txt"><strong>Neuquén y Córdoba</strong> lideran los destinos de envío. Cobertura federal en expansión.</div></div>
+      <div class="punto"><div class="punto-ico">🛒</div><div class="punto-txt">Marketplace alcanza <strong>$56,7M</strong> en ventas. <strong>Coop. Profega</strong> concentra $40,9M (72% del total).</div></div>
+      <div class="punto"><div class="punto-ico">💹</div><div class="punto-txt">Recargas crecieron <strong>x175 por encima de la inflación</strong>. IPC acumuló +230% vs +40.000% de recargas.</div></div>
+      <div class="punto"><div class="punto-ico">👥</div><div class="punto-txt"><strong>151 vendedores</strong> dados de alta en 2026 (Ene–Mar). <strong>34 en marzo</strong>, acelerando el onboarding.</div></div>
+      <div class="punto"><div class="punto-ico">💰</div><div class="punto-txt">Ingreso marginal de <strong>$679.518</strong> en comisiones — 17 transacciones cruzadas con guías del Marketplace.</div></div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// ── NAVIGATION ──────────────────────────────────────────
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const overlay = document.getElementById('mobileOverlay');
+  menu.classList.toggle('open');
+  overlay.classList.toggle('open');
+}
+
+// Sync mobile nav active state
+function syncMobileNav(id) {
+  document.querySelectorAll('.mobile-nav .nav-item').forEach(n => n.classList.remove('active'));
+  const mobileItems = document.querySelectorAll('.mobile-nav .nav-item');
+  mobileItems.forEach(item => {
+    if(item.getAttribute('onclick') && item.getAttribute('onclick').includes("'" + id + "'")) {
+      item.classList.add('active');
+    }
+  });
+}
+
+const titles = {
+  resumen: 'Resumen Ejecutivo', recargas: 'Recargas',
+  envios: 'Envíos & Logística', marketplace: 'Marketplace Vía Compras',
+  vendedores: 'Vendedores', pl: 'P&L Operativo', caidas: 'Análisis de Caídas', puntos: 'Puntos Clave'
+};
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sidebar .nav-item, .mobile-nav .nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  // Marcar activo en sidebar y mobile nav
+  document.querySelectorAll('.sidebar .nav-item, .mobile-nav .nav-item').forEach(item => {
+    if(item.getAttribute('onclick') && item.getAttribute('onclick').includes("'" + id + "'")) {
+      item.classList.add('active');
+    }
+  });
+  document.getElementById('topbar-title').textContent = titles[id];
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── CHART DEFAULTS ───────────────────────────────────────
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif";
+Chart.defaults.color = '#5A6B5C';
+
+// ── DATA ─────────────────────────────────────────────────
+const evoLabels = ['Mar24','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene25','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene26','Feb','Mar26'];
+const evoData   = [0.7,2.24,3.56,27.12,70.08,66.78,75.15,160.14,230.52,184.51,176.16,161.63,220.89,183.95,198.37,179.64,194.11,175.34,251.16,300.50,284.15,264.79,383.31,332.18,346.16];
+
+const evoOpts = (canvasId) => {
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  const grad = ctx.createLinearGradient(0,0,0,300);
+  grad.addColorStop(0,'rgba(7,124,20,.2)');
+  grad.addColorStop(1,'rgba(7,124,20,.01)');
+
+  // Plugin para dibujar el label sobre el último punto
+  const lastPointLabel = {
+    id: 'lastPointLabel_' + canvasId,
+    afterDatasetsDraw(chart) {
+      const { ctx: c, data, scales: { x, y } } = chart;
+      const ds = data.datasets[0];
+      const lastIdx = ds.data.length - 1;
+      const lastVal = ds.data[lastIdx];
+      const px = x.getPixelForValue(lastIdx);
+      const py = y.getPixelForValue(lastVal);
+
+      // Pill background
+      const label = '$346,2M';
+      c.save();
+      c.font = 'bold 13px -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif';
+      const tw = c.measureText(label).width;
+      const pw = tw + 20; const ph = 26; const pr = 6;
+      const bx = px - pw / 2; const by = py - ph - 12;
+
+      // Sombra
+      c.shadowColor = 'rgba(7,124,20,.25)';
+      c.shadowBlur = 8;
+      c.shadowOffsetY = 2;
+
+      // Fondo pill verde
+      c.beginPath();
+      c.roundRect(bx, by, pw, ph, pr);
+      c.fillStyle = '#077C14';
+      c.fill();
+      c.shadowBlur = 0;
+
+      // Texto
+      c.fillStyle = '#fff';
+      c.textAlign = 'center';
+      c.textBaseline = 'middle';
+      c.fillText(label, px, by + ph / 2);
+
+      // Línea punteada hasta el punto
+      c.beginPath();
+      c.setLineDash([3, 3]);
+      c.moveTo(px, by + ph);
+      c.lineTo(px, py - 8);
+      c.strokeStyle = 'rgba(7,124,20,.4)';
+      c.lineWidth = 1;
+      c.stroke();
+      c.setLineDash([]);
+
+      c.restore();
+    }
+  };
+
+  return new Chart(ctx, {
+    type:'line',
+    data:{ labels:evoLabels, datasets:[{
+      label:'Recargas ($M)', data:evoData,
+      borderColor:'#077C14', borderWidth:2.5,
+      pointRadius:evoData.map((_,i)=>i===24?7:0),
+      pointBackgroundColor:'#077C14',
+      fill:true, backgroundColor:grad,
+      tension:.4
+    }]},
+    options:{
+      responsive:true, maintainAspectRatio:true,
+      layout:{ padding:{ top: 48 } },
+      plugins:{ legend:{display:false}, tooltip:{
+        callbacks:{ label: ctx => ' $' + ctx.parsed.y + 'M' }
+      }},
+      scales:{
+        x:{ grid:{display:false}, ticks:{maxTicksLimit:6, font:{size:11}} },
+        y:{ grid:{color:'#E8F5E9'}, ticks:{callback:v=>'$'+v+'M', font:{size:11}} }
+      }
+    },
+    plugins:[lastPointLabel]
+  });
+};
+evoOpts('chartEvo');
+evoOpts('chartEvo2');
+
+// ── ENVÍOS CHART ─────────────────────────────────────────
+const envLabels = ['Oct24','Nov','Dic','Ene25','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene26','Feb26','Mar26'];
+const envEnvios = [7020,9208,6978,6892,5630,6871,6999,6878,5377,6379,5872,5970,6959,7254,8398,7146,6807,7497];
+const envBultos = [12138,14219,11463,13284,11442,13485,26692,12780,13057,15091,18370,20897,27291,19055,30465,17558,16526,18397];
+
+new Chart(document.getElementById('chartEnv').getContext('2d'), {
+  type:'bar',
+  data:{
+    labels:envLabels,
+    datasets:[
+      { label:'Envíos', data:envEnvios, backgroundColor:'#077C14', borderRadius:4, order:2 },
+      { label:'Bultos', data:envBultos, backgroundColor:'rgba(7,124,20,.2)', borderRadius:4, order:1 }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:true,
+    plugins:{ legend:{position:'top', labels:{font:{size:12}, boxWidth:12}} },
+    scales:{
+      x:{ grid:{display:false}, ticks:{font:{size:10}} },
+      y:{ grid:{color:'#E8F5E9'}, ticks:{font:{size:11}} }
+    }
+  }
+});
+
+// ── VENDEDORES CHART ──────────────────────────────────────
+const vendLabels = ['Mar24','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene25','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene26','Feb26','Mar26'];
+const vendData = [4,6,53,5,6,5,3,1,4,11,9,22,35,30,31,29,28,52,46,42,41,28,49,68,34];
+new Chart(document.getElementById('chartVend').getContext('2d'), {
+  type:'bar',
+  data:{
+    labels:vendLabels,
+    datasets:[{ label:'Altas', data:vendData,
+      backgroundColor: vendData.map((_,i)=>i===24?'#077C14':'rgba(7,124,20,.4)'),
+      borderRadius:5
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:true,
+    plugins:{ legend:{display:false} },
+    scales:{
+      x:{grid:{display:false}, ticks:{font:{size:10}}},
+      y:{grid:{color:'#E8F5E9'}, ticks:{font:{size:11}}}
+    }
+  }
+});
+
+// ── CUOTAS CHART ──────────────────────────────────────────
+new Chart(document.getElementById('chartCuotas').getContext('2d'), {
+  type:'doughnut',
+  data:{
+    labels:['1 cuota (99.7%)','9 cuotas (0.3%)'],
+    datasets:[{ data:[99.7,0.3], backgroundColor:['#077C14','#A5D6A7'], borderWidth:0, hoverOffset:6 }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:true,
+    plugins:{ legend:{position:'bottom', labels:{font:{size:12},boxWidth:12}} },
+    cutout:'65%'
+  }
+});
+
+// ── RANKING BUILDER ───────────────────────────────────────
+function buildRanking(containerId, items, maxVal, showSecondary) {
+  const c = document.getElementById(containerId);
+  items.forEach((d, i) => {
+    const pct = Math.round(d.v / maxVal * 100);
+    const pct2 = d.v2 ? Math.round(d.v2 / maxVal * 100) : 0;
+    const row = document.createElement('div');
+    row.className = 'rank-row';
+    row.innerHTML = `
+      <div class="rank-num">${i+1}</div>
+      <div class="rank-label" title="${d.n}">${d.n}</div>
+      <div style="flex:1">
+        ${showSecondary && d.v2 ? `<div style="display:flex;gap:3px;margin-bottom:3px;height:7px">
+          <div class="rank-bar" style="width:${pct2}%;background:#AFA9EC;max-width:100%"></div>
+        </div>` : ''}
+        <div class="rank-bar-wrap">
+          <div class="rank-bar" style="width:${pct}%;background:${i===0?'#077C14':i<3?'#22C55E':'#86EFAC'}"></div>
+        </div>
+      </div>
+      <div class="rank-val">${d.val}</div>`;
+    c.appendChild(row);
+  });
+  if(showSecondary) {
+    c.insertAdjacentHTML('beforeend',`
+      <div style="display:flex;gap:16px;margin-top:12px">
+        <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gray)"><div style="width:10px;height:10px;border-radius:2px;background:#AFA9EC"></div>Feb 2026</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gray)"><div style="width:10px;height:10px;border-radius:2px;background:#077C14"></div>Mar 2026</div>
+      </div>`);
+  }
+}
+
+const topRecData = [{n:"Roberto Picca",v:76.5,val:"76.5M"},{n:"Audisio Fernando",v:20.3,val:"20.3M"},{n:"Laraignee Carlos",v:18.0,val:"18.0M"},{n:"El Madero S.A.S",v:13.5,val:"13.5M"},{n:"FIDPMHGS SA",v:11.5,val:"11.5M"},{n:"Estanterías Virreyes",v:10.5,val:"10.5M"},{n:"POPLAY",v:7.5,val:"7.5M"},{n:"Magnolias",v:8.0,val:"8.0M"},{n:"Fragonte",v:6.0,val:"6.0M"},{n:"Fassi Facundo",v:6.28,val:"6.3M"}];
+buildRanking('topRecRanking', [
+  {n:'Roberto Picca',        v:76.5, v2:90.0, val:'$76,5M'},
+  {n:'Audisio Fernando',     v:20.3, v2:17.0, val:'$20,3M'},
+  {n:'Laraignee Carlos',     v:18.0, v2:8.8,  val:'$18,0M'},
+  {n:'El Madero S.A.S',      v:13.5, v2:9.97, val:'$13,5M'},
+  {n:'FIDPMHGS SA',          v:11.5, v2:10.5, val:'$11,5M'},
+  {n:'Estanterías Virreyes', v:10.5, v2:10.0, val:'$10,5M'},
+  {n:'POPLAY',               v:7.5,  v2:0,    val:'$7,5M'},
+  {n:'Magnolias',            v:8.0,  v2:10.5, val:'$8,0M'},
+  {n:'Fragonte',             v:6.0,  v2:7.0,  val:'$6,0M'},
+  {n:'Fassi Facundo',        v:6.28, v2:5.30, val:'$6,3M'},
+], 90, true);
+
+const topEnvData = [{n:"Urbano (SC)",v:1058,val:"1.058"},{n:"Laraignee Carlos",v:329,val:"329"},{n:"Pamela",v:282,val:"282"},{n:"Geraldine",v:272,val:"272"},{n:"Juan Ignacio",v:268,val:"268"},{n:"BYT Química",v:219,val:"219"},{n:"Popeye Probike",v:209,val:"209"},{n:"Gabriel Fogolin",v:191,val:"191"},{n:"Fassi Facundo",v:188,val:"188"},{n:"Pablo Pereira",v:188,val:"188"}];
+buildRanking('topEnvRanking', [
+  {n:'Urbano (SC)',       v:1058, val:'1.058'},
+  {n:'Laraignee Carlos', v:329,  val:'329'},
+  {n:'Pamela',           v:282,  val:'282'},
+  {n:'Geraldine',        v:272,  val:'272'},
+  {n:'Juan Ignacio',     v:268,  val:'268'},
+  {n:'BYT Química',      v:219,  val:'219'},
+  {n:'Popeye Probike',   v:209,  val:'209'},
+  {n:'Gabriel Fogolin',  v:191,  val:'191'},
+  {n:'Fassi Facundo',    v:188,  val:'188'},
+  {n:'Pablo Pereira',    v:188,  val:'188'},
+], 1058, false);
+
+const topLocData = [{n:"Neuquén",v:122},{n:"Córdoba",v:108},{n:"San Juan",v:72},{n:"Bahía Blanca",v:71},{n:"Mendoza",v:66},{n:"Rosario",v:58},{n:"Santa Fe",v:55},{n:"Bariloche",v:54},{n:"Paraná",v:54},{n:"Salta",v:53},{n:"Santa Rosa",v:50},{n:"Río Cuarto",v:47},{n:"Resistencia",v:46},{n:"Posadas",v:46},{n:"Sn Martín Andes",v:45}];
+buildRanking('topLocRanking', [
+  {n:'Neuquén',          v:122, val:'122'},
+  {n:'Córdoba',          v:108, val:'108'},
+  {n:'San Juan',         v:72,  val:'72'},
+  {n:'Bahía Blanca',     v:71,  val:'71'},
+  {n:'Mendoza',          v:66,  val:'66'},
+  {n:'Rosario',          v:58,  val:'58'},
+  {n:'Santa Fe',         v:55,  val:'55'},
+  {n:'Bariloche',        v:54,  val:'54'},
+  {n:'Paraná',           v:54,  val:'54'},
+  {n:'Salta',            v:53,  val:'53'},
+  {n:'Santa Rosa',       v:50,  val:'50'},
+  {n:'Río Cuarto',       v:47,  val:'47'},
+  {n:'Resistencia',      v:46,  val:'46'},
+  {n:'Posadas',          v:46,  val:'46'},
+  {n:'Sn Martín Andes',  v:45,  val:'45'},
+], 122, false);
+
+const topSellData = [{n:"Coop. Profega Ltda.",v:40.91,val:"$40,9M"},{n:"Mundo Obra",v:8.00,val:"$8,0M"},{n:"Petenatti Hogar VC",v:4.72,val:"$4,7M"},{n:"ECOTECN",v:4.69,val:"$4,7M"},{n:"NORTESHOPS",v:3.46,val:"$3,5M"}];
+buildRanking('topSellersRank', [
+  {n:'Coop. Profega Ltda.', v:40.91, val:'$40,9M'},
+  {n:'Mundo Obra',          v:8.00,  val:'$8,0M'},
+  {n:'Petenatti Hogar VC',  v:4.72,  val:'$4,7M'},
+  {n:'ECOTECN',             v:4.69,  val:'$4,7M'},
+  {n:'NORTESHOPS',          v:3.46,  val:'$3,5M'},
+], 40.91, false);
+
+// ── MEDIOS DE PAGO ────────────────────────────────────────
+[{n:'Seller Center',pct:99.7,color:'#077C14',monto:'$57,2M'},{n:'Visa',pct:0.3,color:'#1565C0',monto:'$0,2M'}]
+.forEach(p => {
+  document.getElementById('mp-pagos-list').insertAdjacentHTML('beforeend',`
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <div style="font-size:13px;font-weight:600;color:var(--navy);width:110px;flex-shrink:0">${p.n}</div>
+      <div style="flex:1;height:28px;background:var(--g5);border-radius:6px;overflow:hidden">
+        <div style="height:100%;width:${Math.max(2,p.pct)}%;background:${p.color};border-radius:6px;display:flex;align-items:center;padding-left:10px">
+          <span style="font-size:13px;font-weight:700;color:#fff">${p.pct}%</span>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--gray);width:55px;text-align:right">${p.monto}</div>
+    </div>`);
+});
+
+// ── P&L CHART ─────────────────────────────────────────────
+new Chart(document.getElementById('chartPL').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: ['Enero 2026', 'Febrero 2026', 'Marzo 2026*'],
+    datasets: [
+      {
+        label: 'MiVia & Recargas',
+        data: [370.9, 320.1, 334.8],
+        backgroundColor: '#077C14',
+        borderRadius: 6,
+        stack: 'resultado'
+      },
+      {
+        label: 'Marketplace Via Compras',
+        data: [18.4, 45.5, null],
+        backgroundColor: '#1565C0',
+        borderRadius: 6,
+        stack: 'resultado'
+      },
+      {
+        label: 'Marketplace (sin costos)',
+        data: [null, null, 56.7],
+        backgroundColor: '#90CAF9',
+        borderRadius: 6,
+        stack: 'resultado',
+        borderDash: [5,5]
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: { position: 'top', labels: { font: { size: 12 }, boxWidth: 12 } },
+      tooltip: {
+        callbacks: {
+          label: ctx => ctx.parsed.y ? ` ${ctx.dataset.label}: $${ctx.parsed.y.toFixed(1)}M` : ''
+        }
+      }
+    },
+    scales: {
+      x: { grid: { display: false }, stacked: true, ticks: { font: { size: 12 } } },
+      y: { grid: { color: '#E8F5E9' }, stacked: true, ticks: { callback: v => '$'+v+'M', font: { size: 11 } } }
+    }
+  }
+});
+
+// ── CIUDADES ──────────────────────────────────────────────
+const ciudadesMP = [{n:'Posadas',v:8},{n:'CABA',v:8},{n:'Macachin',v:3},{n:'Las Heras',v:2},{n:'Embalse',v:2},{n:'San Rafael',v:2},{n:'Merlo',v:2},{n:'Virrey del Pino',v:1},{n:'El Calafate',v:1},{n:'San Vicente',v:1}];
+const maxC = 8;
+ciudadesMP.forEach((c,i) => {
+  const bg = i<2?'#077C14':i<5?'#22C55E':'#A5D6A7';
+  document.getElementById('mp-ciudades-list').insertAdjacentHTML('beforeend',`
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+      <div style="font-size:12px;font-weight:500;color:var(--navy);width:120px;flex-shrink:0;text-align:right">${c.n}</div>
+      <div style="flex:1;height:22px;background:var(--g5);border-radius:5px;overflow:hidden">
+        <div style="height:100%;width:${Math.round(c.v/maxC*100)}%;background:${bg};border-radius:5px;display:flex;align-items:center;padding-left:8px">
+          <span style="font-size:12px;font-weight:700;color:${i<5?'#fff':'#0A5E1A'}">${c.v}</span>
+        </div>
+      </div>
+    </div>`);
+});
+</script>
+</body>
+</html>
