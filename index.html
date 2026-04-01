@@ -1008,7 +1008,7 @@ td.dim { color: var(--muted); }
         <tbody>
           <tr><td class="year-cell">2024</td><td class="dim">—</td><td class="dim">—</td><td>4</td><td>6</td><td>53</td><td>5</td><td>6</td><td>5</td><td>3</td><td>1</td><td>4</td><td>11</td><td class="highlight">98</td></tr>
           <tr><td class="year-cell">2025</td><td>9</td><td>22</td><td>35</td><td>30</td><td>31</td><td>29</td><td>28</td><td>52</td><td>46</td><td>42</td><td>41</td><td>28</td><td class="highlight">393</td></tr>
-          <tr><td class="year-cell">2026*</td><td>49</td><td>68</td><td class="highlight">34</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="highlight">151</td></tr>
+          <tr><td class="year-cell">2026*</td><td>49</td><td>68</td><td class="highlight">38</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="highlight">156</td></tr>
         </tbody>
       </table>
     </div>
@@ -1372,7 +1372,7 @@ const PERIODOS = {
     sc_pct: 62, sc_val: '4.652', tn_pct: 24, tn_val: '1.787', ur_pct: 14, ur_val: '1.058',
     evo: [0.7,2.24,3.56,27.12,70.08,66.78,75.15,160.14,230.52,184.51,176.16,161.63,220.89,183.95,198.37,179.64,194.11,175.34,251.16,300.50,284.15,264.79,383.31,332.18,346.16],
     evoLabels: ['Mar24','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene25','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene26','Feb26','Mar26'],
-    mp_ventas: '$56,7M', mp_ordenes: '41', mp_ticket: '$1.381.930', mp_units: '48',
+    mp_ventas: '$74.4M', mp_ordenes: '50', mp_ticket: '$1.487.691', mp_units: '60',
     pl_mp_resultado: '$45,5M*', pl_mp_margen: '~94%*', pl_mivia_resultado: '$333,8M', pl_mivia_margen: '96,2%',
     topRec: [
       {n:'Roberto Picca', v:76.5, val:'$76,5M'},
@@ -1960,7 +1960,7 @@ new Chart(document.getElementById('chartEnv').getContext('2d'), {
 
 // ── VENDEDORES CHART ──────────────────────────────────────
 const vendLabels = ['Mar24','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene25','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene26','Feb26','Mar26'];
-const vendData = [4,6,53,5,6,5,3,1,4,11,9,22,35,30,31,29,28,52,46,42,41,28,49,68,34];
+const vendData = [4, 6, 53, 5, 6, 5, 3, 1, 4, 11, 9, 22, 35, 30, 31, 29, 28, 52, 46, 42, 41, 28, 49, 68, 38];
 new Chart(document.getElementById('chartVend').getContext('2d'), {
   type:'bar',
   data:{
