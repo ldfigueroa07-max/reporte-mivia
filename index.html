@@ -562,20 +562,20 @@ td.dim { color: var(--muted); }
 
 /* ── VELOCIDAD ──────────────────────────── */
 .rank-vel {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--gray);
-  width: 90px;
+  width: 110px;
   text-align: right;
   flex-shrink: 0;
-  line-height: 1.3;
+  line-height: 1.4;
 }
-.rank-vel .vel-hs { font-weight: 600; color: var(--navy); }
-.rank-vel .vel-dias { color: var(--muted); font-size: 10px; }
+.rank-vel .vel-hs { font-weight: 700; color: var(--navy); font-size: 13px; }
+.rank-vel .vel-dias { color: var(--muted); font-size: 12px; }
 .vel-chip {
   display: inline-block;
-  padding: 2px 7px;
+  padding: 3px 9px;
   border-radius: 10px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
 }
 .vel-fast { background: #E8F5E9; color: #1B5E20; }
@@ -669,17 +669,130 @@ td.dim { color: var(--muted); }
   .kpi-grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 800px) {
+  /* Ocultar sidebar desktop, mostrar hamburguesa */
   .sidebar { display: none; }
   .main { margin-left: 0; }
-  .hamburger { display: flex !important; }
+  /* Mostrar hamburguesa */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 8px;
+    transition: background .2s;
+    flex-shrink: 0;
+    margin-right: 4px;
+  }
+  .hamburger:hover { background: var(--g5); }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--navy);
+    border-radius: 2px;
+  }
+  /* Mostrar overlay cuando está abierto */
+  .mobile-overlay.open {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 200;
+  }
+  /* Layout grids */
   .kpi-grid { grid-template-columns: 1fr 1fr; }
   .chart-grid, .chart-grid.wide { grid-template-columns: 1fr; }
   .caida-grid, .puntos-grid, .canal-grid, .ipc-strip { grid-template-columns: 1fr; }
-  .section { padding: 20px 16px 48px; }
+  .section { padding: 16px 12px 48px; }
   .topbar { padding: 0 16px; gap: 10px; }
   .topbar-actions { display: none; }
-  .mp-kpi-row { grid-template-columns: 1fr; }
+  .mp-kpi-row { grid-template-columns: 1fr 1fr; }
   .vend-totals-row { flex-direction: column; }
+
+  /* Period tabs — scroll horizontal en mobile */
+  .period-tabs {
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+  }
+  .period-tab { font-size: 12px; padding: 7px 14px; white-space: nowrap; flex-shrink: 0; }
+
+  /* KPI cards más compactos */
+  .kpi { padding: 14px 12px 12px; }
+  .kpi-value { font-size: 22px; }
+  .kpi-label { font-size: 10px; }
+  .kpi-tag { font-size: 10px; }
+  .kpi-icon { width: 28px; height: 28px; font-size: 14px; margin-bottom: 10px; }
+
+  /* Rankings — ocultar velocidad en mobile, queda muy apretado */
+  .rank-vel { display: none; }
+  .rank-label { font-size: 11px; }
+  .rank-val { font-size: 11px; width: 55px; }
+  .rank-num { font-size: 14px; width: 18px; }
+
+  /* Marketplace */
+  .mp-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .mp-card { padding: 12px; }
+  .mp-card-val { font-size: 20px; }
+  .mp-card-label { font-size: 9px; }
+  .seller-bar-wrap { display: none; }
+  .seller-name { font-size: 11px; }
+  .seller-val { font-size: 11px; width: 58px; }
+  .seller-rank { font-size: 16px; width: 20px; }
+
+  /* MP análisis — grid de métricas en 1 col */
+  .mp-kpi { padding: 10px 12px; }
+  .mp-kpi-val { font-size: 22px; }
+  .mp-kpi-label { font-size: 9px; }
+
+  /* Caídas */
+  .caida-card { padding: 12px 14px; }
+  .caida-name { font-size: 12px; }
+  .caida-diff { font-size: 18px; }
+  .caida-flow { font-size: 10px; }
+  .caida-causa { font-size: 10px; }
+
+  /* Puntos clave */
+  .puntos-grid { grid-template-columns: 1fr; }
+  .punto-card { padding: 12px 14px; }
+  .punto-txt { font-size: 12px; }
+
+  /* Vendedores */
+  .vend-grid { grid-template-columns: 1fr; gap: 14px; }
+  .vend-totals { gap: 8px; }
+  .vend-total { padding: 14px 16px; flex: 1; }
+  .vend-num { font-size: 38px; }
+  .vend-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .vend-table th { font-size: 9px; padding: 6px 5px; }
+  .vend-table td { font-size: 9px; padding: 6px 5px; }
+
+  /* P&L */
+  .pl-table td { font-size: 12px; padding: 8px 10px; }
+  .pl-row-result td { font-size: 13px; }
+
+  /* Canales */
+  .canal-grid { grid-template-columns: 1fr; gap: 8px; }
+  .canal-pill { padding: 14px; }
+  .canal-pct { font-size: 32px; }
+  .canal-num { font-size: 16px; }
+
+  /* IPC */
+  .ipc-strip { grid-template-columns: 1fr; }
+  .ipc-val { font-size: 40px; }
+
+  /* Cards generales */
+  .card { padding: 16px 14px; }
+  .card-title { font-size: 11px; }
+
+  /* Footer */
+  .site-footer { flex-direction: column; gap: 8px; padding: 16px; text-align: center; }
+  .footer-text { font-size: 10px; line-height: 1.5; }
 }
 @media (max-width: 480px) {
   .kpi-grid { grid-template-columns: 1fr; }
@@ -794,23 +907,13 @@ td.dim { color: var(--muted); }
     </div>
 
     <div class="kpi-grid">
-      <div class="kpi" style="grid-column: span 2">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
-          <div>
-            <div class="kpi-icon">💳</div>
-            <div class="kpi-label">Recargas — Marzo 2026</div>
-            <div class="kpi-value">$409.2M</div>
-            <div class="kpi-tags">
-              <span class="kpi-tag up">▲ 23.2% vs Febrero</span>
-              <span class="kpi-tag up">▲ 85.2% vs Mar 2025</span>
-            </div>
-          </div>
-          <div style="text-align:right;padding-left:20px;border-left:1px solid var(--border);margin-left:20px">
-            <div style="font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">TOTAL ACUMULADO</div>
-            <div style="font-size:13px;color:var(--muted);margin-bottom:4px">Mar 2024 → Mar 2026</div>
-            <div style="font-family:-apple-system,sans-serif;font-size:32px;font-weight:700;color:var(--g1);letter-spacing:-1px;line-height:1">$4.536.1M</div>
-            <div style="font-size:11px;color:var(--muted);margin-top:6px">25 meses consecutivos</div>
-          </div>
+      <div class="kpi">
+        <div class="kpi-icon">💳</div>
+        <div class="kpi-label">Recargas</div>
+        <div class="kpi-value">$409.2M</div>
+        <div class="kpi-tags">
+          <span class="kpi-tag up">▲ 23.2% vs Febrero</span>
+          <span class="kpi-tag up">▲ 85.2% vs Mar 2025</span>
         </div>
       </div>
       <div class="kpi">
@@ -851,7 +954,20 @@ td.dim { color: var(--muted); }
       </div>
     </div>
 
-
+    <!-- Banner acumulado -->
+    <div style="background:linear-gradient(135deg,var(--g3) 0%,var(--g4) 100%);border-radius:var(--radius);padding:20px 32px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:48px;box-shadow:var(--shadow)">
+      <div style="text-align:center">
+        <div style="font-size:11px;font-weight:600;letter-spacing:2px;color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:4px">TOTAL ACUMULADO</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.45)">Mar 2024 → Mar 2026</div>
+      </div>
+      <div style="width:1px;height:40px;background:rgba(255,255,255,.15)"></div>
+      <div style="font-size:48px;font-weight:700;color:#fff;letter-spacing:-2px;line-height:1">$4.536.1M</div>
+      <div style="width:1px;height:40px;background:rgba(255,255,255,.15)"></div>
+      <div style="text-align:center">
+        <div style="font-size:11px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:4px">MESES CONSECUTIVOS</div>
+        <div style="font-size:32px;font-weight:700;color:#fff">25</div>
+      </div>
+    </div>
 
     <div class="chart-grid">
       <div class="card">
