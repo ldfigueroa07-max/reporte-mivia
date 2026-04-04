@@ -960,10 +960,10 @@ td.dim { color: var(--muted); }
       <div class="kpi">
         <div class="kpi-icon">📫</div>
         <div class="kpi-label">Bultos</div>
-        <div class="kpi-value">17.434</div>
+        <div class="kpi-value" id="bulVal">17.434</div>
         <div class="kpi-tags">
-          <span class="kpi-tag up">▲ 10,1% vs Febrero</span>
-          <span class="kpi-tag up">▲ 9,1% vs Mar 2025</span>
+          <span class="kpi-tag up">▲ 8.0pct vs Febrero</span>
+          <span class="kpi-tag up">▲ 7.0pct vs Mar 2025</span>
         </div>
       </div>
     </div>
@@ -998,22 +998,22 @@ td.dim { color: var(--muted); }
         </div>
         <div class="canal-grid" style="margin-bottom:0;margin-top:8px">
           <div class="canal-pill">
-            <div class="canal-pct" style="color:#077C14">63</div>
             <div class="canal-name">Seller Center</div>
-            <div class="canal-num">4.652</div>
+            <div class="canal-num">4.658</div>
             <div class="canal-sub">envíos</div>
+            <div class="canal-pct" style="color:#077C14;font-size:18px;font-weight:600;margin-top:6px">63 pct</div>
           </div>
           <div class="canal-pill">
-            <div class="canal-pct" style="color:#22C55E">23</div>
             <div class="canal-name">TiendaNube</div>
             <div class="canal-num">1.680</div>
             <div class="canal-sub">envíos</div>
+            <div class="canal-pct" style="color:#22C55E;font-size:18px;font-weight:600;margin-top:6px">23 pct</div>
           </div>
           <div class="canal-pill">
-            <div class="canal-pct" style="color:#F57F17">14</div>
             <div class="canal-name">Urbano</div>
             <div class="canal-num">1.013</div>
             <div class="canal-sub">envíos</div>
+            <div class="canal-pct" style="color:#F57F17;font-size:18px;font-weight:600;margin-top:6px">14 pct</div>
           </div>
         </div>
         <div class="ipc-strip">
@@ -2072,6 +2072,16 @@ const evoOpts = (canvasId) => {
 };
 evoChart1 = evoOpts('chartEvo');
 evoChart2 = evoOpts('chartEvo2');
+
+// Inicializar período al cargar página
+setTimeout(() => {
+  const activeTab = document.querySelector('#periodTabs .period-tab.active');
+  if (activeTab) {
+    const onclick = activeTab.getAttribute('onclick') || '';
+    const match = onclick.match(/'([a-z]+)'/);
+    if (match) setPeriod(match[1], activeTab);
+  }
+}, 400);
 
 
 // ── ENVÍOS CHART ─────────────────────────────────────────
