@@ -723,15 +723,17 @@ td.dim { color: var(--muted); }
   }
   .period-tab { font-size: 12px; padding: 7px 14px; white-space: nowrap; flex-shrink: 0; }
 
-  /* KPI cards más compactos */
-  .kpi { padding: 14px 12px 12px; }
-  .kpi-value { font-size: 22px; }
-  .kpi-label { font-size: 10px; }
-  .kpi-tag { font-size: 10px; }
-  .kpi-icon { width: 28px; height: 28px; font-size: 14px; margin-bottom: 10px; }
+  /* KPI cards mobile — aprovechar espacio */
+  .kpi { padding: 18px 14px 14px; }
+  .kpi-value { font-size: 30px; letter-spacing: -0.5px; }
+  .kpi-label { font-size: 11px; letter-spacing: 1px; }
+  .kpi-tag { font-size: 11px; }
+  .kpi-icon { width: 32px; height: 32px; font-size: 16px; margin-bottom: 12px; }
 
-  /* Rankings — ocultar velocidad en mobile, queda muy apretado */
-  .rank-vel { display: none; }
+  /* Rankings — velocidad compacta en mobile */
+  .rank-vel { width: 70px; }
+  .rank-vel .vel-chip { font-size: 10px; padding: 2px 5px; }
+  .rank-vel .vel-dias { font-size: 9px; }
   .rank-label { font-size: 11px; }
   .rank-val { font-size: 11px; width: 55px; }
   .rank-num { font-size: 14px; width: 18px; }
@@ -1174,7 +1176,7 @@ td.dim { color: var(--muted); }
       <div class="kpi-result positive" style="border:1px solid var(--border)">
         <div class="kpi-icon">🛒</div>
         <div class="kpi-label">Marketplace — Marzo</div>
-        <div class="kpi-value" style="font-size:22px;color:var(--amber)" id="plMPResult">Pendiente*</div>
+        <div class="kpi-value" style="font-size:22px;color:var(--g1)" id="plMPResult">$53,2M</div>
         <div style="font-size:11px;color:var(--muted);margin-top:6px">Esperando costos Vtex de Marzo</div>
         <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
           <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray)"><span>Ingresos</span><span style="font-weight:600;color:var(--navy)">$56,7M</span></div>
@@ -1237,11 +1239,10 @@ td.dim { color: var(--muted); }
           <!-- MARZO -->
           <tr class="pl-row-header"><td colspan="2">MARZO 2026 · USD $1.415</td></tr>
           <tr class="pl-row-item"><td>↑ Ventas Marketplace</td><td>$56.700.000</td></tr>
-          <tr class="pl-row-partial"><td>↓ Vtex Plataforma</td><td>⏳ Pendiente</td></tr>
-          <tr class="pl-row-partial"><td>↓ Vtex Comisiones</td><td>⏳ Pendiente</td></tr>
-          <tr class="pl-row-partial"><td>Resultado Marzo</td><td>Pendiente</td></tr>
+          <tr class="pl-row-item"><td>↓ Vtex (Plataforma + Comisiones)</td><td style="color:var(--red)">-$3.477.399</td></tr>
+          <tr class="pl-row-subtotal"><td>Resultado Marzo</td><td style="color:var(--g1)">$53.222.601</td></tr>
 
-          <tr class="pl-row-result positive"><td>💼 TOTAL MARKETPLACE</td><td>$63,9M + Mar</td></tr>
+          <tr class="pl-row-result positive"><td>💼 TOTAL MARKETPLACE</td><td>$172,4M</td></tr>
         </table>
 
         <!-- Margen por mes -->
@@ -1258,7 +1259,7 @@ td.dim { color: var(--muted); }
             </div>
             <div style="text-align:center;background:#FFF8E1;border-radius:8px;padding:10px;border:1px solid #FFE082">
               <div style="font-size:10px;color:var(--gray)">Marzo</div>
-              <div style="font-size:20px;font-weight:700;color:var(--amber)">—</div>
+              <div style="font-size:20px;font-weight:700;color:var(--g1)">93,9%</div>
             </div>
           </div>
         </div>
@@ -1883,10 +1884,11 @@ function setPeriod(p, clickedTab) {
       const pct = Math.round(item.v/mx*100);
       const row = document.createElement('div');
       row.className = 'rank-row';
+      const displayVal = item.val !== undefined ? item.val : item.v;
       row.innerHTML = `<div class="rank-num">${i+1}</div>
-        <div class="rank-label" title="${item.n}">${item.n}</div>
+        <div class="rank-label" title="${item.n || 'Sin nombre'}">${item.n || 'Sin nombre'}</div>
         <div class="rank-bar-wrap"><div class="rank-bar" style="width:${pct}%;background:${i===0?'#077C14':i<3?'#22C55E':'#86EFAC'}"></div></div>
-        <div class="rank-val">${item.val}</div>`;
+        <div class="rank-val">${displayVal}</div>`;
       c.appendChild(row);
     });
     if (document.getElementById('envRankTitle')) document.getElementById('envRankTitle').textContent = 'Top 10 Remitentes — ' + d.label;
@@ -1902,7 +1904,7 @@ function setPeriod(p, clickedTab) {
       const row = document.createElement('div');
       row.className = 'rank-row';
       row.innerHTML = `<div class="rank-num">${i+1}</div>
-        <div class="rank-label" title="${item.n}">${item.n}</div>
+        <div class="rank-label" title="${item.n || 'Sin nombre'}">${item.n || 'Sin nombre'}</div>
         <div class="rank-bar-wrap"><div class="rank-bar" style="width:${pct}%;background:${i===0?'#077C14':i<3?'#22C55E':'#86EFAC'}"></div></div>
         <div class="rank-val">${item.v}</div>`;
       c.appendChild(row);
