@@ -6,6 +6,8 @@
 <title>MiVia & Via Compras — Dashboard</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root {
   --g1: #077C14;
@@ -743,11 +745,12 @@ td.dim { color: var(--muted); }
   .acum-banner > div:last-child > div:last-child { font-size: 28px !important; }
 
   /* Rankings — velocidad compacta en mobile */
-  .rank-vel { width: 70px; }
-  .rank-vel .vel-chip { font-size: 10px; padding: 2px 5px; }
+  .rank-vel { width: 80px; min-width: 80px; flex-shrink: 0; text-align: right; }
+  .rank-vel .vel-chip { font-size: 10px; padding: 2px 6px; white-space: nowrap; }
   .rank-vel .vel-dias { font-size: 9px; }
-  .rank-label { font-size: 11px; }
-  .rank-val { font-size: 11px; width: 55px; }
+  .rank-vel .vel-dias:not(.vel-chip) { font-size: 10px; white-space: nowrap; }
+  .rank-label { font-size: 11px; width: 100px; min-width: 80px; }
+  .rank-val { font-size: 11px; width: 52px; flex-shrink: 0; }
   .rank-num { font-size: 14px; width: 18px; }
 
   /* Marketplace */
@@ -855,7 +858,7 @@ td.dim { color: var(--muted); }
   <div class="sidebar-footer">
     <div class="update-badge">
       <div class="update-label">Última actualización</div>
-      <div class="update-date"><span class="update-dot"></span>04 Apr 2026</div>
+      <div class="update-date"><span class="update-dot"></span>05 Apr 2026</div>
     </div>
   </div>
 </aside>
@@ -873,7 +876,7 @@ td.dim { color: var(--muted); }
       <span class="period-chip">Marzo 2026</span>
     </div>
     <div class="topbar-actions">
-      <button class="btn-action" onclick="window.print()">↓ Exportar</button>
+      <button class="btn-action" id="btn-export-pdf" onclick="exportarPDF()">↓ Exportar PDF</button>
     </div>
   </div>
 
@@ -1513,7 +1516,7 @@ const PERIODOS = {
     showDiag: true,
   },
   mar: {
-    label: 'Marzo 2026', sub: 'Datos al 04 Apr 2026',
+    label: 'Marzo 2026', sub: 'Datos al 05 Apr 2026',
     rec: { val: '$409.2M', v1: '▲ 23.2pct vs Febrero', v2: '▲ 85.2pct vs Mar 2025', up1: true, up2: true },
     mp:  { val: '$74.4M', v1: '▲ vs Feb: $56,7M', v2: '50 órdenes · 60 unds', up1: true, up2: false },
     ing: { val: '$787.443', v1: 'Comisiones Marzo 2026', v2: '14 transacciones', up1: false, up2: false },
@@ -2185,13 +2188,14 @@ function buildRecRanking(containerId, items, velItems) {
   if (!c) return;
   c.innerHTML = '';
   const mx = Math.max(...items.map(d => d.v));
+  // Match por nombre primero, fallback por posición
   const velMap = {};
-  if (velItems) velItems.forEach(d => velMap[d.n] = d);
+  if (velItems) velItems.forEach((d, i) => { velMap[d.n] = d; velMap[i] = d; });
 
   items.forEach((d, i) => {
     const pct = Math.round(d.v / mx * 100);
-    const vel = velMap[d.n];
-    let velHtml = '<div class="rank-vel"><span class="vel-dias">Sin datos</span></div>';
+    const vel = velMap[d.n] || velMap[i];
+    let velHtml = '<div class="rank-vel"><span class="vel-dias" style="white-space:nowrap;font-size:11px;">Sin datos</span></div>';
     if (vel && vel.hs !== null) {
       const chipClass = vel.dias <= 1 ? 'vel-slow' : vel.dias <= 3 ? 'vel-mid' : 'vel-fast';
       velHtml = `<div class="rank-vel">
@@ -2300,6 +2304,82 @@ new Chart(document.getElementById('chartPL').getContext('2d'), {
     }
   }
 });
+
+// ── EXPORT PDF ────────────────────────────────────────────
+async function exportarPDF() {
+  const { jsPDF } = window.jspdf;
+  const btn = document.getElementById('btn-export-pdf');
+  btn.textContent = '⏳ Generando...';
+  btn.disabled = true;
+
+  const secciones = ['resumen','recargas','envios','marketplace','vendedores','pl','caidas','puntos'];
+  const nombres   = ['Resumen Ejecutivo','Recargas','Envíos & Logística','Marketplace','Vendedores','P&L Operativo','Análisis de Caídas','Puntos Clave'];
+
+  const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+  const pdfW = pdf.internal.pageSize.getWidth();
+  const pdfH = pdf.internal.pageSize.getHeight();
+
+  // Guardar sección activa
+  const seccionActiva = document.querySelector('.section.active')?.id?.replace('sec-','') || 'resumen';
+
+  for (let i = 0; i < secciones.length; i++) {
+    const id = secciones[i];
+    btn.textContent = `⏳ ${i+1}/${secciones.length} - ${nombres[i]}`;
+
+    // Mostrar sección
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    const sec = document.getElementById('sec-' + id);
+    if (!sec) continue;
+    sec.classList.add('active');
+
+    // Esperar a que se renderice
+    await new Promise(r => setTimeout(r, 400));
+
+    const canvas = await html2canvas(sec, {
+      scale: 1.5,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: '#F4F7F5',
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: sec.scrollWidth,
+      windowHeight: sec.scrollHeight
+    });
+
+    const imgData = canvas.toDataURL('image/jpeg', 0.92);
+    const imgW = canvas.width;
+    const imgH = canvas.height;
+    const ratio = Math.min(pdfW / imgW * 3.779527559, pdfH / imgH * 3.779527559);
+    const w = imgW * ratio / 3.779527559;
+    const h = imgH * ratio / 3.779527559;
+    const x = (pdfW - w) / 2;
+    const y = (pdfH - h) / 2;
+
+    if (i > 0) pdf.addPage();
+
+    // Header con nombre de sección
+    pdf.setFillColor(7, 124, 20);
+    pdf.rect(0, 0, pdfW, 8, 'F');
+    pdf.setTextColor(255, 255, 255);
+    pdf.setFontSize(9);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text(`MiVia & Via Compras — ${nombres[i]}`, 6, 5.5);
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(8);
+    pdf.text(`Pág. ${i+1} / ${secciones.length}`, pdfW - 6, 5.5, { align: 'right' });
+
+    pdf.addImage(imgData, 'JPEG', x, 10, w, Math.min(h, pdfH - 14));
+  }
+
+  // Restaurar sección activa
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const orig = document.getElementById('sec-' + seccionActiva);
+  if (orig) orig.classList.add('active');
+
+  pdf.save('MiVia_Dashboard.pdf');
+  btn.textContent = '↓ Exportar PDF';
+  btn.disabled = false;
+}
 
 // ── CIUDADES ──────────────────────────────────────────────
 const ciudadesMP = [{n:'Posadas',v:8},{n:'CABA',v:8},{n:'Macachin',v:3},{n:'Las Heras',v:2},{n:'Embalse',v:2},{n:'San Rafael',v:2},{n:'Merlo',v:2},{n:'Virrey del Pino',v:1},{n:'El Calafate',v:1},{n:'San Vicente',v:1}];
