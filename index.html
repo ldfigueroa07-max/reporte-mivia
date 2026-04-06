@@ -2515,20 +2515,6 @@ new Chart(document.getElementById('chartVend').getContext('2d'), {
   }
 });
 
-// ── CUOTAS CHART ──────────────────────────────────────────
-new Chart(document.getElementById('chartCuotas').getContext('2d'), {
-  type:'doughnut',
-  data:{
-    labels:['1 cuota (99.7%)','9 cuotas (0.3%)'],
-    datasets:[{ data:[99.7,0.3], backgroundColor:['#077C14','#A5D6A7'], borderWidth:0, hoverOffset:6 }]
-  },
-  options:{
-    responsive:true, maintainAspectRatio:true,
-    plugins:{ legend:{position:'bottom', labels:{font:{size:12},boxWidth:12}} },
-    cutout:'65%'
-  }
-});
-
 // ── RANKING BUILDER ───────────────────────────────────────
 function buildRanking(containerId, items, maxVal, showSecondary) {
   const c = document.getElementById(containerId);
@@ -2623,21 +2609,6 @@ const topSellData = [{n:"Coop. Profega Ltda.",v:40.91,val:"$40,9M"},{n:"Mundo Ob
 // Top Sellers — se actualiza con setPeriod
 const initTopSell = [{n:"COOPERATIVA DE TRABAJO PROFEGA",v:59.41,val:"59.4M"},{n:"MUNDO OBRA",v:8.10,val:"8.1M"},{n:"ECOTECN",v:2.22,val:"2.2M"},{n:"Petenatti Hogar VC",v:1.38,val:"1.4M"},{n:"NORTESHOPS",v:1.26,val:"1.3M"}];
 buildSellersChart(initTopSell);
-
-// ── MEDIOS DE PAGO ────────────────────────────────────────
-[{n:'Seller Center',pct:99.7,color:'#077C14',monto:'$57,2M'},{n:'Visa',pct:0.3,color:'#1565C0',monto:'$0,2M'}]
-.forEach(p => {
-  document.getElementById('mp-pagos-list').insertAdjacentHTML('beforeend',`
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-      <div style="font-size:13px;font-weight:600;color:var(--navy);width:110px;flex-shrink:0">${p.n}</div>
-      <div style="flex:1;height:28px;background:var(--g5);border-radius:6px;overflow:hidden">
-        <div style="height:100%;width:${Math.max(2,p.pct)}%;background:${p.color};border-radius:6px;display:flex;align-items:center;padding-left:10px">
-          <span style="font-size:13px;font-weight:700;color:#fff">${p.pct}%</span>
-        </div>
-      </div>
-      <div style="font-size:12px;color:var(--gray);width:55px;text-align:right">${p.monto}</div>
-    </div>`);
-});
 
 // ── P&L CHART ─────────────────────────────────────────────
 new Chart(document.getElementById('chartPL').getContext('2d'), {
@@ -2912,20 +2883,6 @@ const sprintIssues = [
 })();
 
 
-const ciudadesMP = [{n:'Posadas',v:8},{n:'CABA',v:8},{n:'Macachin',v:3},{n:'Las Heras',v:2},{n:'Embalse',v:2},{n:'San Rafael',v:2},{n:'Merlo',v:2},{n:'Virrey del Pino',v:1},{n:'El Calafate',v:1},{n:'San Vicente',v:1}];
-const maxC = 8;
-ciudadesMP.forEach((c,i) => {
-  const bg = i<2?'#077C14':i<5?'#22C55E':'#A5D6A7';
-  document.getElementById('mp-ciudades-list').insertAdjacentHTML('beforeend',`
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-      <div style="font-size:12px;font-weight:500;color:var(--navy);width:120px;flex-shrink:0;text-align:right">${c.n}</div>
-      <div style="flex:1;height:22px;background:var(--g5);border-radius:5px;overflow:hidden">
-        <div style="height:100%;width:${Math.round(c.v/maxC*100)}%;background:${bg};border-radius:5px;display:flex;align-items:center;padding-left:8px">
-          <span style="font-size:12px;font-weight:700;color:${i<5?'#fff':'#0A5E1A'}">${c.v}</span>
-        </div>
-      </div>
-    </div>`);
-});
 </script>
 </body>
 </html>
