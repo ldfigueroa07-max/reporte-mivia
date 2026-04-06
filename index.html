@@ -444,6 +444,163 @@ body {
   flex-shrink: 0;
 }
 
+/* ── CLARITY ANALYTICS ───────────────────── */
+.clarity-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.clarity-kpi {
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+.clarity-kpi-val {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--g1);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.clarity-kpi-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.clarity-charts-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.clarity-chart-box {
+  text-align: center;
+}
+.clarity-chart-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 8px;
+}
+.clarity-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+.clarity-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--gray);
+}
+.clarity-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.clarity-conversion-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+  gap: 8px;
+}
+.clarity-conv-val {
+  font-size: 52px;
+  font-weight: 700;
+  color: var(--g1);
+  line-height: 1;
+}
+.clarity-conv-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.clarity-conv-bar-wrap {
+  width: 100%;
+  height: 10px;
+  background: var(--g5);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.clarity-conv-bar {
+  height: 100%;
+  background: var(--g1);
+  border-radius: 5px;
+  transition: width .8s ease;
+}
+.clarity-conv-trend {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--g1);
+}
+
+/* ── SELLERS PODIO ───────────────────────── */
+.sellers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.sellers-podio {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.podio-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.podio-item.gold { background: #FFFDE7; border-color: #FFE082; }
+.podio-item.silver { background: #F5F5F5; border-color: #E0E0E0; }
+.podio-item.bronze { background: #FBE9E7; border-color: #FFCCBC; }
+.podio-medal { font-size: 22px; flex-shrink: 0; }
+.podio-name { font-size: 13px; font-weight: 600; color: var(--navy); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.podio-val { font-size: 14px; font-weight: 700; color: var(--g1); flex-shrink: 0; }
+.sellers-rest {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rest-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+}
+.rest-num { font-size: 16px; font-weight: 700; color: var(--muted); width: 20px; flex-shrink: 0; }
+.rest-name { font-size: 12px; font-weight: 600; color: var(--navy); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rest-val { font-size: 12px; font-weight: 700; color: var(--g1); flex-shrink: 0; }
+.sellers-chart-wrap { }
+
+@media (max-width: 800px) {
+  .clarity-kpi-row { grid-template-columns: repeat(3,1fr); gap: 8px; }
+  .clarity-kpi-val { font-size: 26px; }
+  .clarity-charts-row { grid-template-columns: 1fr; }
+  .sellers-grid { grid-template-columns: 1fr; }
+  .clarity-conv-val { font-size: 40px; }
+}
+
 /* ── JIRA SPRINT ─────────────────────────── */
 .sprint-columns {
   display: grid;
@@ -1275,28 +1432,60 @@ td.dim { color: var(--muted); }
       <button class="period-tab" onclick="setPeriodAll('anual', this)">Acumulado 2026</button>
     </div>
 
-    <div class="chart-grid wide">
-      <div class="card">
-        <div class="card-header"><span class="card-title">Top Sellers</span><span class="card-badge">Marzo 2026</span></div>
-        <div id="topSellersRank"></div>
+    <!-- ── ANALYTICS CLARITY ── -->
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-header">
+        <span class="card-title">🔍 Analytics — Vía Compras</span>
+        <span class="card-badge" id="clarity-badge">Marzo 2026</span>
       </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">Análisis</span><span class="card-badge">Métricas</span></div>
-        <div class="mp-kpi-row">
-          <div class="mp-kpi"><div class="mp-kpi-label">Ticket Prom.</div><div class="mp-kpi-val">$1.487.691</div></div>
-          <div class="mp-kpi"><div class="mp-kpi-label">Unidades</div><div class="mp-kpi-val">48</div></div>
-          <div class="mp-kpi"><div class="mp-kpi-label">Órdenes</div><div class="mp-kpi-val">41</div></div>
+
+      <!-- 3 métricas grandes -->
+      <div class="clarity-kpi-row" id="clarity-kpis">
+        <!-- se renderizan por JS -->
+      </div>
+
+      <!-- Gráficos: Usuarios + Origen + Conversión -->
+      <div class="clarity-charts-row">
+        <!-- Usuarios nuevos vs recurrentes — donut -->
+        <div class="clarity-chart-box">
+          <div class="clarity-chart-title">Usuarios</div>
+          <canvas id="chartUsuarios" height="180"></canvas>
+          <div class="clarity-chart-legend" id="legend-usuarios"></div>
         </div>
-        <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g1);margin-bottom:10px">Medio de Pago</div>
-        <div id="mp-pagos-list"></div>
-        <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g1);margin:16px 0 10px">Top Ciudades</div>
-        <div id="mp-ciudades-list"></div>
-        <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g1);margin:16px 0 10px">Distribución Cuotas</div>
-        <div id="mp-cuotas-chart-wrap">
-          <canvas id="chartCuotas" height="120"></canvas>
+        <!-- Origen de tráfico — donut -->
+        <div class="clarity-chart-box">
+          <div class="clarity-chart-title">Origen de Tráfico</div>
+          <canvas id="chartOrigen" height="180"></canvas>
+          <div class="clarity-chart-legend" id="legend-origen"></div>
+        </div>
+        <!-- Conversión a checkout — gauge visual -->
+        <div class="clarity-chart-box">
+          <div class="clarity-chart-title">Conversión a Checkout</div>
+          <div class="clarity-conversion-wrap" id="clarity-conversion">
+            <!-- se renderiza por JS -->
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- ── TOP SELLERS ── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">🏆 Top Sellers</span>
+        <span class="card-badge" id="sellers-badge">Marzo 2026</span>
+      </div>
+      <div class="sellers-grid">
+        <!-- Podio top 3 -->
+        <div class="sellers-podio" id="sellers-podio"></div>
+        <!-- Ranking 4-5 -->
+        <div class="sellers-rest" id="sellers-rest"></div>
+        <!-- Mini chart barras -->
+        <div class="sellers-chart-wrap">
+          <canvas id="chartSellers" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+
   </section>
 
   <!-- ═══ SECCIÓN: VENDEDORES ═══ -->
@@ -2129,21 +2318,12 @@ function setPeriod(p, clickedTab) {
     if (document.getElementById('locRankTitle')) document.getElementById('locRankTitle').textContent = 'Top 15 Localidades — ' + d.label;
   }
 
-  // ── Actualizar Top Sellers Marketplace ──
-  if (d.topSellers) {
-    const c = document.getElementById('topSellersRank');
-    c.innerHTML = '';
-    const mx = Math.max(...d.topSellers.map(x=>x.v));
-    d.topSellers.forEach((item,i) => {
-      const row = document.createElement('div');
-      row.className = 'seller-row';
-      row.innerHTML = `<div class="seller-rank ${i===0?'top':''}">${i+1}</div>
-        <div class="seller-name">${item.n}</div>
-        <div class="seller-bar-wrap"><div class="seller-bar" style="width:${Math.round(item.v/mx*100)}%;background:${i===0?'#077C14':'#86EFAC'}"></div></div>
-        <div class="seller-val">${item.val}</div>`;
-      c.appendChild(row);
-    });
-  }
+
+  // ── Actualizar Analytics Clarity + Top Sellers ──
+  buildClaritySection(period);
+  if (d.topSellers) buildSellersChart(d.topSellers);
+
+
 
   // ── Mostrar/ocultar Diagnóstico según período ──
   const diagSections = ['caidas','puntos'];
@@ -2442,7 +2622,7 @@ buildRanking('topLocRanking', initTopLoc, Math.max(...initTopLoc.map(d=>d.v)), f
 const topSellData = [{n:"Coop. Profega Ltda.",v:40.91,val:"$40,9M"},{n:"Mundo Obra",v:8.00,val:"$8,0M"},{n:"Petenatti Hogar VC",v:4.72,val:"$4,7M"},{n:"ECOTECN",v:4.69,val:"$4,7M"},{n:"NORTESHOPS",v:3.46,val:"$3,5M"}];
 // Top Sellers — se actualiza con setPeriod
 const initTopSell = [{n:"COOPERATIVA DE TRABAJO PROFEGA",v:59.41,val:"59.4M"},{n:"MUNDO OBRA",v:8.10,val:"8.1M"},{n:"ECOTECN",v:2.22,val:"2.2M"},{n:"Petenatti Hogar VC",v:1.38,val:"1.4M"},{n:"NORTESHOPS",v:1.26,val:"1.3M"}];
-buildRanking('topSellersRank', initTopSell, Math.max(...initTopSell.map(d=>d.v)), false);
+buildSellersChart(initTopSell);
 
 // ── MEDIOS DE PAGO ────────────────────────────────────────
 [{n:'Seller Center',pct:99.7,color:'#077C14',monto:'$57,2M'},{n:'Visa',pct:0.3,color:'#1565C0',monto:'$0,2M'}]
@@ -2584,6 +2764,113 @@ async function exportarPDF() {
 }
 
 // ── SPRINT GDMVC — datos desde Jira ──────────────────────
+// ── CLARITY ANALYTICS DATA ───────────────────────────────
+const clarityData = {
+  ene: {
+    nuevos: 84.6, recurrentes: 15.4,
+    origen: { Referral: 45.5, 'Búsqueda orgánica': 26.8, Directo: 19.1, Pauta: 8.2, Social: 0.3 },
+    conversion: 1.88, sessions: 28863
+  },
+  feb: {
+    nuevos: 77.8, recurrentes: 22.2,
+    origen: { Referral: 41.5, 'Búsqueda orgánica': 26.2, Directo: 22.4, Pauta: 8.5, Social: 0.3 },
+    conversion: 2.46, sessions: 16998
+  },
+  mar: {
+    nuevos: 82.7, recurrentes: 17.3,
+    origen: { Referral: 45.8, 'Búsqueda orgánica': 25.2, Directo: 21.6, Pauta: 6.8, Social: 0.4 },
+    conversion: 2.75, sessions: 14967
+  },
+  q1: {
+    nuevos: 82.0, recurrentes: 18.0,
+    origen: { Referral: 44.2, 'Búsqueda orgánica': 26.0, Directo: 21.0, Pauta: 7.8, Social: 0.3 },
+    conversion: 2.36, sessions: 60828
+  },
+  anual: {
+    nuevos: 82.0, recurrentes: 18.0,
+    origen: { Referral: 44.2, 'Búsqueda orgánica': 26.0, Directo: 21.0, Pauta: 7.8, Social: 0.3 },
+    conversion: 2.36, sessions: 60828
+  }
+};
+const clarityColors = { Referral:'#077C14', 'Búsqueda orgánica':'#22C55E', Directo:'#86EFAC', Pauta:'#1565C0', Social:'#F57F17' };
+let chartUsuariosInst=null, chartOrigenInst=null, chartSellersInst=null;
+
+function buildClaritySection(period) {
+  const d = clarityData[period] || clarityData.mar;
+  const labelMap = { ene:'Enero 2026', feb:'Febrero 2026', mar:'Marzo 2026', q1:'Q1 2026', anual:'Acumulado 2026' };
+  const badge = document.getElementById('clarity-badge');
+  if (badge) badge.textContent = labelMap[period] || 'Marzo 2026';
+  const sellBadge = document.getElementById('sellers-badge');
+  if (sellBadge) sellBadge.textContent = labelMap[period] || 'Marzo 2026';
+
+  const kpisEl = document.getElementById('clarity-kpis');
+  if (kpisEl) kpisEl.innerHTML = `
+    <div class="clarity-kpi"><div class="clarity-kpi-val">${d.sessions.toLocaleString('es-AR')}</div><div class="clarity-kpi-label">Sesiones</div></div>
+    <div class="clarity-kpi"><div class="clarity-kpi-val">${d.nuevos}%</div><div class="clarity-kpi-label">Usuarios Nuevos</div></div>
+    <div class="clarity-kpi"><div class="clarity-kpi-val" style="color:var(--blue)">${d.conversion}%</div><div class="clarity-kpi-label">Conversión Checkout</div></div>`;
+
+  const ctxU = document.getElementById('chartUsuarios');
+  if (ctxU) {
+    if (chartUsuariosInst) chartUsuariosInst.destroy();
+    chartUsuariosInst = new Chart(ctxU.getContext('2d'), {
+      type:'doughnut',
+      data:{ labels:['Nuevos','Recurrentes'], datasets:[{ data:[d.nuevos,d.recurrentes], backgroundColor:['#077C14','#86EFAC'], borderWidth:0, hoverOffset:4 }] },
+      options:{ cutout:'70%', plugins:{ legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.parsed}%`}} } }
+    });
+    document.getElementById('legend-usuarios').innerHTML =
+      `<div class="clarity-legend-item"><div class="clarity-legend-dot" style="background:#077C14"></div>Nuevos ${d.nuevos}%</div>
+       <div class="clarity-legend-item"><div class="clarity-legend-dot" style="background:#86EFAC"></div>Recurrentes ${d.recurrentes}%</div>`;
+  }
+
+  const ctxO = document.getElementById('chartOrigen');
+  if (ctxO) {
+    if (chartOrigenInst) chartOrigenInst.destroy();
+    const labels=Object.keys(d.origen), vals=Object.values(d.origen), colors=labels.map(l=>clarityColors[l]||'#ccc');
+    chartOrigenInst = new Chart(ctxO.getContext('2d'), {
+      type:'doughnut',
+      data:{ labels, datasets:[{ data:vals, backgroundColor:colors, borderWidth:0, hoverOffset:4 }] },
+      options:{ cutout:'70%', plugins:{ legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.parsed}%`}} } }
+    });
+    document.getElementById('legend-origen').innerHTML = labels.map((l,i)=>
+      `<div class="clarity-legend-item"><div class="clarity-legend-dot" style="background:${colors[i]}"></div>${l} ${vals[i]}%</div>`).join('');
+  }
+
+  const convEl = document.getElementById('clarity-conversion');
+  if (convEl) {
+    const trend = period==='feb'?'▲ vs Enero':period==='mar'?'▲ vs Febrero':period==='q1'?'Q1 promedio':'';
+    convEl.innerHTML = `
+      <div class="clarity-conv-val">${d.conversion}%</div>
+      <div class="clarity-conv-label">llegan al checkout</div>
+      <div class="clarity-conv-bar-wrap" style="width:80%"><div class="clarity-conv-bar" style="width:${Math.min(d.conversion*10,100)}%"></div></div>
+      ${trend?`<div class="clarity-conv-trend">${trend}</div>`:''}`;
+  }
+}
+
+function buildSellersChart(sellers) {
+  const podioEl = document.getElementById('sellers-podio');
+  const medals=['🥇','🥈','🥉'], podioClasses=['gold','silver','bronze'];
+  if (podioEl) podioEl.innerHTML = sellers.slice(0,3).map((s,i)=>`
+    <div class="podio-item ${podioClasses[i]}"><div class="podio-medal">${medals[i]}</div><div class="podio-name">${s.n}</div><div class="podio-val">${s.val}</div></div>`).join('');
+
+  const restEl = document.getElementById('sellers-rest');
+  if (restEl) restEl.innerHTML = sellers.slice(3,5).map((s,i)=>`
+    <div class="rest-item"><div class="rest-num">${i+4}</div><div class="rest-name">${s.n}</div><div class="rest-val">${s.val}</div></div>`).join('');
+
+  const ctxS = document.getElementById('chartSellers');
+  if (ctxS) {
+    if (chartSellersInst) chartSellersInst.destroy();
+    chartSellersInst = new Chart(ctxS.getContext('2d'), {
+      type:'bar',
+      data:{ labels:sellers.map(s=>s.n.split(' ')[0]), datasets:[{ data:sellers.map(s=>s.v), backgroundColor:sellers.map((_,i)=>i===0?'#077C14':i<3?'#22C55E':'#86EFAC'), borderRadius:6 }] },
+      options:{ responsive:true, plugins:{ legend:{display:false}, tooltip:{callbacks:{label:ctx=>` $${ctx.parsed.y}M`}} },
+        scales:{ x:{grid:{display:false},ticks:{font:{size:10}}}, y:{grid:{color:'#E8F5E9'},ticks:{callback:v=>'$'+v+'M',font:{size:10}}} } }
+    });
+  }
+}
+
+buildClaritySection('mar');
+
+// ── SPRINT GDMVC ──────────────────────────────────────────
 const sprintIssues = [
   // BACKLOG
   { key:'GDMVC-25', title:'Agregar link de capacitación en MiVia', cat:'todo' },
