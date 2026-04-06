@@ -762,6 +762,7 @@ td.dim { color: var(--muted); }
   .topbar { padding: 0 16px; gap: 10px; }
   .topbar-actions { display: none; }
   .mp-kpi-row { grid-template-columns: 1fr 1fr; }
+  .mp-kpi-header { grid-template-columns: 1fr 1fr !important; }
   .vend-totals-row { flex-direction: column; }
 
   /* Period tabs — scroll horizontal en mobile */
@@ -1154,7 +1155,7 @@ td.dim { color: var(--muted); }
   <section class="section" id="sec-marketplace">
     <div class="section-title">Marketplace Vía Compras</div>
     <div class="section-sub">Ventas, sellers y análisis — Marzo 2026</div>
-    <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi-grid mp-kpi-header" style="grid-template-columns:repeat(4,1fr)">
       <div class="kpi"><div class="kpi-icon">📈</div><div class="kpi-label" id="mpLabel1">Ventas Mar 2026</div><div class="kpi-value" id="mpVal1">$74.4M</div><div class="kpi-tags"><span class="kpi-tag neutral">mes actual</span></div></div>
       <div class="kpi"><div class="kpi-icon">📅</div><div class="kpi-label">Ventas Feb 2026</div><div class="kpi-value">$48,3M</div><div class="kpi-tags"><span class="kpi-tag up">▲ +17,4% vs Ene</span></div></div>
       <div class="kpi"><div class="kpi-icon">📅</div><div class="kpi-label">Ventas Ene 2026</div><div class="kpi-value">$20,5M</div><div class="kpi-tags"><span class="kpi-tag up">▲ +148% vs Dic</span></div></div>
