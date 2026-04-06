@@ -2319,9 +2319,12 @@ function setPeriod(p, clickedTab) {
   }
 
 
-  // ── Actualizar Analytics Clarity + Top Sellers ──
-  buildClaritySection(period);
-  if (d.topSellers) buildSellersChart(d.topSellers);
+  // ── Actualizar Analytics Clarity + Top Sellers (solo si marketplace está visible) ──
+  const mpSection = document.getElementById('sec-marketplace');
+  if (mpSection && mpSection.classList.contains('active')) {
+    buildClaritySection(period);
+    if (d.topSellers) buildSellersChart(d.topSellers);
+  }
 
 
 
@@ -2374,7 +2377,6 @@ function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.sidebar .nav-item, .mobile-nav .nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('sec-' + id).classList.add('active');
-  // Marcar activo en sidebar y mobile nav
   document.querySelectorAll('.sidebar .nav-item, .mobile-nav .nav-item').forEach(item => {
     if(item.getAttribute('onclick') && item.getAttribute('onclick').includes("'" + id + "'")) {
       item.classList.add('active');
@@ -2382,6 +2384,17 @@ function showSection(id) {
   });
   document.getElementById('topbar-title').textContent = titles[id];
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Re-render marketplace charts cuando la sección se hace visible
+  if (id === 'marketplace') {
+    setTimeout(() => {
+      const activePeriod = document.querySelector('#periodTabsMP .period-tab.active');
+      const period = activePeriod ? activePeriod.getAttribute('onclick').match(/'(\w+)'/)?.[1] : 'mar';
+      buildClaritySection(period || 'mar');
+      const d = PERIODOS[period || 'mar'];
+      if (d && d.topSellers) buildSellersChart(d.topSellers);
+    }, 50);
+  }
 }
 
 // ── CHART DEFAULTS ───────────────────────────────────────
@@ -2608,7 +2621,7 @@ buildRanking('topLocRanking', initTopLoc, Math.max(...initTopLoc.map(d=>d.v)), f
 const topSellData = [{n:"Coop. Profega Ltda.",v:40.91,val:"$40,9M"},{n:"Mundo Obra",v:8.00,val:"$8,0M"},{n:"Petenatti Hogar VC",v:4.72,val:"$4,7M"},{n:"ECOTECN",v:4.69,val:"$4,7M"},{n:"NORTESHOPS",v:3.46,val:"$3,5M"}];
 // Top Sellers — se actualiza con setPeriod
 const initTopSell = [{n:"COOPERATIVA DE TRABAJO PROFEGA",v:59.41,val:"59.4M"},{n:"MUNDO OBRA",v:8.10,val:"8.1M"},{n:"ECOTECN",v:2.22,val:"2.2M"},{n:"Petenatti Hogar VC",v:1.38,val:"1.4M"},{n:"NORTESHOPS",v:1.26,val:"1.3M"}];
-buildSellersChart(initTopSell);
+// No inicializar acá — se renderiza cuando se muestra la sección marketplace
 
 // ── P&L CHART ─────────────────────────────────────────────
 new Chart(document.getElementById('chartPL').getContext('2d'), {
@@ -2839,7 +2852,7 @@ function buildSellersChart(sellers) {
   }
 }
 
-buildClaritySection('mar');
+// Clarity y Sellers se inicializan en showSection('marketplace')
 
 // ── SPRINT GDMVC ──────────────────────────────────────────
 const sprintIssues = [
@@ -2867,19 +2880,30 @@ const sprintIssues = [
 
 
 (function buildSprint() {
-  const containers = { todo: document.getElementById('sprint-todo'), inprogress: document.getElementById('sprint-inprogress'), done: document.getElementById('sprint-done') };
-  const counts = { todo: 0, inprogress: 0, done: 0 };
-  sprintIssues.forEach(issue => {
-    counts[issue.cat]++;
-    const div = document.createElement('div');
-    div.className = 'sprint-issue';
-    div.innerHTML = `<div class="sprint-issue-key">${issue.key}</div><div class="sprint-issue-title">${issue.title}</div>`;
-    containers[issue.cat].appendChild(div);
-  });
-  ['todo','inprogress','done'].forEach(cat => {
-    document.getElementById('badge-' + cat).textContent = counts[cat];
-    document.getElementById('sprint-count-' + cat).textContent = counts[cat];
-  });
+  function run() {
+    const containers = { todo: document.getElementById('sprint-todo'), inprogress: document.getElementById('sprint-inprogress'), done: document.getElementById('sprint-done') };
+    if (!containers.todo) return;
+    const counts = { todo: 0, inprogress: 0, done: 0 };
+    sprintIssues.forEach(issue => {
+      if (!containers[issue.cat]) return;
+      counts[issue.cat]++;
+      const div = document.createElement('div');
+      div.className = 'sprint-issue';
+      div.innerHTML = `<div class="sprint-issue-key">${issue.key}</div><div class="sprint-issue-title">${issue.title}</div>`;
+      containers[issue.cat].appendChild(div);
+    });
+    ['todo','inprogress','done'].forEach(cat => {
+      const badge = document.getElementById('badge-' + cat);
+      const count = document.getElementById('sprint-count-' + cat);
+      if (badge) badge.textContent = counts[cat];
+      if (count) count.textContent = counts[cat];
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
 })();
 
 
