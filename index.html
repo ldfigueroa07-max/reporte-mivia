@@ -396,6 +396,54 @@ body {
 .caida-flow { font-size: 12px; color: var(--gray); margin-bottom: 3px; }
 .caida-causa { font-size: 11.5px; color: var(--muted); font-style: italic; }
 
+/* ── SELLER RANKING ──────────────────────── */
+.seller-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.seller-row:last-child { border-bottom: none; }
+.seller-rank {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--muted);
+  width: 24px;
+  flex-shrink: 0;
+}
+.seller-rank.top { color: var(--g1); }
+.seller-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.seller-bar-wrap {
+  flex: 1;
+  height: 10px;
+  background: var(--g5);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.seller-bar {
+  height: 100%;
+  border-radius: 5px;
+  transition: width .8s cubic-bezier(.4,0,.2,1);
+}
+.seller-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  width: 70px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
 /* ── CANAL PILLS ─────────────────────────── */
 .canal-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
 .canal-pill {
@@ -760,9 +808,9 @@ td.dim { color: var(--muted); }
   .mp-card-val { font-size: 20px; }
   .mp-card-label { font-size: 9px; }
   .seller-bar-wrap { display: none; }
-  .seller-name { font-size: 11px; }
-  .seller-val { font-size: 11px; width: 58px; }
-  .seller-rank { font-size: 16px; width: 20px; }
+  .seller-name { font-size: 12px; }
+  .seller-val { font-size: 12px; width: 58px; }
+  .seller-rank { font-size: 14px; width: 18px; }
 
   /* MP análisis — grid de métricas en 1 col */
   .mp-kpi { padding: 10px 12px; }
