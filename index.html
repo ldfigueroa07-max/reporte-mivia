@@ -444,7 +444,106 @@ body {
   flex-shrink: 0;
 }
 
-/* ── CANAL PILLS ─────────────────────────── */
+/* ── JIRA SPRINT ─────────────────────────── */
+.sprint-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 8px;
+}
+.sprint-col {
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  padding: 16px;
+}
+.sprint-col-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.sprint-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.sprint-col.todo .sprint-col-title { color: var(--muted); }
+.sprint-col.inprogress .sprint-col-title { color: var(--amber); }
+.sprint-col.done .sprint-col-title { color: var(--g1); }
+.sprint-col-count {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+.sprint-col.todo .sprint-col-count { background: #F0F0F0; color: var(--gray); }
+.sprint-col.inprogress .sprint-col-count { background: #FFF8E1; color: #E65100; }
+.sprint-col.done .sprint-col-count { background: var(--g5); color: var(--g3); }
+.sprint-issue {
+  padding: 10px 12px;
+  background: var(--bg);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  border-left: 3px solid var(--border);
+  cursor: default;
+  transition: box-shadow .15s;
+}
+.sprint-col.inprogress .sprint-issue { border-left-color: var(--amber); }
+.sprint-col.done .sprint-issue { border-left-color: var(--g2); }
+.sprint-issue:hover { box-shadow: var(--shadow-sm); }
+.sprint-issue-key {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: .5px;
+  margin-bottom: 4px;
+}
+.sprint-issue-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--navy);
+  line-height: 1.4;
+}
+.sprint-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.sprint-stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  text-align: center;
+}
+.sprint-stat-val {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.sprint-stat.todo .sprint-stat-val { color: var(--muted); }
+.sprint-stat.inprogress .sprint-stat-val { color: var(--amber); }
+.sprint-stat.done .sprint-stat-val { color: var(--g1); }
+.sprint-stat-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@media (max-width: 800px) {
+  .sprint-columns { grid-template-columns: 1fr; }
+  .sprint-summary { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .sprint-stat-val { font-size: 28px; }
+}
+
+
 .canal-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
 .canal-pill {
   background: var(--surface);
@@ -904,6 +1003,10 @@ td.dim { color: var(--muted); }
     <button class="nav-item" onclick="showSection('puntos')">
       <span class="nav-icon">⚡</span> Puntos Clave
     </button>
+    <div class="nav-section">Tech</div>
+    <button class="nav-item" onclick="showSection('sprint')">
+      <span class="nav-icon">🎯</span> Sprint VC
+    </button>
   </nav>
   <div class="sidebar-footer">
     <div class="update-badge">
@@ -950,6 +1053,8 @@ td.dim { color: var(--muted); }
       <div class="nav-section">Diagnóstico</div>
       <button class="nav-item" onclick="showSection('caidas');toggleMobileMenu()"><span class="nav-icon">📉</span> Análisis de Caídas</button>
       <button class="nav-item" onclick="showSection('puntos');toggleMobileMenu()"><span class="nav-icon">⚡</span> Puntos Clave</button>
+      <div class="nav-section">Tech</div>
+      <button class="nav-item" onclick="showSection('sprint');toggleMobileMenu()"><span class="nav-icon">🎯</span> Sprint VC</button>
     </nav>
     <div class="mobile-menu-footer">
       <div class="update-badge">
@@ -1453,6 +1558,53 @@ td.dim { color: var(--muted); }
       <div class="punto"><div class="punto-ico">💹</div><div class="punto-txt">Recargas crecieron <strong>x175 por encima de la inflación</strong>. IPC acumuló +230% vs +40.000% de recargas.</div></div>
       <div class="punto"><div class="punto-ico">👥</div><div class="punto-txt"><strong>151 vendedores</strong> dados de alta en 2026 (Ene–Mar). <strong>34 en marzo</strong>, acelerando el onboarding.</div></div>
       <div class="punto"><div class="punto-ico">💰</div><div class="punto-txt">Ingreso marginal de <strong>$679.518</strong> en comisiones — 17 transacciones cruzadas con guías del Marketplace.</div></div>
+    </div>
+  </section>
+
+  <!-- ═══ SECCIÓN: SPRINT GDM ═══ -->
+  <section class="section" id="sec-sprint">
+    <div class="section-title">Sprint — Gestión de Mejoras Vía Compras</div>
+    <div class="section-sub">Issues proyecto GDMVC · ViaBariloche · Actualizado hoy</div>
+
+    <!-- Resumen KPIs -->
+    <div class="sprint-summary">
+      <div class="sprint-stat todo">
+        <div class="sprint-stat-val" id="sprint-count-todo">0</div>
+        <div class="sprint-stat-label">Backlog</div>
+      </div>
+      <div class="sprint-stat inprogress">
+        <div class="sprint-stat-val" id="sprint-count-inprogress">0</div>
+        <div class="sprint-stat-label">En Curso</div>
+      </div>
+      <div class="sprint-stat done">
+        <div class="sprint-stat-val" id="sprint-count-done">0</div>
+        <div class="sprint-stat-label">Cerrados</div>
+      </div>
+    </div>
+
+    <!-- Columnas kanban -->
+    <div class="sprint-columns">
+      <div class="sprint-col todo">
+        <div class="sprint-col-header">
+          <span class="sprint-col-title">📋 Backlog</span>
+          <span class="sprint-col-count" id="badge-todo">0</span>
+        </div>
+        <div id="sprint-todo"></div>
+      </div>
+      <div class="sprint-col inprogress">
+        <div class="sprint-col-header">
+          <span class="sprint-col-title">🔄 En Desarrollo</span>
+          <span class="sprint-col-count" id="badge-inprogress">0</span>
+        </div>
+        <div id="sprint-inprogress"></div>
+      </div>
+      <div class="sprint-col done">
+        <div class="sprint-col-header">
+          <span class="sprint-col-title">✅ Cerrados</span>
+          <span class="sprint-col-count" id="badge-done">0</span>
+        </div>
+        <div id="sprint-done"></div>
+      </div>
     </div>
   </section>
 
@@ -2431,7 +2583,48 @@ async function exportarPDF() {
   btn.disabled = false;
 }
 
-// ── CIUDADES ──────────────────────────────────────────────
+// ── SPRINT GDMVC — datos desde Jira ──────────────────────
+const sprintIssues = [
+  // BACKLOG
+  { key:'GDMVC-25', title:'Agregar link de capacitación en MiVia', cat:'todo' },
+  { key:'GDMVC-24', title:'Pago Destino en MiVia', cat:'todo' },
+  { key:'GDMVC-23', title:'MiVia - Quickcomm Logística Inversa', cat:'todo' },
+  { key:'GDMVC-22', title:'SKUs de LA PLANCHETTA - Desaparecen las categorías', cat:'todo' },
+  { key:'GDMVC-21', title:'Validar con front-end que sellers no puedan modificar credenciales de VíaCargo', cat:'todo' },
+  { key:'GDMVC-19', title:'Órdenes en estado "Tarde"', cat:'todo' },
+  { key:'GDMVC-18', title:'Recarga automatizada de saldos', cat:'todo' },
+  { key:'GDMVC-16', title:'Usuario Agustina Guerra - Permisos de Notificaciones', cat:'todo' },
+  { key:'GDMVC-15', title:'No funciona el FLOW', cat:'todo' },
+  { key:'GDMVC-14', title:'No aparecen las cuotas en mail y vTex', cat:'todo' },
+  { key:'GDMVC-13', title:'Órdenes que no se ven en MiVía', cat:'todo' },
+  { key:'GDMVC-12', title:'Agregar botón para traer modificaciones en guías', cat:'todo' },
+  { key:'GDMVC-11', title:'Modificar zona horaria de las órdenes', cat:'todo' },
+  // EN CURSO
+  { key:'GDMVC-20', title:'Hacer coincidir nomenclaturas de estados con vTex', cat:'inprogress' },
+  // CERRADOS
+  { key:'GDMVC-9',  title:'Estados de las guías en Tiendanube', cat:'done' },
+  { key:'GDMVC-8',  title:'Estados de las guías en Tiendanube (v2)', cat:'done' },
+  { key:'GDMVC-7',  title:'Generar mejora para APP de Tiendanube — tracking Fulfillment', cat:'done' },
+];
+
+
+(function buildSprint() {
+  const containers = { todo: document.getElementById('sprint-todo'), inprogress: document.getElementById('sprint-inprogress'), done: document.getElementById('sprint-done') };
+  const counts = { todo: 0, inprogress: 0, done: 0 };
+  sprintIssues.forEach(issue => {
+    counts[issue.cat]++;
+    const div = document.createElement('div');
+    div.className = 'sprint-issue';
+    div.innerHTML = `<div class="sprint-issue-key">${issue.key}</div><div class="sprint-issue-title">${issue.title}</div>`;
+    containers[issue.cat].appendChild(div);
+  });
+  ['todo','inprogress','done'].forEach(cat => {
+    document.getElementById('badge-' + cat).textContent = counts[cat];
+    document.getElementById('sprint-count-' + cat).textContent = counts[cat];
+  });
+})();
+
+
 const ciudadesMP = [{n:'Posadas',v:8},{n:'CABA',v:8},{n:'Macachin',v:3},{n:'Las Heras',v:2},{n:'Embalse',v:2},{n:'San Rafael',v:2},{n:'Merlo',v:2},{n:'Virrey del Pino',v:1},{n:'El Calafate',v:1},{n:'San Vicente',v:1}];
 const maxC = 8;
 ciudadesMP.forEach((c,i) => {
