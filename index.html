@@ -2319,12 +2319,11 @@ function setPeriod(p, clickedTab) {
   }
 
 
-  // ── Actualizar Analytics Clarity + Top Sellers (solo si marketplace está visible) ──
-  const mpSection = document.getElementById('sec-marketplace');
-  if (mpSection && mpSection.classList.contains('active')) {
+  // ── Actualizar Analytics Clarity + Top Sellers ──
+  setTimeout(() => {
     buildClaritySection(period);
     if (d.topSellers) buildSellersChart(d.topSellers);
-  }
+  }, 50);
 
 
 
@@ -2388,10 +2387,8 @@ function showSection(id) {
   // Re-render marketplace charts cuando la sección se hace visible
   if (id === 'marketplace') {
     setTimeout(() => {
-      const activePeriod = document.querySelector('#periodTabsMP .period-tab.active');
-      const period = activePeriod ? activePeriod.getAttribute('onclick').match(/'(\w+)'/)?.[1] : 'mar';
-      buildClaritySection(period || 'mar');
-      const d = PERIODOS[period || 'mar'];
+      buildClaritySection(currentPeriod);
+      const d = PERIODOS[currentPeriod];
       if (d && d.topSellers) buildSellersChart(d.topSellers);
     }, 50);
   }
