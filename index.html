@@ -1168,7 +1168,7 @@ td.dim { color: var(--muted); }
   <div class="sidebar-footer">
     <div class="update-badge">
       <div class="update-label">Última actualización</div>
-      <div class="update-date"><span class="update-dot"></span>06 Apr 2026</div>
+      <div class="update-date"><span class="update-dot"></span>07 Apr 2026</div>
     </div>
   </div>
 </aside>
@@ -1907,7 +1907,7 @@ const PERIODOS = {
     showDiag: true,
   },
   mar: {
-    label: 'Marzo 2026', sub: 'Datos al 06 Apr 2026',
+    label: 'Marzo 2026', sub: 'Datos al 07 Apr 2026',
     rec: { val: '$409.2M', v1: '▲ 23.2pct vs Febrero', v2: '▲ 85.2pct vs Mar 2025', up1: true, up2: true },
     mp:  { val: '$74.4M', v1: '▲ vs Feb: $56,7M', v2: '50 órdenes · 60 unds', up1: true, up2: false },
     ing: { val: '$787.443', v1: 'Comisiones Marzo 2026', v2: '14 transacciones', up1: false, up2: false },
@@ -2684,11 +2684,18 @@ async function exportarPDF() {
     const id = secciones[i];
     btn.textContent = `⏳ ${i+1}/${secciones.length} - ${nombres[i]}`;
 
-    // Mostrar sección
+    // Mostrar sección y forzar fondo blanco para PDF
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     const sec = document.getElementById('sec-' + id);
     if (!sec) continue;
     sec.classList.add('active');
+
+    // Forzar fondos blancos — html2canvas no resuelve bien CSS variables
+    sec.style.background = '#ffffff';
+    document.querySelectorAll('.card, .kpi, .canal-pill, .ipc-card, .sprint-col, .sprint-stat, .podio-item, .rest-item, .clarity-kpi').forEach(el => {
+      el.dataset.origBg = el.style.background;
+      el.style.background = el.style.background || '#ffffff';
+    });
 
     // Esperar a que se renderice
     await new Promise(r => setTimeout(r, 400));
@@ -2697,11 +2704,31 @@ async function exportarPDF() {
       scale: 1.5,
       useCORS: true,
       allowTaint: true,
-      backgroundColor: '#F4F7F5',
+      backgroundColor: '#ffffff',
       scrollX: 0,
       scrollY: 0,
       windowWidth: sec.scrollWidth,
-      windowHeight: sec.scrollHeight
+      windowHeight: sec.scrollHeight,
+      onclone: (doc) => {
+        // En el clon, reemplazar todas las variables CSS por valores concretos
+        const clonedSec = doc.getElementById('sec-' + id);
+        if (clonedSec) {
+          clonedSec.style.background = '#ffffff';
+          clonedSec.querySelectorAll('*').forEach(el => {
+            const bg = window.getComputedStyle(el).backgroundColor;
+            if (bg && bg !== 'rgba(0, 0, 0, 0)') el.style.backgroundColor = bg;
+            const color = window.getComputedStyle(el).color;
+            if (color) el.style.color = color;
+          });
+        }
+      }
+    });
+
+    // Restaurar fondos originales
+    sec.style.background = '';
+    document.querySelectorAll('.card, .kpi, .canal-pill, .ipc-card, .sprint-col, .sprint-stat, .podio-item, .rest-item, .clarity-kpi').forEach(el => {
+      el.style.background = el.dataset.origBg || '';
+      delete el.dataset.origBg;
     });
 
     const imgData = canvas.toDataURL('image/jpeg', 0.92);
@@ -2848,26 +2875,6 @@ function buildSellersChart(sellers) {
 
 // ── SPRINT GDMVC ──────────────────────────────────────────
 const sprintIssues = [
-  // BACKLOG
-  { key:'GDMVC-25', title:'Agregar link de capacitación en MiVia', cat:'todo' },
-  { key:'GDMVC-24', title:'Pago Destino en MiVia', cat:'todo' },
-  { key:'GDMVC-23', title:'MiVia - Quickcomm Logística Inversa', cat:'todo' },
-  { key:'GDMVC-22', title:'SKUs de LA PLANCHETTA - Desaparecen las categorías', cat:'todo' },
-  { key:'GDMVC-21', title:'Validar con front-end que sellers no puedan modificar credenciales de VíaCargo', cat:'todo' },
-  { key:'GDMVC-19', title:'Órdenes en estado "Tarde"', cat:'todo' },
-  { key:'GDMVC-18', title:'Recarga automatizada de saldos', cat:'todo' },
-  { key:'GDMVC-16', title:'Usuario Agustina Guerra - Permisos de Notificaciones', cat:'todo' },
-  { key:'GDMVC-15', title:'No funciona el FLOW', cat:'todo' },
-  { key:'GDMVC-14', title:'No aparecen las cuotas en mail y vTex', cat:'todo' },
-  { key:'GDMVC-13', title:'Órdenes que no se ven en MiVía', cat:'todo' },
-  { key:'GDMVC-12', title:'Agregar botón para traer modificaciones en guías', cat:'todo' },
-  { key:'GDMVC-11', title:'Modificar zona horaria de las órdenes', cat:'todo' },
-  // EN CURSO
-  { key:'GDMVC-20', title:'Hacer coincidir nomenclaturas de estados con vTex', cat:'inprogress' },
-  // CERRADOS
-  { key:'GDMVC-9',  title:'Estados de las guías en Tiendanube', cat:'done' },
-  { key:'GDMVC-8',  title:'Estados de las guías en Tiendanube (v2)', cat:'done' },
-  { key:'GDMVC-7',  title:'Generar mejora para APP de Tiendanube — tracking Fulfillment', cat:'done' },
 ];
 
 
