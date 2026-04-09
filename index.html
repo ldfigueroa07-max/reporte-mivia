@@ -1690,9 +1690,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <!-- KPIs gestión comercial -->
     <div class="vend-totals-row">
-      <div class="vend-total"><div class="vend-year">2024</div><div class="vend-num">0</div><div class="vend-sub">Mar–Dic</div></div>
-      <div class="vend-total"><div class="vend-year">2025</div><div class="vend-num">0</div><div class="vend-sub">Año completo</div></div>
-      <div class="vend-total active"><div class="vend-year">2026*</div><div class="vend-num">0</div><div class="vend-sub">Ene–Mar</div></div>
+      <div class="vend-total"><div class="vend-year">2024</div><div class="vend-num">98</div><div class="vend-sub">Mar–Dic</div></div>
+      <div class="vend-total"><div class="vend-year">2025</div><div class="vend-num">393</div><div class="vend-sub">Año completo</div></div>
+      <div class="vend-total active"><div class="vend-year">2026*</div><div class="vend-num">156</div><div class="vend-sub">Ene–Mar</div></div>
     </div>
 
     <!-- KPIs gestión comercial mes actual -->
@@ -1700,13 +1700,13 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="kpi">
         <div class="kpi-icon">📋</div>
         <div class="kpi-label">Altas MiVia — Mes</div>
-        <div class="kpi-value">0</div>
+        <div class="kpi-value">38</div>
         <div class="kpi-tags"><span class="kpi-tag neutral">vendedores activos</span></div>
       </div>
       <div class="kpi">
         <div class="kpi-icon">🛒</div>
         <div class="kpi-label">Altas Vía Compras — Mes</div>
-        <div class="kpi-value">0</div>
+        <div class="kpi-value">17</div>
         <div class="kpi-tags"><span class="kpi-tag neutral">con SKU publicado</span></div>
       </div>
       <div class="kpi amber">
@@ -1733,7 +1733,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <tbody>
           <tr><td class="year-cell">2024</td><td class="dim">—</td><td class="dim">—</td><td>4</td><td>6</td><td>53</td><td>5</td><td>6</td><td>5</td><td>3</td><td>1</td><td>4</td><td>11</td><td class="highlight">98</td></tr>
           <tr><td class="year-cell">2025</td><td>9</td><td>22</td><td>35</td><td>30</td><td>31</td><td>29</td><td>28</td><td>52</td><td>46</td><td>42</td><td>41</td><td>28</td><td class="highlight">393</td></tr>
-          <tr><td class="year-cell">2026*</td><td>49</td><td>68</td><td class="highlight">0</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="highlight">0</td></tr>
+          <tr><td class="year-cell">2026*</td><td>49</td><td>68</td><td class="highlight">38</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="highlight">156</td></tr>
         </tbody>
       </table>
     </div>
@@ -2747,11 +2747,11 @@ new Chart(document.getElementById('chartEnv').getContext('2d'), {
 });
 
 // ── VENDEDORES CHART ──────────────────────────────────────
-const vendLabels  = [];
-const vendMiVia   = [];
-const vendVC      = [];
-const altasMiVia  = 0;
-const altasVC     = 0;
+const vendLabels  = ["Mar24", "Abr24", "May24", "Jun24", "Jul24", "Ago24", "Sep24", "Oct24", "Nov24", "Dic24", "Ene25", "Feb25", "Mar25", "Abr25", "May25", "Jun25", "Jul25", "Ago25", "Sep25", "Oct25", "Nov25", "Dic25", "Ene26", "Feb26", "Mar26", "Abr26"];
+const vendMiVia   = [4, 6, 53, 5, 6, 5, 3, 1, 4, 11, 9, 22, 35, 30, 31, 29, 28, 52, 46, 42, 41, 28, 49, 68, 38, 1];
+const vendVC      = [0, 1, 3, 0, 2, 1, 0, 0, 1, 6, 1, 1, 4, 1, 1, 1, 6, 5, 10, 6, 8, 10, 10, 39, 17, 0];
+const altasMiVia  = 38;
+const altasVC     = 17;
 
 // Tasa de conversión
 const tasaVC = altasMiVia > 0 ? Math.round(altasVC / altasMiVia * 100) : 0;
