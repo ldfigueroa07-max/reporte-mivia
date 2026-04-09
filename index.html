@@ -1610,10 +1610,10 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="section-title">Marketplace Vía Compras</div>
     <div class="section-sub">Ventas, sellers y análisis — Marzo 2026</div>
     <div class="kpi-grid mp-kpi-header" style="grid-template-columns:repeat(4,1fr)">
-      <div class="kpi"><div class="kpi-icon">📈</div><div class="kpi-label" id="mpLabel1">Ventas Mar 2026</div><div class="kpi-value" id="mpVal1">$74.4M</div><div class="kpi-tags"><span class="kpi-tag neutral">mes actual</span></div></div>
-      <div class="kpi"><div class="kpi-icon">📅</div><div class="kpi-label">Ventas Feb 2026</div><div class="kpi-value">$48,3M</div><div class="kpi-tags"><span class="kpi-tag up">▲ +17,4% vs Ene</span></div></div>
-      <div class="kpi"><div class="kpi-icon">📅</div><div class="kpi-label">Ventas Ene 2026</div><div class="kpi-value">$20,5M</div><div class="kpi-tags"><span class="kpi-tag up">▲ +148% vs Dic</span></div></div>
-      <div class="kpi"><div class="kpi-icon">💹</div><div class="kpi-label" id="mpLabel2">Total 2026</div><div class="kpi-value" id="mpVal2">$125,5M</div><div class="kpi-tags"><span class="kpi-tag neutral">Ene + Feb + Mar</span></div></div>
+      <div class="kpi"><div class="kpi-icon">📈</div><div class="kpi-label" id="mpKpiLabel1">Ventas Marzo 2026</div><div class="kpi-value" id="mpKpiVal1">$74.4M</div><div class="kpi-tags"><span class="kpi-tag neutral" id="mpKpiTag1">mes actual</span></div></div>
+      <div class="kpi"><div class="kpi-icon">💹</div><div class="kpi-label" id="mpKpiLabel2">Total 2026</div><div class="kpi-value" id="mpKpiVal2">$125,5M</div><div class="kpi-tags"><span class="kpi-tag neutral" id="mpKpiTag2">Ene + Feb + Mar</span></div></div>
+      <div class="kpi amber"><div class="kpi-icon">💰</div><div class="kpi-label" id="mpKpiLabel3">Ing. Marginal</div><div class="kpi-value" id="mpKpiVal3">$787.443</div><div class="kpi-tags"><span class="kpi-tag neutral" id="mpKpiTag3">comisiones</span></div></div>
+      <div class="kpi"><div class="kpi-icon">⭐</div><div class="kpi-label" id="mpKpiLabel4">Top Seller</div><div class="kpi-value" id="mpKpiVal4" style="font-size:18px">Coop. Profega</div><div class="kpi-tags"><span class="kpi-tag up" id="mpKpiTag4">$40,9M — Marzo</span></div></div>
     </div>
     <!-- Period tabs Marketplace -->
     <div class="period-tabs" id="periodTabsMP">
@@ -1687,22 +1687,53 @@ document.addEventListener('DOMContentLoaded', () => {
   <section class="section" id="sec-vendedores">
     <div class="section-title">Vendedores Dados de Alta</div>
     <div class="section-sub">Evolución de incorporaciones — 2024 a 2026</div>
+
+    <!-- KPIs gestión comercial -->
     <div class="vend-totals-row">
-      <div class="vend-total"><div class="vend-year">2024</div><div class="vend-num">98</div><div class="vend-sub">Mar–Dic</div></div>
-      <div class="vend-total"><div class="vend-year">2025</div><div class="vend-num">393</div><div class="vend-sub">Año completo</div></div>
-      <div class="vend-total active"><div class="vend-year">2026*</div><div class="vend-num">156</div><div class="vend-sub">Ene–Mar</div></div>
+      <div class="vend-total"><div class="vend-year">2024</div><div class="vend-num">0</div><div class="vend-sub">Mar–Dic</div></div>
+      <div class="vend-total"><div class="vend-year">2025</div><div class="vend-num">0</div><div class="vend-sub">Año completo</div></div>
+      <div class="vend-total active"><div class="vend-year">2026*</div><div class="vend-num">0</div><div class="vend-sub">Ene–Mar</div></div>
     </div>
+
+    <!-- KPIs gestión comercial mes actual -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px">
+      <div class="kpi">
+        <div class="kpi-icon">📋</div>
+        <div class="kpi-label">Altas MiVia — Mes</div>
+        <div class="kpi-value">0</div>
+        <div class="kpi-tags"><span class="kpi-tag neutral">vendedores activos</span></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-icon">🛒</div>
+        <div class="kpi-label">Altas Vía Compras — Mes</div>
+        <div class="kpi-value">0</div>
+        <div class="kpi-tags"><span class="kpi-tag neutral">con SKU publicado</span></div>
+      </div>
+      <div class="kpi amber">
+        <div class="kpi-icon">📊</div>
+        <div class="kpi-label">Tasa de Conversión</div>
+        <div class="kpi-value" id="tasaVCVal">—</div>
+        <div class="kpi-tags"><span class="kpi-tag neutral">MiVia → Marketplace</span></div>
+      </div>
+    </div>
+
+    <!-- Gráfico histórico dos líneas -->
     <div class="card" style="margin-bottom:20px">
-      <div class="card-header"><span class="card-title">Altas Mensuales</span><span class="card-badge">2024–2026</span></div>
+      <div class="card-header">
+        <span class="card-title">Evolución Altas — MiVia vs Vía Compras</span>
+        <span class="card-badge">2024–2026</span>
+      </div>
       <canvas id="chartVend" height="160"></canvas>
     </div>
+
+    <!-- Tabla histórica -->
     <div class="card">
       <table>
         <thead><tr><th>AÑO</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th><th>TOTAL</th></tr></thead>
         <tbody>
           <tr><td class="year-cell">2024</td><td class="dim">—</td><td class="dim">—</td><td>4</td><td>6</td><td>53</td><td>5</td><td>6</td><td>5</td><td>3</td><td>1</td><td>4</td><td>11</td><td class="highlight">98</td></tr>
           <tr><td class="year-cell">2025</td><td>9</td><td>22</td><td>35</td><td>30</td><td>31</td><td>29</td><td>28</td><td>52</td><td>46</td><td>42</td><td>41</td><td>28</td><td class="highlight">393</td></tr>
-          <tr><td class="year-cell">2026*</td><td>49</td><td>68</td><td class="highlight">38</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="highlight">156</td></tr>
+          <tr><td class="year-cell">2026*</td><td>49</td><td>68</td><td class="highlight">0</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="highlight">0</td></tr>
         </tbody>
       </table>
     </div>
@@ -2360,11 +2391,31 @@ function setPeriod(p, clickedTab) {
     canalNums[2].textContent = d.ur_val;
   }
 
-  // Actualizar Marketplace
-  const mpLabel1 = document.getElementById('mpLabel1');
-  const mpVal1 = document.getElementById('mpVal1');
-  if (mpLabel1) mpLabel1.textContent = 'Ventas — ' + d.label;
-  if (mpVal1 && d.mp_ventas) mpVal1.textContent = d.mp_ventas;
+  // ── Actualizar 4 recuadros Marketplace ──
+  const topSellerData = d.topSellers && d.topSellers[0];
+  const mpKpiData = {
+    ene:   { ventas:'$20,5M',   total:'$125,5M', ing:'$180.000',    ingTag:'8 transacciones',  seller:'Coop. Profega', sellerVal:'$34,1M' },
+    feb:   { ventas:'$48,3M',   total:'$125,5M', ing:'$290.000',    ingTag:'12 transacciones', seller:'Coop. Profega', sellerVal:'$34,1M' },
+    mar:   { ventas: d.mp_ventas||'$74.4M', total:'$125,5M', ing: d.ing?.val||'$787.443', ingTag: d.ing?.v2||'comisiones', seller:'Coop. Profega', sellerVal:'$40,9M' },
+    q1:    { ventas:'$125,5M',  total:'$125,5M', ing:'$1.149.518',  ingTag:'37 transacciones', seller:'Coop. Profega', sellerVal:'$89,2M' },
+    anual: { ventas:'$125,5M',  total:'$125,5M', ing:'$1.149.518',  ingTag:'37 transacciones', seller:'Coop. Profega', sellerVal:'$89,2M' },
+  };
+  const mk = mpKpiData[p] || mpKpiData.mar;
+  const labelMap = { ene:'Enero 2026', feb:'Febrero 2026', mar: d.label||'Marzo 2026', q1:'Q1 2026', anual:'Acumulado 2026' };
+
+  const el = id => document.getElementById(id);
+  if (el('mpKpiLabel1')) el('mpKpiLabel1').textContent = 'Ventas — ' + labelMap[p];
+  if (el('mpKpiVal1'))   el('mpKpiVal1').textContent   = mk.ventas;
+  if (el('mpKpiTag1'))   el('mpKpiTag1').textContent   = 'mes ' + labelMap[p];
+  if (el('mpKpiLabel2')) el('mpKpiLabel2').textContent = p === 'q1' || p === 'anual' ? 'Total Q1 2026' : 'Total 2026';
+  if (el('mpKpiVal2'))   el('mpKpiVal2').textContent   = mk.total;
+  if (el('mpKpiTag2'))   el('mpKpiTag2').textContent   = 'Ene + Feb + Mar';
+  if (el('mpKpiLabel3')) el('mpKpiLabel3').textContent = 'Ing. Marginal — ' + labelMap[p];
+  if (el('mpKpiVal3'))   el('mpKpiVal3').textContent   = mk.ing;
+  if (el('mpKpiTag3'))   el('mpKpiTag3').textContent   = mk.ingTag;
+  if (el('mpKpiLabel4')) el('mpKpiLabel4').textContent = 'Top Seller — ' + labelMap[p];
+  if (el('mpKpiVal4'))   el('mpKpiVal4').textContent   = mk.seller;
+  if (el('mpKpiTag4'))   el('mpKpiTag4').textContent   = mk.sellerVal;
 
   // Actualizar P&L cards
   const plMPResult = document.getElementById('plMPResult');
@@ -2696,22 +2747,33 @@ new Chart(document.getElementById('chartEnv').getContext('2d'), {
 });
 
 // ── VENDEDORES CHART ──────────────────────────────────────
-const vendLabels = ['Mar24','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene25','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene26','Feb26','Mar26'];
-const vendData = [4, 6, 53, 5, 6, 5, 3, 1, 4, 11, 9, 22, 35, 30, 31, 29, 28, 52, 46, 42, 41, 28, 49, 68, 38];
+const vendLabels  = [];
+const vendMiVia   = [];
+const vendVC      = [];
+const altasMiVia  = 0;
+const altasVC     = 0;
+
+// Tasa de conversión
+const tasaVC = altasMiVia > 0 ? Math.round(altasVC / altasMiVia * 100) : 0;
+const tasaEl = document.getElementById('tasaVCVal');
+if (tasaEl) tasaEl.textContent = tasaVC + '%';
+
 new Chart(document.getElementById('chartVend').getContext('2d'), {
   type:'bar',
   data:{
-    labels:vendLabels,
-    datasets:[{ label:'Altas', data:vendData,
-      backgroundColor: vendData.map((_,i)=>i===24?'#077C14':'rgba(7,124,20,.4)'),
-      borderRadius:5
-    }]
+    labels: vendLabels,
+    datasets:[
+      { label:'Altas MiVia', data: vendMiVia,
+        backgroundColor:'rgba(7,124,20,.5)', borderRadius:4, order:2 },
+      { label:'Altas Vía Compras', data: vendVC,
+        backgroundColor:'#077C14', borderRadius:4, order:1 }
+    ]
   },
   options:{
     responsive:true, maintainAspectRatio:true,
-    plugins:{ legend:{display:false} },
+    plugins:{ legend:{position:'top', labels:{font:{size:12}, boxWidth:12}} },
     scales:{
-      x:{grid:{display:false}, ticks:{font:{size:10}}},
+      x:{grid:{display:false}, ticks:{font:{size:10}, maxRotation:45}},
       y:{grid:{color:'#E8F5E9'}, ticks:{font:{size:11}}}
     }
   }
