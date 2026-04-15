@@ -1828,6 +1828,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <!-- KPIs gestión comercial -->
     <div class="vend-totals-row">
+      <div class="vend-total"><div class="vend-year">2024</div><div class="vend-num">98</div><div class="vend-sub">Mar–Dic</div></div>
+      <div class="vend-total"><div class="vend-year">2025</div><div class="vend-num">393</div><div class="vend-sub">Año completo</div></div>
       <div class="vend-total active"><div class="vend-year">2026*</div><div class="vend-num">169</div><div class="vend-sub">Ene–Abr</div></div>
     </div>
 
@@ -1867,6 +1869,8 @@ document.addEventListener('DOMContentLoaded', () => {
       <table>
         <thead><tr><th>AÑO</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th><th>TOTAL</th></tr></thead>
         <tbody>
+          <tr><td class="year-cell">2024</td><td class="dim">—</td><td class="dim">—</td><td>4</td><td>6</td><td>53</td><td>5</td><td>6</td><td>5</td><td>3</td><td>1</td><td>4</td><td>11</td><td class="highlight">98</td></tr>
+          <tr><td class="year-cell">2025</td><td>9</td><td>22</td><td>35</td><td>30</td><td>31</td><td>29</td><td>28</td><td>52</td><td>46</td><td>42</td><td>41</td><td>28</td><td class="highlight">393</td></tr>
           <tr><td class="year-cell">2026*</td><td>49</td><td>68</td><td>38</td><td class="highlight">14</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="highlight">169</td></tr>
         </tbody>
       </table>
@@ -2285,13 +2289,13 @@ const PERIODOS = {
     bul: { val: '6.785', v1: '▼ 49,8% vs Marzo', v2: '▼ 57,2% vs Abril 2025', up1: true, up2: true },
     acum: '$4.641,6M', acum_label: 'Acumulado Abril 2026',
     sc_pct: 65, sc_val: '1.955', tn_pct: 23, tn_val: '695', ur_pct: 12, ur_val: '347',
-    evo: [383.31, 332.18, 409.2, 105.39],
+    evo: [0.7, 2.24, 3.56, 27.12, 70.08, 66.78, 75.15, 160.14, 230.52, 184.51, 176.16, 161.63, 220.89, 183.95, 198.37, 179.64, 194.11, 175.34, 251.16, 300.5, 284.15, 264.79, 383.31, 332.18, 409.2, 105.39],
     evoLabels: ['Mar24','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene25','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene26','Feb26','Mar26','Abr26'],
     mp_ventas: '$11,4M', mp_ordenes: '10', mp_ticket: '$1.144.557', mp_units: '12',
     pl_mp_resultado: '', pl_mp_margen: '', pl_mivia_resultado: '', pl_mivia_margen: '',
     topRec: [{n:"ROBERTO PICCA E HIJOS S.A.S.",v:16.00,val:"$16,0M"},{n:"LARAIGNEE CARLOS",v:8.00,val:"$8,0M"},{n:"Magnolias",v:4.00,val:"$4,0M"},{n:"AUDISIO FERNANDO Y FEDERICO",v:3.50,val:"$3,5M"},{n:"FIDPMHGS SA",v:3.50,val:"$3,5M"},{n:"Fassi Facundo Y Otros",v:3.02,val:"$3,0M"},{n:"ESTANTERIAS VIRREYES S.R.L.",v:3.00,val:"$3,0M"},{n:"BYT QUIMICA SRL",v:2.64,val:"$2,6M"},{n:"METALURGICACDG S.A",v:2.60,val:"$2,6M"},{n:"VICA NEUMATICOS Y SERVICIOS S.",v:2.50,val:"$2,5M"}],
     topEnv: [{n:"Urbano (5 - Urbano)",v:347,val:"347"},{n:"LARAIGNEE CARLOS",v:161,val:"161"},{n:"Juan Ignacio",v:141,val:"141"},{n:"BYT QUIMICA SRL",v:105,val:"105"},{n:"METALURGICACDG S.A",v:105,val:"105"},{n:"pamela",v:93,val:"93"},{n:"Fassi Facundo Y Otros",v:90,val:"90"},{n:"POPEYE PROBIKE",v:87,val:"87"},{n:"geraldine",v:79,val:"79"},{n:"FRANMAROL S.A.",v:75,val:"75"}],
-    topLoc: [{n:"Neuquen",v:49},{n:"San Juan",v:35},{n:"Rosario",v:35},{n:"Mendoza",v:31},{n:"Cordoba",v:27},{n:"Bariloche",v:27},{n:"Salta",v:24},{n:"Parana",v:21},{n:"Bahia Blanca",v:21},{n:"San Miguel de Tucuman",v:20},{n:"Viedma",v:20},{n:"Rio Cuarto",v:19},{n:"Santa Fe",v:18},{n:"Tandil",v:18},{n:"Cipolletti",v:18}],
+    topLoc: [{n:"Neuquen",v:49},{n:"Rosario",v:35},{n:"San Juan",v:35},{n:"Mendoza",v:31},{n:"Cordoba",v:27},{n:"Bariloche",v:27},{n:"Salta",v:24},{n:"Parana",v:21},{n:"Bahia Blanca",v:21},{n:"San Miguel de Tucuman",v:20},{n:"Viedma",v:20},{n:"Rio Cuarto",v:19},{n:"Santa Fe",v:18},{n:"Tandil",v:18},{n:"Cipolletti",v:18}],
     topSellers: [{n:"MUNDO OBRA",v:5.62,val:"$5,6M"},{n:"COOPERATIVA DE TRABAJO PROFEGA",v:5.15,val:"$5,2M"},{n:"ZONO SRL",v:0.35,val:"$0,3M"},{n:"Pardo",v:0.20,val:"$0,2M"},{n:"LAS044",v:0.12,val:"$0,1M"}],
     showDiag: true,
   },
@@ -2572,7 +2576,9 @@ function setPeriod(p, clickedTab) {
   if (plMiViaMargen && d.pl_mivia_margen) plMiViaMargen.textContent = 'Margen ' + d.pl_mivia_margen;
 
   // ── Actualizar gráficos de evolución ──
-  const evoLbls = d.evoLabels || ['Mar24','Feb26','Mar26'];
+  // Cada período muestra su propia curva histórica completa (desde Mar 2024 hasta ese mes)
+  const evoLbls = d.evoLabels || evoLabels;
+  const evoFull  = d.evo;
   const isBar = d.chartType === 'bar';
   ['chartEvo','chartEvo2'].forEach((canvasId, chartIdx) => {
     const canvas = document.getElementById(canvasId);
@@ -2586,8 +2592,8 @@ function setPeriod(p, clickedTab) {
         type: 'bar',
         data: {
           labels: evoLbls,
-          datasets: [{ label:'Recargas ($M)', data: d.evo,
-            backgroundColor:['rgba(7,124,20,.45)','rgba(7,124,20,.65)','#077C14'],
+          datasets: [{ label:'Recargas ($M)', data: evoFull,
+            backgroundColor: evoFull.map((_,i)=> i===evoFull.length-1 ? '#077C14' : 'rgba(7,124,20,.35)'),
             borderColor:'#004D0A', borderWidth:1, borderRadius:8 }]
         },
         options: {
@@ -2623,9 +2629,9 @@ function setPeriod(p, clickedTab) {
       config = {
         type:'line',
         data:{ labels:evoLbls, datasets:[{
-          label:'Recargas ($M)', data:d.evo,
+          label:'Recargas ($M)', data:evoFull,
           borderColor:'#077C14', borderWidth:2.5,
-          pointRadius:d.evo.map((_,i)=>i===d.evo.length-1?7:0),
+          pointRadius: evoFull.map((_,i)=> i===evoFull.length-1 ? 7 : 0),
           pointBackgroundColor:'#077C14',
           fill:true, backgroundColor:grad, tension:.4
         }]},
@@ -2790,8 +2796,8 @@ Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Helvetica Neue
 Chart.defaults.color = '#5A6B5C';
 
 // ── DATA ─────────────────────────────────────────────────
-const evoLabels = ['Ene26','Feb','Mar','Abr'];
-const evoData   = [383.31, 332.18, 409.2, 105.39];
+const evoLabels = ['Mar24','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene25','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene26','Feb','Mar','Abr'];
+const evoData   = [0.7, 2.24, 3.56, 27.12, 70.08, 66.78, 75.15, 160.14, 230.52, 184.51, 176.16, 161.63, 220.89, 183.95, 198.37, 179.64, 194.11, 175.34, 251.16, 300.5, 284.15, 264.79, 383.31, 332.18, 409.2, 105.39];
 
 function makeLastPointPlugin(canvasId) {
   return {
@@ -2860,8 +2866,8 @@ evoChart1 = evoOpts('chartEvo');
 evoChart2 = evoOpts('chartEvo2');
 
 const envLabels = ['Oct24','Nov','Dic','Ene25','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene26','Feb26','Mar26'];
-const envEnvios = [7146, 6807, 5968, 2997];
-const envBultos = [17558, 16526, 14726, 6785];
+const envEnvios = [7020, 9208, 6978, 6892, 5630, 6871, 6999, 6878, 5377, 6379, 5872, 5970, 6959, 7254, 8398, 7146, 6807, 5968, 2997];
+const envBultos = [12138, 14219, 11463, 13284, 11442, 13485, 26692, 12780, 13057, 15091, 18370, 20897, 27291, 19055, 30465, 17558, 16526, 14726, 6785];
 
 new Chart(document.getElementById('chartEnv').getContext('2d'), {
   type:'bar',
@@ -3023,7 +3029,7 @@ buildRanking('topEnvRanking', initTopEnv, Math.max(...initTopEnv.map(d=>d.v)), f
 
 const topLocData = [{n:"Neuquén",v:122},{n:"Córdoba",v:108},{n:"San Juan",v:72},{n:"Bahía Blanca",v:71},{n:"Mendoza",v:66},{n:"Rosario",v:58},{n:"Santa Fe",v:55},{n:"Bariloche",v:54},{n:"Paraná",v:54},{n:"Salta",v:53},{n:"Santa Rosa",v:50},{n:"Río Cuarto",v:47},{n:"Resistencia",v:46},{n:"Posadas",v:46},{n:"Sn Martín Andes",v:45}];
 // Top Localidades — se actualiza con setPeriod
-const initTopLoc = [{n:"Neuquen",v:49},{n:"San Juan",v:35},{n:"Rosario",v:35},{n:"Mendoza",v:31},{n:"Cordoba",v:27},{n:"Bariloche",v:27},{n:"Salta",v:24},{n:"Parana",v:21},{n:"Bahia Blanca",v:21},{n:"San Miguel de Tucuman",v:20},{n:"Viedma",v:20},{n:"Rio Cuarto",v:19},{n:"Santa Fe",v:18},{n:"Tandil",v:18},{n:"Cipolletti",v:18}];
+const initTopLoc = [{n:"Neuquen",v:49},{n:"Rosario",v:35},{n:"San Juan",v:35},{n:"Mendoza",v:31},{n:"Cordoba",v:27},{n:"Bariloche",v:27},{n:"Salta",v:24},{n:"Parana",v:21},{n:"Bahia Blanca",v:21},{n:"San Miguel de Tucuman",v:20},{n:"Viedma",v:20},{n:"Rio Cuarto",v:19},{n:"Santa Fe",v:18},{n:"Tandil",v:18},{n:"Cipolletti",v:18}];
 buildRanking('topLocRanking', initTopLoc, Math.max(...initTopLoc.map(d=>d.v)), false);
 
 const topSellData = [{n:"Coop. Profega Ltda.",v:40.91,val:"$40,9M"},{n:"Mundo Obra",v:8.00,val:"$8,0M"},{n:"Petenatti Hogar VC",v:4.72,val:"$4,7M"},{n:"ECOTECN",v:4.69,val:"$4,7M"},{n:"NORTESHOPS",v:3.46,val:"$3,5M"}];
