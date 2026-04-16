@@ -2326,7 +2326,7 @@ const PERIODOS = {
     pl_mp_resultado: '$7,9M', pl_mp_margen: '69,5%', pl_mivia_resultado: '$92,7M', pl_mivia_margen: '87,8%',
     topRec: [{n:"ROBERTO PICCA E HIJOS S.A.S.",v:16.00,val:"$16,0M"},{n:"LARAIGNEE CARLOS",v:8.00,val:"$8,0M"},{n:"Magnolias",v:4.00,val:"$4,0M"},{n:"AUDISIO FERNANDO Y FEDERICO",v:3.50,val:"$3,5M"},{n:"FIDPMHGS SA",v:3.50,val:"$3,5M"},{n:"Fassi Facundo Y Otros",v:3.02,val:"$3,0M"},{n:"ESTANTERIAS VIRREYES S.R.L.",v:3.00,val:"$3,0M"},{n:"BYT QUIMICA SRL",v:2.64,val:"$2,6M"},{n:"METALURGICACDG S.A",v:2.60,val:"$2,6M"},{n:"VICA NEUMATICOS Y SERVICIOS S.",v:2.50,val:"$2,5M"}],
     topEnv: [{n:"Urbano (5 - Urbano)",v:347,val:"347"},{n:"LARAIGNEE CARLOS",v:161,val:"161"},{n:"Juan Ignacio",v:141,val:"141"},{n:"BYT QUIMICA SRL",v:105,val:"105"},{n:"METALURGICACDG S.A",v:105,val:"105"},{n:"pamela",v:93,val:"93"},{n:"Fassi Facundo Y Otros",v:90,val:"90"},{n:"POPEYE PROBIKE",v:87,val:"87"},{n:"geraldine",v:79,val:"79"},{n:"FRANMAROL S.A.",v:75,val:"75"}],
-    topLoc: [{n:"Neuquen",v:49},{n:"Rosario",v:35},{n:"San Juan",v:35},{n:"Mendoza",v:31},{n:"Bariloche",v:27},{n:"Cordoba",v:27},{n:"Salta",v:24},{n:"Parana",v:21},{n:"Bahia Blanca",v:21},{n:"Viedma",v:20},{n:"San Miguel de Tucuman",v:20},{n:"Rio Cuarto",v:19},{n:"Tandil",v:18},{n:"Plottier",v:18},{n:"Santa Fe",v:18}],
+    topLoc: [{n:"Neuquen",v:49},{n:"San Juan",v:35},{n:"Rosario",v:35},{n:"Mendoza",v:31},{n:"Cordoba",v:27},{n:"Bariloche",v:27},{n:"Salta",v:24},{n:"Bahia Blanca",v:21},{n:"Parana",v:21},{n:"San Miguel de Tucuman",v:20},{n:"Viedma",v:20},{n:"Rio Cuarto",v:19},{n:"Tandil",v:18},{n:"Plottier",v:18},{n:"Santa Fe",v:18}],
     topSellers: [{n:"MUNDO OBRA",v:5.62,val:"$5,6M"},{n:"COOPERATIVA DE TRABAJO PROFEGA",v:5.15,val:"$5,2M"},{n:"ZONO SRL",v:0.35,val:"$0,3M"},{n:"Pardo",v:0.20,val:"$0,2M"},{n:"LAS044",v:0.12,val:"$0,1M"}],
     showDiag: true,
   },
@@ -3068,7 +3068,7 @@ buildRanking('topEnvRanking', initTopEnv, Math.max(...initTopEnv.map(d=>d.v)), f
 
 const topLocData = [{n:"Neuquén",v:122},{n:"Córdoba",v:108},{n:"San Juan",v:72},{n:"Bahía Blanca",v:71},{n:"Mendoza",v:66},{n:"Rosario",v:58},{n:"Santa Fe",v:55},{n:"Bariloche",v:54},{n:"Paraná",v:54},{n:"Salta",v:53},{n:"Santa Rosa",v:50},{n:"Río Cuarto",v:47},{n:"Resistencia",v:46},{n:"Posadas",v:46},{n:"Sn Martín Andes",v:45}];
 // Top Localidades — se actualiza con setPeriod
-const initTopLoc = [{n:"Neuquen",v:49},{n:"Rosario",v:35},{n:"San Juan",v:35},{n:"Mendoza",v:31},{n:"Bariloche",v:27},{n:"Cordoba",v:27},{n:"Salta",v:24},{n:"Parana",v:21},{n:"Bahia Blanca",v:21},{n:"Viedma",v:20},{n:"San Miguel de Tucuman",v:20},{n:"Rio Cuarto",v:19},{n:"Tandil",v:18},{n:"Plottier",v:18},{n:"Santa Fe",v:18}];
+const initTopLoc = [{n:"Neuquen",v:49},{n:"San Juan",v:35},{n:"Rosario",v:35},{n:"Mendoza",v:31},{n:"Cordoba",v:27},{n:"Bariloche",v:27},{n:"Salta",v:24},{n:"Bahia Blanca",v:21},{n:"Parana",v:21},{n:"San Miguel de Tucuman",v:20},{n:"Viedma",v:20},{n:"Rio Cuarto",v:19},{n:"Tandil",v:18},{n:"Plottier",v:18},{n:"Santa Fe",v:18}];
 buildRanking('topLocRanking', initTopLoc, Math.max(...initTopLoc.map(d=>d.v)), false);
 
 const topSellData = [{n:"Coop. Profega Ltda.",v:40.91,val:"$40,9M"},{n:"Mundo Obra",v:8.00,val:"$8,0M"},{n:"Petenatti Hogar VC",v:4.72,val:"$4,7M"},{n:"ECOTECN",v:4.69,val:"$4,7M"},{n:"NORTESHOPS",v:3.46,val:"$3,5M"}];
@@ -3464,7 +3464,7 @@ const sprintIssues = [
   {key:"GDMVC-22",title:"SKUs de LA PLANCHETTA - Desaparecen las categorías",status:"Cierre",cat:"done",assignee:"Sin asignar",type:"Historia / Requerimiento",url:"https://viabariloche.atlassian.net/browse/GDMVC-22"},
   {key:"GDMVC-21",title:"Validad con front-end que los sellers no puedan modificar o eliminar las credenciales de la organización VíaCargo",status:"Backlog",cat:"todo",assignee:"Sin asignar",type:"Historia / Requerimiento",url:"https://viabariloche.atlassian.net/browse/GDMVC-21"},
   {key:"GDMVC-20",title:"Hacer coincidir nomenclaturas",status:"Relevamiento",cat:"inprogress",assignee:"Alexis Garbarz",type:"Historia / Requerimiento",url:"https://viabariloche.atlassian.net/browse/GDMVC-20"},
-  {key:"GDMVC-19",title:"Órdenes en estado "Tarde"",status:"Backlog",cat:"todo",assignee:"Sin asignar",type:"Historia / Requerimiento",url:"https://viabariloche.atlassian.net/browse/GDMVC-19"},
+  {key:"GDMVC-19",title:"Órdenes en estado Tarde",status:"Backlog",cat:"todo",assignee:"Sin asignar",type:"Historia / Requerimiento",url:"https://viabariloche.atlassian.net/browse/GDMVC-19"},
   {key:"GDMVC-18",title:"Recarga automatizada de saldos",status:"Backlog",cat:"todo",assignee:"Sin asignar",type:"Historia / Requerimiento",url:"https://viabariloche.atlassian.net/browse/GDMVC-18"},
   {key:"GDMVC-16",title:"Usuario Agustina Guerra - Permisos",status:"Backlog",cat:"todo",assignee:"jesus",type:"Historia / Requerimiento",url:"https://viabariloche.atlassian.net/browse/GDMVC-16"},
   {key:"GDMVC-15",title:"No funciona el FLOW",status:"Cierre",cat:"done",assignee:"jesus",type:"Historia / Requerimiento",url:"https://viabariloche.atlassian.net/browse/GDMVC-15"},
