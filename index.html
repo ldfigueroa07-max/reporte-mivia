@@ -904,6 +904,21 @@ td { font-size: 13.5px; padding: 11px 14px; text-align: center; color: var(--nav
 td.year-cell { font-weight: 700; color: var(--g1); background: var(--g5); }
 td.highlight { font-weight: 700; color: var(--g1); }
 td.dim { color: var(--muted); }
+/* ── CALENDAR GRID VENDEDORES ─────────────────── */
+.cal-section { margin-bottom: 18px; }
+.cal-year-hdr { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.cal-year-lbl { font-size:13px; font-weight:700; color:var(--gray); letter-spacing:.5px; }
+.cal-year-total { font-size:11px; background:var(--g5); color:var(--g1); border-radius:20px; padding:2px 10px; font-weight:700; }
+.cal-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.cal-cell { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:10px 6px; text-align:center; transition:transform .15s; }
+.cal-cell .cal-mes { font-size:11px; font-weight:600; color:var(--gray); text-transform:uppercase; letter-spacing:.5px; }
+.cal-cell .cal-num { font-size:22px; font-weight:700; color:var(--navy); margin-top:2px; line-height:1; }
+.cal-cell.dim { background:var(--bg); border-color:transparent; }
+.cal-cell.dim .cal-mes { color:#ccc; }
+.cal-cell.dim .cal-num { color:#ddd; font-size:16px; }
+.cal-cell.cur { background:var(--g1); border-color:var(--g1); }
+.cal-cell.cur .cal-mes { color:rgba(255,255,255,.75); }
+.cal-cell.cur .cal-num { color:#fff; }
 
 /* ── PUNTOS ──────────────────────────────── */
 .puntos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -1864,16 +1879,52 @@ document.addEventListener('DOMContentLoaded', () => {
       <canvas id="chartVend" height="160"></canvas>
     </div>
 
-    <!-- Tabla histórica -->
+    <!-- Calendar histórico de altas -->
     <div class="card">
-      <table>
-        <thead><tr><th>AÑO</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th><th>TOTAL</th></tr></thead>
-        <tbody>
-          <tr><td class="year-cell">2024</td><td class="dim">—</td><td class="dim">—</td><td>4</td><td>6</td><td>53</td><td>5</td><td>6</td><td>5</td><td>3</td><td>1</td><td>4</td><td>11</td><td class="highlight">98</td></tr>
-          <tr><td class="year-cell">2025</td><td>9</td><td>22</td><td>35</td><td>30</td><td>31</td><td>29</td><td>28</td><td>52</td><td>46</td><td>42</td><td>41</td><td>28</td><td class="highlight">393</td></tr>
-          <tr><td class="year-cell">2026*</td><td>49</td><td>68</td><td>38</td><td class="highlight">14</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td><td class="highlight">169</td></tr>
-        </tbody>
-      </table>
+      <!-- 2024 -->
+      <div class="cal-section">
+        <div class="cal-year-hdr">
+          <span class="cal-year-lbl">2024</span>
+          <span class="cal-year-total">98 altas</span>
+        </div>
+        <div class="cal-grid">
+          <div class="cal-cell dim"><div class="cal-mes">Ene</div><div class="cal-num">—</div></div>
+          <div class="cal-cell dim"><div class="cal-mes">Feb</div><div class="cal-num">—</div></div>
+          <div class="cal-cell"><div class="cal-mes">Mar</div><div class="cal-num">4</div></div>
+          <div class="cal-cell"><div class="cal-mes">Abr</div><div class="cal-num">6</div></div>
+          <div class="cal-cell"><div class="cal-mes">May</div><div class="cal-num">53</div></div>
+          <div class="cal-cell"><div class="cal-mes">Jun</div><div class="cal-num">5</div></div>
+          <div class="cal-cell"><div class="cal-mes">Jul</div><div class="cal-num">6</div></div>
+          <div class="cal-cell"><div class="cal-mes">Ago</div><div class="cal-num">5</div></div>
+          <div class="cal-cell"><div class="cal-mes">Sep</div><div class="cal-num">3</div></div>
+          <div class="cal-cell"><div class="cal-mes">Oct</div><div class="cal-num">1</div></div>
+          <div class="cal-cell"><div class="cal-mes">Nov</div><div class="cal-num">4</div></div>
+          <div class="cal-cell"><div class="cal-mes">Dic</div><div class="cal-num">11</div></div>
+        </div>
+      </div>
+      <!-- 2025 -->
+      <div class="cal-section">
+        <div class="cal-year-hdr">
+          <span class="cal-year-lbl">2025</span>
+          <span class="cal-year-total">393 altas</span>
+        </div>
+        <div class="cal-grid">
+          <div class="cal-cell"><div class="cal-mes">Ene</div><div class="cal-num">9</div></div>
+          <div class="cal-cell"><div class="cal-mes">Feb</div><div class="cal-num">22</div></div>
+          <div class="cal-cell"><div class="cal-mes">Mar</div><div class="cal-num">35</div></div>
+          <div class="cal-cell"><div class="cal-mes">Abr</div><div class="cal-num">30</div></div>
+          <div class="cal-cell"><div class="cal-mes">May</div><div class="cal-num">31</div></div>
+          <div class="cal-cell"><div class="cal-mes">Jun</div><div class="cal-num">29</div></div>
+          <div class="cal-cell"><div class="cal-mes">Jul</div><div class="cal-num">28</div></div>
+          <div class="cal-cell"><div class="cal-mes">Ago</div><div class="cal-num">52</div></div>
+          <div class="cal-cell"><div class="cal-mes">Sep</div><div class="cal-num">46</div></div>
+          <div class="cal-cell"><div class="cal-mes">Oct</div><div class="cal-num">42</div></div>
+          <div class="cal-cell"><div class="cal-mes">Nov</div><div class="cal-num">41</div></div>
+          <div class="cal-cell"><div class="cal-mes">Dic</div><div class="cal-num">28</div></div>
+        </div>
+      </div>
+      <!-- 2026* — generado por el script -->
+      <div class="cal-section"><div class="cal-year-hdr"><span class="cal-year-lbl">2026*</span><span class="cal-year-total">169 altas</span></div><div class="cal-grid"><div class="cal-cell"><div class="cal-mes">Ene</div><div class="cal-num">49</div></div><div class="cal-cell"><div class="cal-mes">Feb</div><div class="cal-num">68</div></div><div class="cal-cell"><div class="cal-mes">Mar</div><div class="cal-num">38</div></div><div class="cal-cell cur"><div class="cal-mes">Abr</div><div class="cal-num">14</div></div><div class="cal-cell dim"><div class="cal-mes">May</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Jun</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Jul</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Ago</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Sep</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Oct</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Nov</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Dic</div><div class="cal-num">—</div></div></div></div>
     </div>
   </section>
 
@@ -2326,7 +2377,7 @@ const PERIODOS = {
     pl_mp_resultado: '$7,9M', pl_mp_margen: '69,5%', pl_mivia_resultado: '$92,7M', pl_mivia_margen: '87,8%',
     topRec: [{n:"ROBERTO PICCA E HIJOS S.A.S.",v:16.00,val:"$16,0M"},{n:"LARAIGNEE CARLOS",v:8.00,val:"$8,0M"},{n:"Magnolias",v:4.00,val:"$4,0M"},{n:"AUDISIO FERNANDO Y FEDERICO",v:3.50,val:"$3,5M"},{n:"FIDPMHGS SA",v:3.50,val:"$3,5M"},{n:"Fassi Facundo Y Otros",v:3.02,val:"$3,0M"},{n:"ESTANTERIAS VIRREYES S.R.L.",v:3.00,val:"$3,0M"},{n:"BYT QUIMICA SRL",v:2.64,val:"$2,6M"},{n:"METALURGICACDG S.A",v:2.60,val:"$2,6M"},{n:"VICA NEUMATICOS Y SERVICIOS S.",v:2.50,val:"$2,5M"}],
     topEnv: [{n:"Urbano (5 - Urbano)",v:347,val:"347"},{n:"LARAIGNEE CARLOS",v:161,val:"161"},{n:"Juan Ignacio",v:141,val:"141"},{n:"BYT QUIMICA SRL",v:105,val:"105"},{n:"METALURGICACDG S.A",v:105,val:"105"},{n:"pamela",v:93,val:"93"},{n:"Fassi Facundo Y Otros",v:90,val:"90"},{n:"POPEYE PROBIKE",v:87,val:"87"},{n:"geraldine",v:79,val:"79"},{n:"FRANMAROL S.A.",v:75,val:"75"}],
-    topLoc: [{n:"Neuquen",v:49},{n:"San Juan",v:35},{n:"Rosario",v:35},{n:"Mendoza",v:31},{n:"Cordoba",v:27},{n:"Bariloche",v:27},{n:"Salta",v:24},{n:"Bahia Blanca",v:21},{n:"Parana",v:21},{n:"San Miguel de Tucuman",v:20},{n:"Viedma",v:20},{n:"Rio Cuarto",v:19},{n:"Tandil",v:18},{n:"Plottier",v:18},{n:"Santa Fe",v:18}],
+    topLoc: [{n:"Neuquen",v:49},{n:"Rosario",v:35},{n:"San Juan",v:35},{n:"Mendoza",v:31},{n:"Cordoba",v:27},{n:"Bariloche",v:27},{n:"Salta",v:24},{n:"Bahia Blanca",v:21},{n:"Parana",v:21},{n:"San Miguel de Tucuman",v:20},{n:"Viedma",v:20},{n:"Rio Cuarto",v:19},{n:"Tandil",v:18},{n:"Plottier",v:18},{n:"Santa Fe",v:18}],
     topSellers: [{n:"MUNDO OBRA",v:5.62,val:"$5,6M"},{n:"COOPERATIVA DE TRABAJO PROFEGA",v:5.15,val:"$5,2M"},{n:"ZONO SRL",v:0.35,val:"$0,3M"},{n:"Pardo",v:0.20,val:"$0,2M"},{n:"LAS044",v:0.12,val:"$0,1M"}],
     showDiag: true,
   },
@@ -3068,7 +3119,7 @@ buildRanking('topEnvRanking', initTopEnv, Math.max(...initTopEnv.map(d=>d.v)), f
 
 const topLocData = [{n:"Neuquén",v:122},{n:"Córdoba",v:108},{n:"San Juan",v:72},{n:"Bahía Blanca",v:71},{n:"Mendoza",v:66},{n:"Rosario",v:58},{n:"Santa Fe",v:55},{n:"Bariloche",v:54},{n:"Paraná",v:54},{n:"Salta",v:53},{n:"Santa Rosa",v:50},{n:"Río Cuarto",v:47},{n:"Resistencia",v:46},{n:"Posadas",v:46},{n:"Sn Martín Andes",v:45}];
 // Top Localidades — se actualiza con setPeriod
-const initTopLoc = [{n:"Neuquen",v:49},{n:"San Juan",v:35},{n:"Rosario",v:35},{n:"Mendoza",v:31},{n:"Cordoba",v:27},{n:"Bariloche",v:27},{n:"Salta",v:24},{n:"Bahia Blanca",v:21},{n:"Parana",v:21},{n:"San Miguel de Tucuman",v:20},{n:"Viedma",v:20},{n:"Rio Cuarto",v:19},{n:"Tandil",v:18},{n:"Plottier",v:18},{n:"Santa Fe",v:18}];
+const initTopLoc = [{n:"Neuquen",v:49},{n:"Rosario",v:35},{n:"San Juan",v:35},{n:"Mendoza",v:31},{n:"Cordoba",v:27},{n:"Bariloche",v:27},{n:"Salta",v:24},{n:"Bahia Blanca",v:21},{n:"Parana",v:21},{n:"San Miguel de Tucuman",v:20},{n:"Viedma",v:20},{n:"Rio Cuarto",v:19},{n:"Tandil",v:18},{n:"Plottier",v:18},{n:"Santa Fe",v:18}];
 buildRanking('topLocRanking', initTopLoc, Math.max(...initTopLoc.map(d=>d.v)), false);
 
 const topSellData = [{n:"Coop. Profega Ltda.",v:40.91,val:"$40,9M"},{n:"Mundo Obra",v:8.00,val:"$8,0M"},{n:"Petenatti Hogar VC",v:4.72,val:"$4,7M"},{n:"ECOTECN",v:4.69,val:"$4,7M"},{n:"NORTESHOPS",v:3.46,val:"$3,5M"}];
