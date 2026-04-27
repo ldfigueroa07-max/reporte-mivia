@@ -3052,7 +3052,7 @@ function buildRanking(containerId, items, maxVal, showSecondary) {
           <div class="rank-bar" style="width:${pct}%;background:${i===0?'#077C14':i<3?'#22C55E':'#86EFAC'}"></div>
         </div>
       </div>
-      <div class="rank-val">${d.val}</div>`;
+      <div class="rank-val">${d.val !== undefined ? d.val : d.v}</div>`;
     c.appendChild(row);
   });
   if(showSecondary) {
