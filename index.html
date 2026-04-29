@@ -1383,6 +1383,7 @@ function doLogin() {
   if (USUARIOS[u] && USUARIOS[u] === p) {
     document.getElementById('loginScreen').style.display = 'none';
     sessionStorage.setItem('auth', '1');
+    setPeriod('abr');
   } else {
     document.getElementById('loginError').style.display = 'block';
   }
@@ -1397,6 +1398,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   if (sessionStorage.getItem('auth') === '1') {
     document.getElementById('loginScreen').style.display = 'none';
+    setPeriod('abr');
   }
 });
 </script>
@@ -1444,7 +1446,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="sidebar-footer">
     <div class="update-badge">
       <div class="update-label">Última actualización</div>
-      <div class="update-date"><span class="update-dot"></span>27 Abr 2026</div>
+      <div class="update-date"><span class="update-dot"></span>29 Abr 2026</div>
     </div>
   </div>
 </aside>
@@ -1492,7 +1494,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="mobile-menu-footer">
       <div class="update-badge">
         <div class="update-label">Última actualización</div>
-        <div class="update-date"><span class="update-dot"></span>27 Abr 2026</div>
+        <div class="update-date"><span class="update-dot"></span>29 Abr 2026</div>
       </div>
     </div>
   </div>
