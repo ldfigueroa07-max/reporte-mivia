@@ -1733,7 +1733,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="kpi"><div class="kpi-icon">💹</div><div class="kpi-label" id="mpKpiLabel2">Total 2026</div><div class="kpi-value" id="mpKpiVal2">$125,5M</div><div class="kpi-tags"><span class="kpi-tag neutral" id="mpKpiTag2">Ene + Feb + Mar</span></div></div>
       <div class="kpi amber"><div class="kpi-icon">💰</div><div class="kpi-label" id="mpKpiLabel3">Ing. Marginal</div><div class="kpi-value" id="mpKpiVal3">$613.425</div><div class="kpi-tags"><span class="kpi-tag neutral" id="mpKpiTag3">comisiones</span></div></div>
       <div class="kpi"><div class="kpi-icon">⭐</div><div class="kpi-label" id="mpKpiLabel4">Top Seller</div><div class="kpi-value" id="mpKpiVal4" style="font-size:18px">Coop. Profega</div><div class="kpi-tags"><span class="kpi-tag up" id="mpKpiTag4">$40,9M — Marzo</span></div></div>
-      <div class="kpi"><div class="kpi-icon">🔍</div><div class="kpi-label" id="mpKpiLabel5">Conversión Checkout</div><div class="kpi-value" id="mpKpiVal5" style="color:var(--blue)">2,75%</div><div class="kpi-tags"><span class="kpi-tag neutral" id="mpKpiTag5">Clarity · sesiones → checkout</span></div></div>
+      <div class="kpi"><div class="kpi-icon">🔍</div><div class="kpi-label" id="mpKpiLabel5">Conversión Checkout</div><div class="kpi-value" id="mpKpiVal5" style="color:var(--blue)">—</div><div class="kpi-tags"><span class="kpi-tag neutral" id="mpKpiTag5">Clarity</span></div></div>
     </div>
     <!-- Period tabs Marketplace -->
     <div class="period-selector">
@@ -2680,9 +2680,13 @@ function setPeriod(p, clickedTab) {
   // KPI 5 — Conversión Checkout (Clarity)
   const clarityKey = p === 'anual' ? 'acumulado' : p;
   const convRate = (clarityData[clarityKey] || {}).conversion || 0;
+  const convValEl = el('mpKpiVal5');
   if (el('mpKpiLabel5')) el('mpKpiLabel5').textContent = 'Conversión Checkout';
-  if (el('mpKpiVal5'))   el('mpKpiVal5').textContent   = convRate > 0 ? convRate + '%' : 'N/D';
-  if (el('mpKpiTag5'))   el('mpKpiTag5').textContent   = convRate > 0 ? 'Clarity · sesiones → checkout' : 'Clarity · sin datos aún';
+  if (convValEl) {
+    convValEl.textContent = convRate > 0 ? convRate + '%' : '—';
+    convValEl.style.color = convRate > 0 ? 'var(--blue)' : 'var(--muted)';
+  }
+  if (el('mpKpiTag5'))   el('mpKpiTag5').textContent   = convRate > 0 ? 'Clarity · checkout' : 'Clarity · próx. actualización';
 
   // Actualizar P&L cards
   const plMPResult = document.getElementById('plMPResult');
