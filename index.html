@@ -1728,11 +1728,12 @@ document.addEventListener('DOMContentLoaded', () => {
   <section class="section" id="sec-marketplace">
     <div class="section-title">Marketplace Vía Compras</div>
     <div class="section-sub">Ventas, sellers y análisis — Abril 2026</div>
-    <div class="kpi-grid mp-kpi-header" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi-grid mp-kpi-header" style="grid-template-columns:repeat(5,1fr)">
       <div class="kpi"><div class="kpi-icon">📈</div><div class="kpi-label" id="mpKpiLabel1">Ventas Marzo 2026</div><div class="kpi-value" id="mpKpiVal1">$16,7M</div><div class="kpi-tags"><span class="kpi-tag neutral" id="mpKpiTag1">mes actual</span></div></div>
       <div class="kpi"><div class="kpi-icon">💹</div><div class="kpi-label" id="mpKpiLabel2">Total 2026</div><div class="kpi-value" id="mpKpiVal2">$125,5M</div><div class="kpi-tags"><span class="kpi-tag neutral" id="mpKpiTag2">Ene + Feb + Mar</span></div></div>
       <div class="kpi amber"><div class="kpi-icon">💰</div><div class="kpi-label" id="mpKpiLabel3">Ing. Marginal</div><div class="kpi-value" id="mpKpiVal3">$613.425</div><div class="kpi-tags"><span class="kpi-tag neutral" id="mpKpiTag3">comisiones</span></div></div>
       <div class="kpi"><div class="kpi-icon">⭐</div><div class="kpi-label" id="mpKpiLabel4">Top Seller</div><div class="kpi-value" id="mpKpiVal4" style="font-size:18px">Coop. Profega</div><div class="kpi-tags"><span class="kpi-tag up" id="mpKpiTag4">$40,9M — Marzo</span></div></div>
+      <div class="kpi"><div class="kpi-icon">🔍</div><div class="kpi-label" id="mpKpiLabel5">Conversión Checkout</div><div class="kpi-value" id="mpKpiVal5" style="color:var(--blue)">2,75%</div><div class="kpi-tags"><span class="kpi-tag neutral" id="mpKpiTag5">Clarity · sesiones → checkout</span></div></div>
     </div>
     <!-- Period tabs Marketplace -->
     <div class="period-selector">
@@ -2675,6 +2676,13 @@ function setPeriod(p, clickedTab) {
   if (el('mpKpiLabel4')) el('mpKpiLabel4').textContent = 'Top Seller — ' + labelMap[p];
   if (el('mpKpiVal4'))   el('mpKpiVal4').textContent   = mk.seller;
   if (el('mpKpiTag4'))   el('mpKpiTag4').textContent   = mk.sellerVal;
+
+  // KPI 5 — Conversión Checkout (Clarity)
+  const clarityKey = p === 'anual' ? 'acumulado' : p;
+  const convRate = (clarityData[clarityKey] || {}).conversion || 0;
+  if (el('mpKpiLabel5')) el('mpKpiLabel5').textContent = 'Conversión Checkout';
+  if (el('mpKpiVal5'))   el('mpKpiVal5').textContent   = convRate > 0 ? convRate + '%' : 'N/D';
+  if (el('mpKpiTag5'))   el('mpKpiTag5').textContent   = convRate > 0 ? 'Clarity · sesiones → checkout' : 'Clarity · sin datos aún';
 
   // Actualizar P&L cards
   const plMPResult = document.getElementById('plMPResult');
