@@ -1860,7 +1860,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="kpi">
         <div class="kpi-icon">📋</div>
         <div class="kpi-label">Altas MiVia — Mes</div>
-        <div class="kpi-value" id="altasMiviaVal">12</div>
+        <div class="kpi-value" id="altasMiviaVal">11</div>
         <div class="kpi-tags"><span class="kpi-tag neutral">vendedores activos</span></div>
       </div>
       <div class="kpi">
@@ -3008,9 +3008,9 @@ new Chart(document.getElementById('chartEnv').getContext('2d'), {
 // ── VENDEDORES CHART ──────────────────────────────────────
 const vendLabels  = ["Mar24", "Abr24", "May24", "Jun24", "Jul24", "Ago24", "Sep24", "Oct24", "Nov24", "Dic24", "Ene25", "Feb25", "Mar25", "Abr25", "May25", "Jun25", "Jul25", "Ago25", "Sep25", "Oct25", "Nov25", "Dic25", "Ene26", "Feb26", "Mar26", "Abr26", "May26"];
 const vendMiVia   = [4, 6, 53, 5, 6, 5, 3, 1, 4, 11, 9, 22, 35, 30, 31, 29, 28, 52, 46, 42, 41, 28, 49, 68, 38, 51, 12];
-const vendVC      = [0, 0, 3, 0, 2, 1, 0, 0, 1, 3, 2, 1, 3, 0, 1, 1, 3, 4, 5, 3, 8, 8, 10, 31, 14, 11, 0];
-const altasMiVia  = 12;
-const altasVC     = 0;
+const vendVC      = [0, 0, 3, 0, 2, 1, 0, 0, 1, 3, 2, 1, 3, 0, 1, 1, 3, 4, 5, 3, 8, 8, 10, 31, 14, 11, 1];
+const altasMiVia  = 11;
+const altasVC     = 1;
 
 // Datos por período
 const altasData = {
@@ -3018,9 +3018,9 @@ const altasData = {
   feb:       { mivia: 68, vc: 31 },
   mar:       { mivia: 38, vc: 14 },
   abr:       { mivia: 51, vc: 11 },
-  may:       { mivia: 12, vc: 0 },
+  may:       { mivia: 11, vc: 1 },
   q1:        { mivia: 155, vc: 55 },
-  acumulado: { mivia: 218, vc: 71 },
+  acumulado: { mivia: 217, vc: 72 },
 };
 
 function updateAltasKPIs(period) {
