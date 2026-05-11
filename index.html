@@ -708,6 +708,28 @@ body {
 .rest-val { font-size: 12px; font-weight: 700; color: var(--g1); flex-shrink: 0; }
 .sellers-chart-wrap { }
 
+/* ── RUTAS DE ENVÍOS ── */
+.rutas-grid { display: flex; flex-direction: column; gap: 12px; }
+.ruta-card { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; background: var(--surface2); }
+.ruta-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.ruta-rank { font-size: 18px; font-weight: 800; color: var(--muted); width: 28px; flex-shrink: 0; }
+.ruta-nombre { font-size: 13px; font-weight: 700; color: var(--navy); flex: 1; }
+.ruta-bultos { font-size: 12px; font-weight: 600; color: var(--g1); background: rgba(7,124,20,0.08); padding: 3px 8px; border-radius: 20px; }
+.ruta-body { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: start; }
+.ruta-lbl { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; padding-top: 3px; white-space: nowrap; }
+.ruta-orig-val { font-size: 12px; font-weight: 600; color: var(--navy); }
+.ruta-orig-val span { font-size: 10px; font-weight: 400; color: var(--muted); margin-left: 4px; }
+.ruta-bars { display: flex; flex-direction: column; gap: 4px; }
+.ruta-bar-row { display: flex; align-items: center; gap: 8px; }
+.ruta-bar-lbl { font-size: 11px; color: var(--text); width: 160px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ruta-bar-wrap { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.ruta-bar-fill { height: 100%; border-radius: 4px; background: var(--g2); }
+.ruta-bar-val { font-size: 10px; font-weight: 600; color: var(--muted); width: 60px; text-align: right; flex-shrink: 0; }
+
+@media (max-width: 800px) {
+  .ruta-bar-lbl { width: 100px; }
+}
+
 @media (max-width: 800px) {
   .clarity-kpi-row { grid-template-columns: repeat(3,1fr); gap: 8px; }
   .clarity-kpi-val { font-size: 26px; }
@@ -1821,6 +1843,17 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="sellers-col-title">Top Visitas Categorías</div>
           <div id="cats-ranking"></div>
         </div>
+      </div>
+    </div>
+
+    <!-- ── RUTAS DE ENVÍOS — VENTAS MARKETPLACE ── -->
+    <div class="card" style="margin-top:20px">
+      <div class="card-header">
+        <span class="card-title">📍 Rutas de Envíos — Top Sellers Marketplace</span>
+        <span class="card-badge">Ene–May 2026</span>
+      </div>
+      <div class="rutas-grid" id="rutas-grid">
+        <!-- se renderiza por JS -->
       </div>
     </div>
 
@@ -3615,6 +3648,79 @@ const sprintIssues = [
   }
 })();
 
+
+// ── RUTAS DE ENVÍOS — VENTAS MARKETPLACE (cruce VTEX trackings × canales) ────
+const mpRutasData = [
+  { rank:1, n:'MUNDO OBRA', envios:13, bultos:26, orig:'Isidro Casanova', cp_orig:'1824',
+    dest:[
+      {pob:'Córdoba',        cp:'5000', b:2},
+      {pob:'Puerto Madryn',  cp:'9120', b:8},
+      {pob:'Salta',          cp:'4400', b:1},
+      {pob:'Las Heras',      cp:'9017', b:2},
+      {pob:'Ramallo',        cp:'2132', b:4},
+      {pob:'Formosa',        cp:'3600', b:1},
+      {pob:'Santa Fe',       cp:'3000', b:2},
+      {pob:'Concordia',      cp:'3200', b:1},
+      {pob:'Trenque Lauquen',cp:'6400', b:2},
+      {pob:'Sn Martín de los Andes', cp:'8370', b:2},
+    ]
+  },
+  { rank:2, n:'COOP. DE TRABAJO PROFEGA', envios:8, bultos:22, orig:'Santa Fe', cp_orig:'3000',
+    dest:[
+      {pob:'Embalse',         cp:'5856', b:4},
+      {pob:'Neuquén',         cp:'8300', b:8},
+      {pob:'Mar del Plata',   cp:'7600', b:2},
+      {pob:'Allen',           cp:'8328', b:2},
+      {pob:'Coronel Suárez',  cp:'8324', b:2},
+      {pob:'Junín',           cp:'6000', b:2},
+      {pob:'San Rafael',      cp:'5600', b:2},
+    ]
+  },
+  { rank:3, n:'Fassi Facundo Y Otros', envios:2, bultos:2, orig:'Rufino', cp_orig:'2607',
+    dest:[
+      {pob:'Longchamps', cp:'1838', b:1},
+      {pob:'Moreno',     cp:'1738', b:1},
+    ]
+  },
+  { rank:4, n:'CIRIATO', envios:1, bultos:4, orig:'Córdoba', cp_orig:'5000',
+    dest:[{pob:'Coronel Suárez', cp:'8324', b:4}]
+  },
+  { rank:5, n:'FERRETERIA LOS FRESNOS', envios:1, bultos:4, orig:'Córdoba', cp_orig:'5000',
+    dest:[{pob:'Coronel Suárez', cp:'8324', b:4}]
+  },
+];
+
+(function buildMpRutas() {
+  const grid = document.getElementById('rutas-grid');
+  if (!grid) return;
+  const medals = ['🥇','🥈','🥉','4°','5°'];
+
+  mpRutasData.forEach((r, i) => {
+    const maxB = Math.max(...r.dest.map(d => d.b));
+    const bars = r.dest.map(d => `
+      <div class="ruta-bar-row">
+        <div class="ruta-bar-lbl">${d.pob} <span style="color:var(--muted);font-size:9px">CP ${d.cp}</span></div>
+        <div class="ruta-bar-wrap"><div class="ruta-bar-fill" style="width:${Math.round(d.b/maxB*100)}%"></div></div>
+        <div class="ruta-bar-val">${d.b} bul.</div>
+      </div>`).join('');
+
+    const card = document.createElement('div');
+    card.className = 'ruta-card';
+    card.innerHTML = `
+      <div class="ruta-header">
+        <div class="ruta-rank">${medals[i]}</div>
+        <div class="ruta-nombre">${r.n}</div>
+        <div class="ruta-bultos">${r.envios} envíos · ${r.bultos} bultos</div>
+      </div>
+      <div class="ruta-body">
+        <div class="ruta-lbl">Origen</div>
+        <div class="ruta-orig-val">📦 ${r.orig} <span>CP ${r.cp_orig}</span></div>
+        <div class="ruta-lbl">Destinos</div>
+        <div class="ruta-bars">${bars}</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+})();
 
 // Inicializar selector jerárquico — al final para que el DOM esté listo
 renderSelectors();
