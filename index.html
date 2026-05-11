@@ -708,6 +708,121 @@ body {
 .rest-val { font-size: 12px; font-weight: 700; color: var(--g1); flex-shrink: 0; }
 .sellers-chart-wrap { }
 
+/* ── RUTAS DE ENVÍOS ── */
+.rutas-grid { display: flex; flex-direction: column; gap: 12px; }
+.ruta-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  background: var(--surface2);
+}
+.ruta-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.ruta-rank {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--muted);
+  width: 28px;
+  flex-shrink: 0;
+}
+.ruta-nombre {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  flex: 1;
+}
+.ruta-bultos {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--g1);
+  background: rgba(7,124,20,0.08);
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+.ruta-canal-pill {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--blue);
+  color: #fff;
+}
+.ruta-body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 16px;
+  align-items: start;
+}
+.ruta-origen-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  padding-top: 2px;
+}
+.ruta-origen-val {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--navy);
+}
+.ruta-dest-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  padding-top: 4px;
+}
+.ruta-dest-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ruta-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ruta-bar-label {
+  font-size: 11px;
+  color: var(--text);
+  width: 150px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ruta-bar-wrap {
+  flex: 1;
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.ruta-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--g2);
+  transition: width .4s ease;
+}
+.ruta-bar-val {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+  width: 50px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+@media (max-width: 800px) {
+  .ruta-bar-label { width: 100px; }
+}
+
 @media (max-width: 800px) {
   .clarity-kpi-row { grid-template-columns: repeat(3,1fr); gap: 8px; }
   .clarity-kpi-val { font-size: 26px; }
@@ -1821,6 +1936,17 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="sellers-col-title">Top Visitas Categorías</div>
           <div id="cats-ranking"></div>
         </div>
+      </div>
+    </div>
+
+    <!-- ── RUTAS DE ENVÍOS — TOP 5 REMITENTES ── -->
+    <div class="card" style="margin-top:20px">
+      <div class="card-header">
+        <span class="card-title">📍 Rutas de Envíos — Top 5 Remitentes</span>
+        <span class="card-badge">Ene–May 2026</span>
+      </div>
+      <div class="rutas-grid" id="rutas-grid">
+        <!-- se renderiza por JS -->
       </div>
     </div>
 
@@ -3613,6 +3739,55 @@ const sprintIssues = [
   } else {
     run();
   }
+})();
+
+// ── RUTAS DE ENVÍOS — TOP 5 REMITENTES ─────────────────────────────────────
+const rutasData = [
+  {rank:1, n:'geraldine', b:74854, canal:'TN', orig:'Beccar (BUE)', cp:'1617',
+   dest:[{pob:'Rosario',b:843},{pob:'Córdoba',b:556},{pob:'Bahía Blanca',b:403},{pob:'Mar del Plata',b:403},{pob:'San Martín de los Andes',b:364}]},
+  {rank:2, n:'GARDEN LIFE S.A', b:24248, canal:'SC', orig:'Pablo Nogués (BUE)', cp:'1616',
+   dest:[{pob:'Mendoza',b:872},{pob:'La Plata',b:718},{pob:'Rosario',b:576},{pob:'Bahía Blanca',b:481},{pob:'S.M. de Tucumán',b:405}]},
+  {rank:3, n:'LICHEMAR MDQ SRL', b:19716, canal:'TN', orig:'Mar del Plata', cp:'7600',
+   dest:[{pob:'Centenario',b:393},{pob:'Boulogne',b:293},{pob:'Río Gallegos',b:275},{pob:'Oberá',b:260},{pob:'Ituzaingó',b:226}]},
+  {rank:4, n:'Gonzalo', b:19461, canal:'TN', orig:'Ciudadela (BUE)', cp:'1702',
+   dest:[{pob:'Mar del Plata',b:1016},{pob:'Mendoza',b:587},{pob:'Rosario',b:280},{pob:'Viedma',b:241},{pob:'Olavarría',b:240}]},
+  {rank:5, n:'Sofia', b:15821, canal:'TN', orig:'Chascomús (BUE)', cp:'7130',
+   dest:[{pob:'Las Heras',b:418},{pob:'Orán',b:375},{pob:'Bahía Blanca',b:351},{pob:'Roque Sáenz Peña',b:337},{pob:'Villa Mercedes',b:267}]},
+];
+
+(function buildRutas() {
+  const grid = document.getElementById('rutas-grid');
+  if (!grid) return;
+
+  const canalColors = { TN:'#1565C0', SC:'#077C14', UR:'#E65100' };
+  const medals = ['🥇','🥈','🥉','4°','5°'];
+
+  rutasData.forEach((r, i) => {
+    const maxDest = r.dest[0].b;
+    const destBars = r.dest.map(d => `
+      <div class="ruta-bar-row">
+        <div class="ruta-bar-label">${d.pob}</div>
+        <div class="ruta-bar-wrap"><div class="ruta-bar-fill" style="width:${Math.round(d.b/maxDest*100)}%"></div></div>
+        <div class="ruta-bar-val">${d.b.toLocaleString('es-AR')} bul.</div>
+      </div>`).join('');
+
+    const card = document.createElement('div');
+    card.className = 'ruta-card';
+    card.innerHTML = `
+      <div class="ruta-header">
+        <div class="ruta-rank">${medals[i]}</div>
+        <div class="ruta-nombre">${r.n}</div>
+        <span class="ruta-canal-pill" style="background:${canalColors[r.canal]||'var(--blue)'}">${r.canal}</span>
+        <div class="ruta-bultos">${r.b.toLocaleString('es-AR')} bultos</div>
+      </div>
+      <div class="ruta-body">
+        <div class="ruta-origen-label">Origen</div>
+        <div class="ruta-origen-val">📦 ${r.orig} &nbsp;<span style="color:var(--muted);font-size:11px">CP ${r.cp}</span></div>
+        <div class="ruta-dest-label">Top destinos</div>
+        <div class="ruta-dest-bars">${destBars}</div>
+      </div>`;
+    grid.appendChild(card);
+  });
 })();
 
 // Inicializar selector jerárquico — al final para que el DOM esté listo
