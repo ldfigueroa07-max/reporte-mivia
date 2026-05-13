@@ -709,33 +709,19 @@ body {
 .sellers-chart-wrap { }
 
 /* ── RUTAS DE ENVÍOS ── */
-.rutas-grid { display: flex; flex-direction: column; gap: 12px; }
-.ruta-card { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; background: var(--surface2); }
-.ruta-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.ruta-rank { font-size: 18px; font-weight: 800; color: var(--muted); width: 28px; flex-shrink: 0; }
-.ruta-nombre { font-size: 13px; font-weight: 700; color: var(--navy); flex: 1; }
-.ruta-bultos { font-size: 12px; font-weight: 600; color: var(--g1); background: rgba(7,124,20,0.08); padding: 3px 8px; border-radius: 20px; }
-.ruta-body { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: start; }
-.ruta-lbl { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; padding-top: 3px; white-space: nowrap; }
-.ruta-orig-val { font-size: 12px; font-weight: 600; color: var(--navy); }
-.ruta-orig-val span { font-size: 10px; font-weight: 400; color: var(--muted); margin-left: 4px; }
-.ruta-bars { display: flex; flex-direction: column; gap: 4px; }
-.ruta-bar-row { display: flex; align-items: center; gap: 8px; }
-.ruta-bar-lbl { font-size: 11px; color: var(--text); width: 160px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ruta-bar-wrap { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
-.ruta-bar-fill { height: 100%; border-radius: 4px; background: var(--g2); }
-.ruta-bar-val { font-size: 10px; font-weight: 600; color: var(--muted); width: 60px; text-align: right; flex-shrink: 0; }
-.ruta-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.ruta-table th { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--border); }
-.ruta-table th.r { text-align: right; }
-.ruta-table td { padding: 7px 10px; color: var(--navy); border-bottom: 1px solid var(--border); vertical-align: middle; }
-.ruta-table tr:last-child td { border-bottom: none; }
+.rutas-grid { display: flex; flex-direction: column; gap: 0; }
 .cp-pill { font-size: 9px; font-weight: 600; color: var(--muted); background: var(--border); border-radius: 3px; padding: 1px 5px; margin-left: 5px; }
-.rt-bar-bg { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; min-width: 40px; }
+.rt-compact { width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.rt-compact th { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--border); background: var(--surface2); }
+.rt-compact th.r { text-align: right; }
+.rt-compact td { padding: 5px 10px; color: var(--navy); border-bottom: 1px solid var(--border); vertical-align: middle; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rt-compact tr:last-child td { border-bottom: none; }
+.rt-compact tr.rt-sep td { background: var(--surface2); padding: 4px 10px; border-top: 2px solid var(--border); }
+.rt-bar-bg { height: 5px; background: var(--border); border-radius: 2px; overflow: hidden; }
 .rt-bar-fill { height: 100%; border-radius: 2px; }
 .rt-monto { font-size: 12px; font-weight: 700; text-align: right; white-space: nowrap; }
 .rt-tx { font-size: 10px; color: var(--muted); text-align: right; white-space: nowrap; }
-.ruta-orig-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.ruta-orig-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
 .ruta-pending-note { font-size: 10px; color: var(--amber); font-style: italic; padding: 6px 10px; border-top: 1px solid var(--border); }
 
 @media (max-width: 800px) {
@@ -3770,45 +3756,56 @@ const mpRutasData = [
   if (!grid) return;
 
   const fmt = n => '$' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  const globalMax = Math.max(...mpRutasData.flatMap(o => o.routes.map(r => r.m)));
+
+  let thead = `<thead><tr>
+    <th style="width:16%">Origen</th>
+    <th style="width:20%">Destino</th>
+    <th style="width:34%">Proporción</th>
+    <th class="r" style="width:16%">Importe</th>
+    <th class="r" style="width:14%">Tx</th>
+  </tr></thead>`;
+
+  let tbodyHtml = '';
+  let pendingNotes = [];
 
   mpRutasData.forEach(o => {
-    const mx = Math.max(...o.routes.map(r => r.m));
-    const rows = o.routes.map(r => `
-      <tr>
+    tbodyHtml += `<tr class="rt-sep">
+      <td colspan="5">
+        <span class="ruta-orig-dot" style="background:${o.color}"></span>
+        <strong style="font-size:11px;color:var(--navy)">${o.orig}</strong>
+        <span class="cp-pill">CP ${o.cp_o}</span>
+        <span style="float:right;font-size:11px;font-weight:700;color:var(--navy)">${fmt(o.total)}</span>
+        <span style="float:right;font-size:10px;color:var(--muted);margin-right:10px">${o.tx} tx</span>
+      </td>
+    </tr>`;
+    o.routes.forEach(r => {
+      const pct = Math.round(r.m / globalMax * 100);
+      tbodyHtml += `<tr>
+        <td style="font-size:11px;color:var(--muted)">${o.orig}</td>
         <td>${r.d}<span class="cp-pill">CP ${r.cp}</span></td>
-        <td><div style="display:flex;align-items:center;gap:6px">
-          <div class="rt-bar-bg"><div class="rt-bar-fill" style="width:${Math.round(r.m/mx*100)}%;background:${o.color};opacity:.75"></div></div>
-        </div></td>
-        <td class="rt-monto" style="color:var(--navy)">${fmt(r.m)}</td>
-        <td class="rt-tx">${r.t} tx</td>
-      </tr>`).join('');
-
-    const pendingNote = o.pendingAbr
-      ? `<div class="ruta-pending-note">⚠ ${o.pendingAbr} órdenes Abril sin facturas emitidas · ${fmt(o.pendingAmt)} pendiente de asignación por destino</div>`
-      : '';
-
-    const block = document.createElement('div');
-    block.className = 'ruta-card';
-    block.innerHTML = `
-      <div class="ruta-header">
-        <div class="ruta-orig-dot" style="background:${o.color}"></div>
-        <div style="flex:1">
-          <span class="ruta-nombre">${o.orig}</span>
-          <span class="cp-pill" style="margin-left:8px">CP ${o.cp_o}</span>
-        </div>
-        <span class="ruta-bultos" style="margin-right:8px">${fmt(o.total)}</span>
-        <span style="font-size:11px;color:var(--muted)">${o.tx} tx</span>
-      </div>
-      <table class="ruta-table">
-        <thead><tr>
-          <th>Destino</th><th>Proporción</th>
-          <th class="r">Importe</th><th class="r">Tx</th>
-        </tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-      ${pendingNote}`;
-    grid.appendChild(block);
+        <td><div class="rt-bar-bg"><div class="rt-bar-fill" style="width:${pct}%;background:${o.color}"></div></div></td>
+        <td class="rt-monto">${fmt(r.m)}</td>
+        <td class="rt-tx">${r.t}x</td>
+      </tr>`;
+    });
+    if (o.pendingAbr) {
+      pendingNotes.push(`⚠ ${o.orig}: ${o.pendingAbr} órdenes Abril sin factura → ${fmt(o.pendingAmt)} incluidos en el total pero sin desglose por ruta.`);
+    }
   });
+
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'border:1px solid var(--border);border-radius:10px;overflow:hidden';
+  wrapper.innerHTML = `<table class="rt-compact">${thead}<tbody>${tbodyHtml}</tbody></table>`;
+  grid.appendChild(wrapper);
+
+  if (pendingNotes.length) {
+    const note = document.createElement('div');
+    note.className = 'ruta-pending-note';
+    note.style.marginTop = '8px';
+    note.textContent = pendingNotes.join(' · ');
+    grid.appendChild(note);
+  }
 })();
 
 // Inicializar selector jerárquico — al final para que el DOM esté listo
