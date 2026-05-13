@@ -725,6 +725,18 @@ body {
 .ruta-bar-wrap { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
 .ruta-bar-fill { height: 100%; border-radius: 4px; background: var(--g2); }
 .ruta-bar-val { font-size: 10px; font-weight: 600; color: var(--muted); width: 60px; text-align: right; flex-shrink: 0; }
+.ruta-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.ruta-table th { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+.ruta-table th.r { text-align: right; }
+.ruta-table td { padding: 7px 10px; color: var(--navy); border-bottom: 1px solid var(--border); vertical-align: middle; }
+.ruta-table tr:last-child td { border-bottom: none; }
+.cp-pill { font-size: 9px; font-weight: 600; color: var(--muted); background: var(--border); border-radius: 3px; padding: 1px 5px; margin-left: 5px; }
+.rt-bar-bg { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; min-width: 40px; }
+.rt-bar-fill { height: 100%; border-radius: 2px; }
+.rt-monto { font-size: 12px; font-weight: 700; text-align: right; white-space: nowrap; }
+.rt-tx { font-size: 10px; color: var(--muted); text-align: right; white-space: nowrap; }
+.ruta-orig-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.ruta-pending-note { font-size: 10px; color: var(--amber); font-style: italic; padding: 6px 10px; border-top: 1px solid var(--border); }
 
 @media (max-width: 800px) {
   .ruta-bar-lbl { width: 100px; }
@@ -1851,6 +1863,24 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="card-header">
         <span class="card-title">📍 Rutas de Envíos — Top Sellers Marketplace</span>
         <span class="card-badge">Ene–11 May 2026</span>
+      </div>
+      <!-- Consolidado total -->
+      <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+        <div style="flex:1;min-width:140px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Total identificado</div>
+          <div style="font-size:22px;font-weight:700;color:var(--g1)">$4.531.378</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">88 transacciones</div>
+        </div>
+        <div style="flex:1;min-width:140px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Orígenes</div>
+          <div style="font-size:22px;font-weight:700;color:var(--navy)">15</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">rutas confirmadas</div>
+        </div>
+        <div style="flex:1;min-width:140px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Ruta mayor</div>
+          <div style="font-size:22px;font-weight:700;color:var(--navy)">$542.804</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">Santa Fe → Neuquén</div>
+        </div>
       </div>
       <div class="rutas-grid" id="rutas-grid">
         <!-- se renderiza por JS -->
@@ -3651,79 +3681,133 @@ const sprintIssues = [
 
 // ── RUTAS DE ENVÍOS — VENTAS MARKETPLACE (cruce VTEX trackings × canales) ────
 const mpRutasData = [
-  { rank:1, n:'Mundo Obra', envios:41, orig:'Isidro Casanova', cp_orig:'1824',
-    dest:[
-      {pob:'Bahía Blanca',    cp:'8000', b:2},
-      {pob:'Salta',           cp:'4400', b:2},
-      {pob:'Las Heras',       cp:'9017', b:2},
-      {pob:'Plottier',        cp:'8316', b:2},
-      {pob:'Concordia',       cp:'3200', b:2},
-      {pob:'El Calafate',     cp:'9405', b:2},
-      {pob:'Puerto Madryn',   cp:'9120', b:2},
-      {pob:'San Martín de los Andes', cp:'8370', b:2},
-      {pob:'Realico',         cp:'6200', b:1},
-      {pob:'Rosario',         cp:'2000', b:1},
-    ]
-  },
-  { rank:2, n:'Coop. Profega', envios:25, orig:'Santa Fe', cp_orig:'3000',
-    dest:[
-      {pob:'Neuquén',         cp:'8300', b:4},
-      {pob:'CABA',            cp:'1431', b:3},
-      {pob:'Los Toldos',      cp:'6015', b:2},
-      {pob:'San Rafael',      cp:'5600', b:2},
-      {pob:'Allen',           cp:'8328', b:2},
-      {pob:'Mar del Plata',   cp:'7600', b:2},
-      {pob:'Rivadavia',       cp:'5400', b:2},
-      {pob:'Embalse',         cp:'5856', b:2},
-      {pob:'San Vicente',     cp:'1865', b:1},
-      {pob:'Carlos Casares',  cp:'6530', b:1},
-    ]
-  },
-  { rank:3, n:'Ciriato + Ferretería Los Fresnos', envios:4, orig:'Córdoba', cp_orig:'5000',
-    dest:[
-      {pob:'Cipolletti',      cp:'8324', b:2},
-      {pob:'General Roca',    cp:'8332', b:1},
-      {pob:'San Carlos de Bariloche', cp:'8400', b:1},
-    ]
-  },
-  { rank:4, n:'Fassi Facundo y Otros', envios:2, orig:'Rufino', cp_orig:'2607',
-    dest:[
-      {pob:'Moreno',          cp:'1738', b:1},
-      {pob:'Luis Guillón',    cp:'1838', b:1},
-    ]
-  },
+  {orig:'Isidro Casanova', cp_o:'1824', total:1294701, tx:33, color:'#378ADD', pendingAbr:8, pendingAmt:197283, routes:[
+    {d:'Venado Tuerto',          cp:'2600',  m:95000,  t:1},
+    {d:'Realico',                cp:'6200',  m:95000,  t:1},
+    {d:'Las Heras',              cp:'9017',  m:83000,  t:2},
+    {d:'El Calafate',            cp:'9405',  m:79190,  t:2},
+    {d:'Salta',                  cp:'4400',  m:73000,  t:2},
+    {d:'Bahía Blanca',           cp:'8000',  m:73000,  t:2},
+    {d:'Plottier',               cp:'8316',  m:66000,  t:2},
+    {d:'Córdoba',                cp:'5016',  m:60000,  t:1},
+    {d:'Centenario',             cp:'8309',  m:60000,  t:1},
+    {d:'Rosario',                cp:'2000',  m:50000,  t:1},
+    {d:'Concordia',              cp:'3200',  m:40000,  t:1},
+    {d:'Tandil',                 cp:'7000',  m:40000,  t:1},
+    {d:'San Martín de los Andes',cp:'8370',  m:36011,  t:1},
+    {d:'Tupungato',              cp:'5561',  m:33000,  t:1},
+    {d:'General Roca',           cp:'8332',  m:33000,  t:1},
+    {d:'Ensenadita',             cp:'3412',  m:33000,  t:1},
+    {d:'Junín de los Andes',     cp:'8371',  m:33000,  t:1},
+    {d:'General Las Heras',      cp:'1741',  m:33000,  t:1},
+    {d:'Paraná',                 cp:'3100',  m:33000,  t:1},
+    {d:'Rincón de los Sauces',   cp:'8319',  m:33000,  t:1},
+    {d:'Allen',                  cp:'8328',  m:33000,  t:1},
+    {d:'Dina Huapi',             cp:'8402',  m:33000,  t:1},
+    {d:'Mar del Plata',          cp:'7600',  m:27000,  t:1},
+    {d:'San Miguel de Tucumán',  cp:'4000',  m:27000,  t:1},
+    {d:'Constitución',           cp:'S2919', m:27000,  t:1},
+    {d:'San Antonio de Padua',   cp:'1718',  m:21000,  t:1},
+    {d:'Bovril',                 cp:'3142',  m:12500,  t:1},
+  ]},
+  {orig:'Santa Fe', cp_o:'3000', total:2029604, tx:16, color:'#1D9E75', routes:[
+    {d:'Neuquén',      cp:'8300', m:542804, t:4},
+    {d:'Rivadavia',    cp:'5400', m:234950, t:2},
+    {d:'Allen',        cp:'8328', m:234950, t:2},
+    {d:'Embalse',      cp:'5856', m:234950, t:2},
+    {d:'Santa Fe',     cp:'3000', m:311380, t:2},
+    {d:'Mar del Plata',cp:'7600', m:118145, t:1},
+    {d:'Los Toldos',   cp:'6015', m:117475, t:1},
+    {d:'Cipolletti',   cp:'8324', m:117475, t:1},
+    {d:'San Rafael',   cp:'5600', m:117475, t:1},
+  ]},
+  {orig:'San Justo', cp_o:'1754', total:380359, tx:6, color:'#D85A30', routes:[
+    {d:'Corrientes',          cp:'3400', m:89401, t:1},
+    {d:'Villa La Angostura',  cp:'8407', m:80895, t:1},
+    {d:'Trevelin',            cp:'9203', m:72625, t:1},
+    {d:'Esquel',              cp:'9200', m:110528,t:2},
+    {d:'Rawson',              cp:'9103', m:26911, t:1},
+  ]},
+  {orig:'San Miguel', cp_o:'1663', total:132100, tx:2, color:'#7F77DD', routes:[
+    {d:'Chajarí',   cp:'3228', m:69075, t:1},
+    {d:'San Pedro', cp:'2930', m:63025, t:1},
+  ]},
+  {orig:'El Ortondo', cp_o:'3000', total:99500, tx:11, color:'#0F6E56', routes:[
+    {d:'San Luis',        cp:'5700', m:20500, t:1},
+    {d:'Apóstoles',       cp:'3350', m:12500, t:1},
+    {d:'Concepción',      cp:'4146', m:12500, t:1},
+    {d:'San Pedro',       cp:'2930', m:12500, t:1},
+    {d:'Valentín Alsina', cp:'1822', m:12500, t:1},
+    {d:'San Rafael',      cp:'5600', m:12500, t:1},
+    {d:'Verónica',        cp:'1917', m:4500,  t:1},
+    {d:'Florida',         cp:'1602', m:4500,  t:1},
+    {d:'San Justo',       cp:'1754', m:2500,  t:1},
+    {d:'Pablo Nogues',    cp:'1613', m:2500,  t:1},
+    {d:'San Miguel',      cp:'1663', m:2500,  t:1},
+  ]},
+  {orig:'Córdoba', cp_o:'5000', total:96518, tx:4, color:'#BA7517', routes:[
+    {d:'Cipolletti',              cp:'8324', m:67018, t:2},
+    {d:'San Carlos de Bariloche', cp:'8400', m:17000, t:1},
+    {d:'General Roca',            cp:'8332', m:12500, t:1},
+  ]},
+  {orig:'Rufino', cp_o:'2607', total:106133, tx:5, color:'#888780', routes:[
+    {d:'Moreno',      cp:'1738', m:44967, t:2},
+    {d:'Luis Guillón',cp:'1838', m:37755, t:2},
+    {d:'Santa Isabel',cp:'2607', m:23411, t:1},
+  ]},
+  {orig:'Virreyes',       cp_o:'1645', total:50000, tx:1, color:'#639922', routes:[{d:'San Fernando',cp:'1646',m:50000,t:1}]},
+  {orig:'Mataderos',      cp_o:'1440', total:49680, tx:1, color:'#D4537E', routes:[{d:'Córdoba',     cp:'5000',m:49680,t:1}]},
+  {orig:'Gral. Villegas', cp_o:'6230', total:33000, tx:1, color:'#E24B4A', routes:[{d:'Gerli',       cp:'1870',m:33000,t:1}]},
+  {orig:'Villa Martelli', cp_o:'1603', total:15000, tx:1, color:'#888780', routes:[{d:'Caseros',     cp:'1678',m:15000,t:1}]},
+  {orig:'San Rafael',     cp_o:'5600', total:15000, tx:1, color:'#185FA5', routes:[{d:'Dock Sud',    cp:'1871',m:15000,t:1}]},
+  {orig:'Lomas de Zamora',cp_o:'1834', total:12500, tx:1, color:'#BA7517', routes:[{d:'Ramos Mejía', cp:'1704',m:12500,t:1}]},
+  {orig:'Tigre',          cp_o:'1648', total:12500, tx:1, color:'#1D9E75', routes:[{d:'Merlo',       cp:'1722',m:12500,t:1}]},
+  {orig:'Pergamino',      cp_o:'2700', total:12500, tx:1, color:'#888780', routes:[{d:'Posadas',     cp:'3301',m:12500,t:1}]},
 ];
 
 (function buildMpRutas() {
   const grid = document.getElementById('rutas-grid');
   if (!grid) return;
-  const medals = ['🥇','🥈','🥉','4°','5°'];
 
-  mpRutasData.forEach((r, i) => {
-    const maxB = Math.max(...r.dest.map(d => d.b));
-    const bars = r.dest.map(d => `
-      <div class="ruta-bar-row">
-        <div class="ruta-bar-lbl">${d.pob} <span style="color:var(--muted);font-size:9px">CP ${d.cp}</span></div>
-        <div class="ruta-bar-wrap"><div class="ruta-bar-fill" style="width:${Math.round(d.b/maxB*100)}%"></div></div>
-        <div class="ruta-bar-val">${d.b > 1 ? d.b + ' env.' : '1 env.'}</div>
-      </div>`).join('');
+  const fmt = n => '$' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
-    const card = document.createElement('div');
-    card.className = 'ruta-card';
-    card.innerHTML = `
+  mpRutasData.forEach(o => {
+    const mx = Math.max(...o.routes.map(r => r.m));
+    const rows = o.routes.map(r => `
+      <tr>
+        <td>${r.d}<span class="cp-pill">CP ${r.cp}</span></td>
+        <td><div style="display:flex;align-items:center;gap:6px">
+          <div class="rt-bar-bg"><div class="rt-bar-fill" style="width:${Math.round(r.m/mx*100)}%;background:${o.color};opacity:.75"></div></div>
+        </div></td>
+        <td class="rt-monto" style="color:var(--navy)">${fmt(r.m)}</td>
+        <td class="rt-tx">${r.t} tx</td>
+      </tr>`).join('');
+
+    const pendingNote = o.pendingAbr
+      ? `<div class="ruta-pending-note">⚠ ${o.pendingAbr} órdenes Abril sin facturas emitidas · ${fmt(o.pendingAmt)} pendiente de asignación por destino</div>`
+      : '';
+
+    const block = document.createElement('div');
+    block.className = 'ruta-card';
+    block.innerHTML = `
       <div class="ruta-header">
-        <div class="ruta-rank">${medals[i]}</div>
+        <div class="ruta-orig-dot" style="background:${o.color}"></div>
         <div style="flex:1">
-          <div class="ruta-nombre">📦 ${r.orig} <span style="color:var(--muted);font-size:11px;font-weight:600">CP ${r.cp_orig}</span></div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px">${r.n}</div>
+          <span class="ruta-nombre">${o.orig}</span>
+          <span class="cp-pill" style="margin-left:8px">CP ${o.cp_o}</span>
         </div>
-        <div class="ruta-bultos">${r.envios} envíos</div>
+        <span class="ruta-bultos" style="margin-right:8px">${fmt(o.total)}</span>
+        <span style="font-size:11px;color:var(--muted)">${o.tx} tx</span>
       </div>
-      <div style="margin-top:8px">
-        <div class="ruta-lbl" style="margin-bottom:6px">📍 Destinos</div>
-        <div class="ruta-bars">${bars}</div>
-      </div>`;
-    grid.appendChild(card);
+      <table class="ruta-table">
+        <thead><tr>
+          <th>Destino</th><th>Proporción</th>
+          <th class="r">Importe</th><th class="r">Tx</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      ${pendingNote}`;
+    grid.appendChild(block);
   });
 })();
 
