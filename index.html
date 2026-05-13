@@ -708,6 +708,28 @@ body {
 .rest-val { font-size: 12px; font-weight: 700; color: var(--g1); flex-shrink: 0; }
 .sellers-chart-wrap { }
 
+/* ── EVOLUCIÓN VENDEDOR (Recargas) ── */
+.rv-search-row{position:relative;margin-bottom:14px}
+.rv-input{width:100%;box-sizing:border-box;font-size:13px;padding:9px 14px 9px 36px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--navy);outline:none;font-family:inherit}
+.rv-input:focus{border-color:var(--g1)}
+.rv-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:15px;color:var(--muted);pointer-events:none}
+.rv-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg);border:1px solid var(--border);border-radius:8px;z-index:20;max-height:210px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.rv-opt{padding:8px 14px;font-size:13px;cursor:pointer;color:var(--navy);border-bottom:1px solid var(--border)}
+.rv-opt:last-child{border-bottom:none}
+.rv-opt:hover{background:var(--surface2)}
+.rv-vendor-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.rv-vendor-name{font-size:14px;font-weight:700;color:var(--navy)}
+.rv-legend{display:flex;gap:14px;flex-wrap:wrap}
+.rv-leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+.rv-note{font-size:10px;color:var(--muted);margin-top:8px}
+.rv-empty{text-align:center;color:var(--muted);font-size:13px;padding:28px 0}
+@media(max-width:600px){
+  .rv-input{font-size:12px;padding:8px 12px 8px 32px}
+  .rv-vendor-name{font-size:13px}
+  .rv-legend{gap:8px}
+  .rv-leg-item{font-size:10px}
+}
+
 /* ── RUTAS DE ENVÍOS ── */
 .rutas-grid { display: flex; flex-direction: column; gap: 0; }
 .cp-pill { font-size: 9px; font-weight: 600; color: var(--muted); background: var(--border); border-radius: 3px; padding: 1px 5px; margin-left: 5px; }
@@ -1466,7 +1488,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="sidebar-footer">
     <div class="update-badge">
       <div class="update-label">Última actualización</div>
-      <div class="update-date"><span class="update-dot"></span>12 May 2026</div>
+      <div class="update-date"><span class="update-dot"></span>13 May 2026</div>
     </div>
   </div>
 </aside>
@@ -1514,7 +1536,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="mobile-menu-footer">
       <div class="update-badge">
         <div class="update-label">Última actualización</div>
-        <div class="update-date"><span class="update-dot"></span>12 May 2026</div>
+        <div class="update-date"><span class="update-dot"></span>13 May 2026</div>
       </div>
     </div>
   </div>
@@ -1522,7 +1544,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <!-- ═══ SECCIÓN: RESUMEN ═══ -->
   <section class="section active" id="sec-resumen">
     <div class="section-title">Resumen Ejecutivo</div>
-    <div class="section-sub">Vista consolidada del período · Datos al 12 May 2026</div>
+    <div class="section-sub">Vista consolidada del período · Datos al 13 May 2026</div>
 
     <!-- Period selector tabs -->
     <div class="period-selector">
@@ -1696,6 +1718,22 @@ document.addEventListener('DOMContentLoaded', () => {
         <div id="topRecRanking"></div>
       </div>
     </div>
+
+    <!-- ── EVOLUCIÓN POR VENDEDOR ── -->
+    <div class="card" style="margin-top:20px" id="card-vendor-evo">
+      <div class="card-header">
+        <span class="card-title">Evolución por Vendedor</span>
+        <span class="card-badge">2024 · 2025 · 2026</span>
+      </div>
+      <div style="position:relative">
+        <div class="rv-search-row" id="rvSearchRow">
+          <span class="rv-search-icon">&#x1F50D;</span>
+          <input class="rv-input" id="rvInput" type="text" placeholder="Buscar vendedor..." autocomplete="off" />
+          <div class="rv-dropdown" id="rvDropdown" style="display:none"></div>
+        </div>
+        <div id="rvChartOut"><div class="rv-empty">Buscá un vendedor para ver su evolución mensual</div></div>
+      </div>
+    </div>
   </section>
 
   <!-- ═══ SECCIÓN: ENVÍOS ═══ -->
@@ -1848,7 +1886,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="card" style="margin-top:20px">
       <div class="card-header">
         <span class="card-title">📍 Rutas de Envíos — Top Sellers Marketplace</span>
-        <span class="card-badge">Ene–12 May 2026</span>
+        <span class="card-badge">Ene–13 May 2026</span>
       </div>
       <!-- Consolidado total -->
       <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
@@ -2438,7 +2476,7 @@ const PERIODOS = {
     showDiag: true,
   },
   may: {
-    label: 'Mayo 2026', sub: 'Datos al 12 May 2026',
+    label: 'Mayo 2026', sub: 'Datos al 13 May 2026',
     rec: { val: '$107,6M', v1: 'Datos al 9/5', v2: '281 transacciones', up1: true, up2: false },
     mp:  { val: '$10,8M', v1: 'Datos al 9/5', v2: '7 órdenes · 8 unds', up1: false, up2: false },
     ing: { val: '$375.198', v1: 'Comisiones Mayo 2026', v2: '4 transacciones', up1: false, up2: false },
@@ -3806,6 +3844,157 @@ const mpRutasData = [
     note.textContent = pendingNotes.join(' · ');
     grid.appendChild(note);
   }
+})();
+
+// ── EVOLUCIÓN POR VENDEDOR ─────────────────────────────────────────────
+const VENDOR_HIST = {
+"PAÑOL":{2025:[null,null,null,null,null,null,null,null,477.2,84.0,90.29,55.0],2026:[50.33,50.0,50.17,40.02,null,null,null,null,null,null,null,null]},
+"GARDEN LIFE S.A":{2024:[null,null,null,null,null,null,null,null,null,62.39,145.58,63.72],2025:[64.12,41.56,40.9,20.74,20.84,20.33,0.08,0.09,0.2,1.11,null,1.62],2026:[0.52,0.6,0.5,3.43,1.0,null,null,null,null,null,null,null]},
+"ROBERTO PICCA E HIJOS S.A.S.":{2026:[96.11,93.63,95.74,79.13,58.2,null,null,null,null,null,null,null]},
+"AUDISIO FERNANDO Y FEDERICO":{2024:[null,null,null,null,null,null,null,null,null,null,1.0,16.4],2025:[15.04,13.64,15.36,19.93,26.42,16.75,18.09,18.73,21.54,23.96,22.45,25.41],2026:[17.32,18.13,24.92,14.85,9.12,null,null,null,null,null,null,null]},
+"Magnolias":{2024:[null,null,0.65,0.3,0.4,1.3,1.6,0.9,3.56,40.26,16.0,23.9],2025:[24.5,33.29,14.19,18.44,25.19,3.95,0.78,13.57,15.62,24.93,13.4,10.77],2026:[9.67,11.59,10.34,7.51,0.28,null,null,null,null,null,null,null]},
+"CATEDRAL ALTA PATAGONIA SA":{2024:[null,null,null,null,null,null,null,null,null,null,30.01,40.01],2025:[40.02,20.03,60.02,21.5,20.18,20.33,0.01,0.03,21.41,null,null,null]},
+"MOVIMIENTO MKT - VIAPAGO":{2025:[null,null,null,null,null,null,null,null,206.6,20.66,0.31,1.06],2026:[21.36,null,0.05,0.03,null,null,null,null,null,null,null,null]},
+"MATERIALES GUTI SAS":{2024:[null,null,null,null,null,14.35,26.04,28.48,40.06,36.74,26.49,43.44],2025:[18.97,2.51,null,null,null,null,null,null,null,null,null,null]},
+"ELECTROYHOGAR.COM":{2024:[null,null,null,null,null,2.3,4.8,9.78,6.96,10.89,12.33,6.26],2025:[5.89,8.09,58.5,23.97,15.92,14.5,11.62,6.91,6.8,5.4,6.3,2.15],2026:[6.22,4.18,4.25,2.2,null,null,null,null,null,null,null,null]},
+"LARAIGNEE CARLOS":{2024:[null,null,null,null,null,null,null,null,null,null,null,2.53],2025:[5.9,8.73,14.79,30.8,18.99,21.49,23.55,6.15,4.04,4.03,3.45,5.2],2026:[4.7,8.89,21.21,26.53,9.0,null,null,null,null,null,null,null]},
+"SIQUEM SAS":{2024:[null,null,null,null,null,null,null,null,null,null,null,6.38],2025:[16.35,15.55,20.61,17.89,22.19,19.53,21.3,17.33,19.35,14.4,8.59,null],2026:[null,1.79,null,null,null,null,null,null,null,null,null,null]},
+"El Madero S.A.S":{2025:[null,null,null,null,null,1.24,6.95,5.71,2.94,8.4,23.78,20.67],2026:[19.73,10.71,15.85,11.58,2.07,null,null,null,null,null,null,null]},
+"Fassi Facundo Y Otros":{2024:[null,null,null,null,null,0.35,0.76,0.35,4.94,7.74,7.53,7.89],2025:[5.72,7.62,6.47,6.76,5.27,4.41,7.38,5.45,6.76,6.22,6.0,4.35],2026:[4.54,5.39,6.69,8.45,2.36,null,null,null,null,null,null,null]},
+"ESTANTERIAS VIRREYES S.R.L.":{2025:[null,null,null,null,null,null,null,null,10.55,10.72,9.78,11.8],2026:[13.69,11.0,12.75,11.87,3.75,null,null,null,null,null,null,null]},
+"FIDPMHGS SA":{2025:[null,null,null,null,null,null,null,null,4.29,6.75,7.85,5.11],2026:[22.95,11.14,13.46,10.95,3.7,null,null,null,null,null,null,null]},
+"GRUPO DECO HOME":{2025:[null,null,null,null,null,null,null,null,null,12.48,21.84,13.74],2026:[11.42,6.57,4.48,8.81,2.0,null,null,null,null,null,null,null]},
+"CHIRIANO JORGE RUBEN":{2024:[null,null,null,null,null,null,6.18,2.52,2.46,3.25,1.72,3.22],2025:[4.27,5.29,3.21,3.21,3.42,2.64,6.53,3.3,2.84,5.65,2.13,2.11],2026:[3.16,2.01,2.08,2.08,null,null,null,null,null,null,null,null]},
+"Espacio682":{2024:[null,null,null,null,0.1,null,null,0.06,0.18,0.91,13.29,8.43],2025:[5.71,3.7,2.33,2.43,4.08,3.86,3.7,4.46,4.63,6.67,3.39,0.89],2026:[1.07,1.25,0.94,0.3,0.18,null,null,null,null,null,null,null]},
+"POPLAY":{2025:[null,null,null,null,null,4.3,6.82,2.0,5.0,8.0,5.55,7.66],2026:[3.04,6.07,7.58,6.12,null,null,null,null,null,null,null,null]},
+"CARNIEL LEONARDO NICOLAS":{2024:[null,null,null,null,null,null,2.83,4.03,2.12,2.03,2.52,2.22],2025:[2.61,1.75,2.28,3.08,3.17,3.54,3.84,2.66,1.97,1.67,3.42,3.11],2026:[3.21,3.01,1.52,3.35,0.9,null,null,null,null,null,null,null]},
+"Prunus Natural":{2025:[null,null,null,null,null,2.0,5.59,2.54,6.34,4.74,3.69,3.22],2026:[4.1,3.74,5.0,5.17,4.04,null,null,null,null,null,null,null]},
+"Fragonte":{2025:[null,null,null,null,null,4.5,7.78,null,3.08,6.28,6.0,0.09],2026:[3.25,7.88,10.13,0.17,0.1,null,null,null,null,null,null,null]},
+"VICA NEUMATICOS Y SERVICIOS S.A.":{2024:[null,null,null,null,null,null,null,null,null,1.0,0.09,3.39],2025:[2.05,3.0,2.0,2.03,1.0,1.03,3.16,1.52,3.0,2.05,null,3.33],2026:[4.4,1.03,5.0,7.06,3.0,null,null,null,null,null,null,null]},
+"GABRIEL OSCAR FOGOLIN":{2025:[null,1.55,3.0,1.04,3.67,3.02,2.0,3.01,2.01,3.02,2.0,2.46],2026:[1.02,3.51,4.04,2.0,2.0,null,null,null,null,null,null,null]},
+"ROLLER SHOW":{2025:[null,null,1.18,null,2.42,1.89,2.57,2.0,3.4,1.84,3.2,2.1],2026:[3.06,3.95,5.0,4.0,1.0,null,null,null,null,null,null,null]},
+"Vidrios Francisco":{2024:[null,null,0.05,1.81,1.9,2.88,2.1,1.81,3.03,1.5,1.64,1.75],2025:[1.6,0.92,1.24,0.86,2.63,0.46,1.59,1.1,0.7,1.0,0.65,1.04],2026:[0.96,0.84,0.93,0.99,0.36,null,null,null,null,null,null,null]},
+"POPEYE PROBIKE":{2025:[null,null,null,null,null,null,null,null,null,null,0.73,6.51],2026:[8.24,4.1,6.04,5.0,2.5,null,null,null,null,null,null,null]},
+"BASTERRECHE CARINA":{2025:[null,null,1.9,1.56,0.01,1.7,1.06,2.0,2.59,1.4,2.15,1.0],2026:[2.15,1.75,1.8,2.22,1.5,null,null,null,null,null,null,null]},
+"BYT QUIMICA SRL":{2026:[0.95,2.39,6.65,9.64,3.12,null,null,null,null,null,null,null]},
+"Nino Mateo Oriti":{2024:[null,null,null,null,null,null,0.31,0.67,0.82,1.28,1.35,1.4],2025:[1.1,0.91,1.48,1.31,2.12,1.43,1.57,1.6,1.34,1.86,2.19,1.77],2026:[1.86,1.41,2.3,2.11,0.74,null,null,null,null,null,null,null]},
+"MATIAS JAVIER ANDRES":{2025:[null,0.1,0.07,0.52,1.02,1.11,4.73,4.39,6.27,6.67,13.14,20.74],2026:[13.61,5.47,2.19,2.01,1.0,null,null,null,null,null,null,null]},
+"HEZKA S.A.":{2025:[null,null,null,null,null,null,2.6,3.0,0.19,4.0,5.0,3.0],2026:[1.5,null,3.0,2.0,3.0,null,null,null,null,null,null,null]},
+"PASKALINAS":{2025:[null,null,0.83,2.67,2.36,1.69,2.48,1.33,1.91,2.35,1.87,1.35],2026:[1.51,1.54,0.82,2.11,2.0,null,null,null,null,null,null,null]},
+"MIJORMI SRL":{2025:[null,0.3,1.61,2.02,3.12,1.61,2.9,2.0,2.14,1.11,2.13,1.04],2026:[2.0,1.01,3.0,2.0,2.0,null,null,null,null,null,null,null]},
+"CARLITOS HOGAR":{2025:[null,1.5,12.35,3.53,0.01,2.52,2.11,1.0,1.0,1.02,1.17,1.0],2026:[1.03,1.0,1.0,1.0,null,null,null,null,null,null,null,null]},
+"Factory Pino":{2025:[null,null,null,null,1.5,1.2,2.02,2.2,1.37,1.39,2.47,2.15],2026:[1.71,1.67,2.3,3.54,0.6,null,null,null,null,null,null,null]},
+"Lebaux SRL":{2025:[null,null,null,null,null,null,1.26,1.61,1.82,1.59,2.08,3.46],2026:[2.85,1.66,4.39,2.18,0.18,null,null,null,null,null,null,null]},
+"PRADO":{2025:[null,null,null,null,null,null,null,0.59,2.3,2.8,4.34,4.09],2026:[0.49,1.1,3.93,3.0,null,null,null,null,null,null,null,null]},
+"GE RUIGUANG":{2025:[null,null,null,null,null,3.36,3.1,3.05,2.6,3.2,4.0,1.2],2026:[4.31,1.0,5.36,4.57,0.7,null,null,null,null,null,null,null]},
+"AJ INTERNATIONAL GROUP S.A.U":{2025:[null,null,null,null,null,null,null,null,0.3,1.28,3.29,5.59],2026:[6.21,6.37,5.33,3.24,null,null,null,null,null,null,null,null]},
+"FOOD PACKAGING SRL":{2025:[null,null,null,8.43,4.75,2.2,3.97,4.6,2.91,5.3,4.32,1.85],2026:[null,1.0,1.35,null,null,null,null,null,null,null,null,null]},
+"Medios Urbanos Argentina S.A":{2024:[null,null,null,null,null,null,2.31,0.23,0.02,2.3,2.02,0.04],2025:[null,2.0,2.08,0.02,null,2.0,0.03,2.06,1.1,0.1,2.0,null],2026:[null,2.0,2.0,2.0,null,null,null,null,null,null,null,null]},
+"PALOU MARIA SOL":{2025:[2.58,2.17,0.21,1.3,1.51,3.41,1.39,0.8,1.29,3.25,3.9,3.98],2026:[2.81,1.6,1.37,1.36,null,null,null,null,null,null,null,null]},
+};
+
+(function initVendorEvo() {
+  const MONTHS = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const allVendors = Object.keys(VENDOR_HIST).sort();
+  const input = document.getElementById('rvInput');
+  const dropdown = document.getElementById('rvDropdown');
+  const out = document.getElementById('rvChartOut');
+  if (!input) return;
+  let chartInst = null;
+
+  function norm(s){ return s.toLowerCase().replace(/[.\-]/g,' ').replace(/\s+/g,' ').trim(); }
+
+  function renderDd(q) {
+    if (!q) { dropdown.style.display='none'; return; }
+    const nq = norm(q);
+    const res = allVendors.filter(v => norm(v).includes(nq)).slice(0, 12);
+    if (!res.length) { dropdown.style.display='none'; return; }
+    dropdown.innerHTML = res.map(v => `<div class="rv-opt">${v}</div>`).join('');
+    dropdown.style.display = 'block';
+    dropdown.querySelectorAll('.rv-opt').forEach(el => {
+      el.onclick = () => { selectV(el.textContent); input.value = el.textContent; dropdown.style.display='none'; };
+    });
+  }
+
+  function selectV(name) {
+    const d = VENDOR_HIST[name]; if (!d) return;
+    const yrs = Object.keys(d).sort();
+    const isMobile = window.innerWidth < 600;
+    const chartH = isMobile ? 180 : 230;
+
+    const cfgs = {
+      '2024':{ color:'#888780', dash:[5,4], fill:false, width:1.5 },
+      '2025':{ color:'#378ADD', dash:[],   fill:false, width:2   },
+      '2026':{ color:'#1D9E75', dash:[],   fill:true,  width:2.5 }
+    };
+
+    const legendHTML = yrs.map(yr => {
+      const cfg = cfgs[yr] || { color:'#888' };
+      const acum = d[yr].reduce((s,v)=>s+(v||0),0);
+      const lineStyle = yr==='2024'
+        ? `border-top:1.5px dashed ${cfg.color};height:0;width:20px`
+        : `background:${cfg.color};height:2px;width:20px;border-radius:1px`;
+      return `<div class="rv-leg-item"><div style="${lineStyle}"></div><span>${yr} · $${acum.toFixed(1)}M</span></div>`;
+    }).join('');
+
+    out.innerHTML = `
+      <div class="rv-vendor-header">
+        <span class="rv-vendor-name">${name}</span>
+        <div class="rv-legend">${legendHTML}</div>
+      </div>
+      <div style="position:relative;height:${chartH}px">
+        <canvas id="rvCanvas" role="img" aria-label="Evolución mensual de ${name}"></canvas>
+      </div>
+      <div class="rv-note">* Mayo 2026: datos parciales al 13/5. Los meses en blanco no tienen registros en el período.</div>`;
+
+    if (chartInst) chartInst.destroy();
+
+    const datasets = yrs.map(yr => {
+      const cfg = cfgs[yr] || { color:'#888', dash:[], fill:false, width:1.5 };
+      const vals = d[yr];
+      return {
+        label: yr,
+        data: vals,
+        borderColor: cfg.color,
+        borderWidth: cfg.width,
+        borderDash: cfg.dash,
+        pointRadius: vals.map(v => v!==null ? (isMobile?2:3) : 0),
+        pointBackgroundColor: cfg.color,
+        backgroundColor: yr==='2026' ? 'rgba(29,158,117,0.09)' : 'transparent',
+        tension: 0.35,
+        spanGaps: false,
+        fill: cfg.fill ? 'origin' : false
+      };
+    });
+
+    chartInst = new Chart(document.getElementById('rvCanvas'), {
+      type: 'line',
+      data: { labels: MONTHS, datasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode:'index', intersect:false },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: {
+            label: ctx => ctx.parsed.y !== null ? `${ctx.dataset.label}: $${ctx.parsed.y.toFixed(2)}M` : null,
+            filter: item => item.parsed.y !== null
+          }}
+        },
+        scales: {
+          x: { grid:{display:false}, ticks:{color:'#888', font:{size: isMobile?10:11}} },
+          y: {
+            grid: { color:'rgba(0,0,0,0.04)' },
+            ticks: { color:'#888', font:{size: isMobile?10:11}, callback: v => '$'+v+'M' },
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+
+  input.addEventListener('input', () => renderDd(input.value));
+  input.addEventListener('focus', () => { if (input.value) renderDd(input.value); });
+  document.addEventListener('click', e => { if (!e.target.closest('#rvSearchRow')) dropdown.style.display='none'; });
 })();
 
 // Inicializar selector jerárquico — al final para que el DOM esté listo
