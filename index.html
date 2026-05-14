@@ -1769,9 +1769,9 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 
     <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
-      <div class="kpi"><div class="kpi-icon">📦</div><div class="kpi-label" id="envLabel">Envíos — Mayo 2026</div><div class="kpi-value" id="envVal">2.299</div><div class="kpi-tags"><span class="kpi-tag neutral">Datos al 14/5</span><span class="kpi-tag neutral"></span></div></div>
-      <div class="kpi"><div class="kpi-icon">📫</div><div class="kpi-label" id="bulLabel">Bultos — Mayo 2026</div><div class="kpi-value" id="bulVal">6.056</div><div class="kpi-tags"><span class="kpi-tag neutral">Datos al 14/5</span><span class="kpi-tag neutral"></span></div></div>
-      <div class="kpi"><div class="kpi-icon">🗓</div><div class="kpi-label">Abr 2026</div><div class="kpi-value">9.047</div><div class="kpi-tags"><span class="kpi-tag neutral">21.808 bultos</span></div></div>
+      <div class="kpi"><div class="kpi-icon">📦</div><div class="kpi-label" id="envLabel">Envíos — Mayo 2026</div><div class="kpi-value" id="envVal">2.299</div><div class="kpi-tags"><span class="kpi-tag neutral" id="envTag1">Datos al 14/5</span><span class="kpi-tag neutral" id="envTag2"></span></div></div>
+      <div class="kpi"><div class="kpi-icon">📫</div><div class="kpi-label" id="bulLabel">Bultos — Mayo 2026</div><div class="kpi-value" id="enviosBulVal">6.056</div><div class="kpi-tags"><span class="kpi-tag neutral" id="bulTag1">Datos al 14/5</span><span class="kpi-tag neutral" id="bulTag2"></span></div></div>
+      <div class="kpi"><div class="kpi-icon">🗓</div><div class="kpi-label" id="refPeriodLabel">Abr 2026</div><div class="kpi-value" id="refPeriodEnv">9.047</div><div class="kpi-tags"><span class="kpi-tag neutral" id="refPeriodBul">21.808 bultos</span></div></div>
     </div>
     <div class="chart-grid">
       <div class="card">
@@ -2721,15 +2721,39 @@ function setPeriod(p, clickedTab) {
     envTags[1].className = 'kpi-tag ' + (d.env.up2 ? 'up' : 'down');
     envTags[1].textContent = d.env.v2;
 
-    // Actualizar labels de sección Envíos
+    // Actualizar sección Envíos & Logística
+  const refMap = {
+    ene:        { label:'Dic 2025',   env:'8.413',  bul:'30.482 bultos' },
+    feb:        { label:'Ene 2026',   env:'7.156',  bul:'17.570 bultos' },
+    mar:        { label:'Feb 2026',   env:'6.816',  bul:'16.834 bultos' },
+    abr:        { label:'Mar 2026',   env:'8.758',  bul:'20.856 bultos' },
+    may:        { label:'Abr 2026',   env:'9.047',  bul:'21.808 bultos' },
+    q1:         { label:'Q1 2025',    env:'24.556', bul:'44.470 bultos' },
+    acumulado:  { label:'Acum 2025',  env:'38.551', bul:'84.306 bultos' },
+  };
   const envLabel = document.getElementById('envLabel');
-  const envVal = document.getElementById('envVal');
+  const envVal   = document.getElementById('envVal');
   const bulLabel = document.getElementById('bulLabel');
-  const bulVal = document.getElementById('bulVal');
+  const enviosBulVal = document.getElementById('enviosBulVal');
+  const envTag1  = document.getElementById('envTag1');
+  const envTag2  = document.getElementById('envTag2');
+  const bulTag1  = document.getElementById('bulTag1');
+  const bulTag2  = document.getElementById('bulTag2');
+  const refLabel = document.getElementById('refPeriodLabel');
+  const refEnv   = document.getElementById('refPeriodEnv');
+  const refBul   = document.getElementById('refPeriodBul');
   if (envLabel) envLabel.textContent = 'Envíos — ' + d.label;
-  if (envVal) envVal.textContent = d.env.val;
+  if (envVal)   envVal.textContent   = d.env.val;
   if (bulLabel) bulLabel.textContent = 'Bultos — ' + d.label;
-  if (bulVal) bulVal.textContent = d.bul.val;
+  if (enviosBulVal) enviosBulVal.textContent = d.bul.val;
+  if (envTag1) { envTag1.className = 'kpi-tag ' + (d.env.up1 ? 'up' : 'down'); envTag1.textContent = d.env.v1; }
+  if (envTag2) { envTag2.className = 'kpi-tag ' + (d.env.up2 ? 'up' : 'down'); envTag2.textContent = d.env.v2; }
+  if (bulTag1) { bulTag1.className = 'kpi-tag ' + (d.bul.up1 ? 'up' : 'down'); bulTag1.textContent = d.bul.v1; }
+  if (bulTag2) { bulTag2.className = 'kpi-tag ' + (d.bul.up2 ? 'up' : 'down'); bulTag2.textContent = d.bul.v2; }
+  const ref = refMap[p] || refMap['may'];
+  if (refLabel) refLabel.textContent = ref.label;
+  if (refEnv)   refEnv.textContent   = ref.env;
+  if (refBul)   refBul.textContent   = ref.bul;
 
   // Bultos
     kpis[4].querySelector('.kpi-value').textContent = d.bul.val;
