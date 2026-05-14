@@ -325,6 +325,14 @@ body {
 .chart-wrap {
   position: relative;
 }
+/* ── CANAL EVOLUTION TABS ────────────────── */
+.ce-tabs { display:flex; gap:4px; margin-bottom:14px; flex-wrap:wrap; }
+.ce-tab { padding:5px 16px; border:0.5px solid var(--border); background:transparent; border-radius:20px; font-size:13px; cursor:pointer; color:var(--muted); font-family:inherit; transition:background .15s,color .15s; }
+.ce-tab.active { background:var(--surface2); color:var(--navy); font-weight:600; border-color:var(--g1); }
+.ce-tab:hover:not(.active) { background:var(--surface2); }
+.ce-leg { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px; font-size:12px; color:var(--muted); align-items:center; }
+.ce-li { display:flex; align-items:center; gap:5px; }
+.ce-note { font-size:11px; color:var(--muted); margin-top:8px; padding:6px 10px; background:var(--surface2); border-radius:8px; }
 
 /* ── RANKING BARS ────────────────────────── */
 .rank-row {
@@ -1488,7 +1496,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="sidebar-footer">
     <div class="update-badge">
       <div class="update-label">Última actualización</div>
-      <div class="update-date"><span class="update-dot"></span>13 May 2026</div>
+      <div class="update-date"><span class="update-dot"></span>14 May 2026</div>
     </div>
   </div>
 </aside>
@@ -1536,7 +1544,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="mobile-menu-footer">
       <div class="update-badge">
         <div class="update-label">Última actualización</div>
-        <div class="update-date"><span class="update-dot"></span>13 May 2026</div>
+        <div class="update-date"><span class="update-dot"></span>14 May 2026</div>
       </div>
     </div>
   </div>
@@ -1544,7 +1552,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <!-- ═══ SECCIÓN: RESUMEN ═══ -->
   <section class="section active" id="sec-resumen">
     <div class="section-title">Resumen Ejecutivo</div>
-    <div class="section-sub">Vista consolidada del período · Datos al 13 May 2026</div>
+    <div class="section-sub">Vista consolidada del período · Datos al 14 May 2026</div>
 
     <!-- Period selector tabs -->
     <div class="period-selector">
@@ -1777,8 +1785,25 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 
     <div class="card" style="margin-top:20px">
-      <div class="card-header"><span class="card-title">Evolución Envíos & Bultos</span><span class="card-badge">18 meses</span></div>
-      <div class="chart-wrap"><canvas id="chartEnv" height="160"></canvas></div>
+      <div class="card-header"><span class="card-title">Evolución Envíos & Bultos por Canal</span><span class="card-badge">Ene 2024 – May 2026</span></div>
+      <div class="ce-tabs">
+        <button class="ce-tab active" data-c="all">Ver todos</button>
+        <button class="ce-tab" data-c="sc">Seller Center</button>
+        <button class="ce-tab" data-c="tn">Tiendanube</button>
+        <button class="ce-tab" data-c="ur">Urbano</button>
+      </div>
+      <div class="ce-leg">
+        <span class="ce-li"><svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#3B82F6" stroke-width="2"/></svg> 2024 Envíos</span>
+        <span class="ce-li"><svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#3B82F6" stroke-width="2" stroke-dasharray="5,3"/></svg> 2024 Bultos</span>
+        <span class="ce-li"><svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#EC4899" stroke-width="2"/></svg> 2025 Envíos</span>
+        <span class="ce-li"><svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#EC4899" stroke-width="2" stroke-dasharray="5,3"/></svg> 2025 Bultos</span>
+        <span class="ce-li"><svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#10B981" stroke-width="2"/></svg> 2026 Envíos</span>
+        <span class="ce-li"><svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#10B981" stroke-width="2" stroke-dasharray="5,3"/></svg> 2026 Bultos</span>
+      </div>
+      <div style="position:relative;width:100%;height:310px">
+        <canvas id="ceChart"></canvas>
+      </div>
+      <div class="ce-note" id="ceNote"></div>
     </div>
   </section>
 
@@ -1886,7 +1911,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="card" style="margin-top:20px">
       <div class="card-header">
         <span class="card-title">📍 Rutas de Envíos — Top Sellers Marketplace</span>
-        <span class="card-badge">Ene–13 May 2026</span>
+        <span class="card-badge">Ene–14 May 2026</span>
       </div>
       <!-- Consolidado total -->
       <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
@@ -2476,7 +2501,7 @@ const PERIODOS = {
     showDiag: true,
   },
   may: {
-    label: 'Mayo 2026', sub: 'Datos al 13 May 2026',
+    label: 'Mayo 2026', sub: 'Datos al 14 May 2026',
     rec: { val: '$107,6M', v1: 'Datos al 9/5', v2: '281 transacciones', up1: true, up2: false },
     mp:  { val: '$10,8M', v1: 'Datos al 9/5', v2: '7 órdenes · 8 unds', up1: false, up2: false },
     ing: { val: '$375.198', v1: 'Comisiones Mayo 2026', v2: '4 transacciones', up1: false, up2: false },
@@ -3081,28 +3106,125 @@ const evoOpts = (canvasId) => {
 evoChart1 = evoOpts('chartEvo');
 evoChart2 = evoOpts('chartEvo2');
 
-const envLabels = ['Oct24','Nov','Dic','Ene25','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene26','Feb26','Mar26'];
-const envEnvios = [7020, 9208, 6978, 6892, 5630, 6871, 6999, 6878, 5377, 6379, 5872, 5970, 6959, 7254, 8398, 7146, 6807, 5968, 4819];
-const envBultos = [12138, 14219, 11463, 13284, 11442, 13485, 26692, 12780, 13057, 15091, 18370, 20897, 27291, 19055, 30465, 17558, 16526, 14726, 11428];
-
-new Chart(document.getElementById('chartEnv').getContext('2d'), {
-  type:'bar',
-  data:{
-    labels:envLabels,
-    datasets:[
-      { label:'Envíos', data:envEnvios, backgroundColor:'#077C14', borderRadius:4, order:2 },
-      { label:'Bultos', data:envBultos, backgroundColor:'rgba(7,124,20,.2)', borderRadius:4, order:1 }
-    ]
+// ── CANAL EVOLUTION CHART ─────────────────────────────────
+const CE_MONTHS = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const CANAL_HIST = {
+  sc: {
+    env: { 2024:[null,null,null,null,null,null,null,null,null,7020,9208,6978],
+           2025:[6892,5630,6871,6999,6878,5377,6379,5872,5970,6959,7254,8398],
+           2026:[7146,6807,5968,4819,null,null,null,null,null,null,null,null] },
+    bul: { 2024:[null,null,null,null,null,null,null,null,null,12138,14219,11463],
+           2025:[13284,11442,13485,26692,12780,13057,15091,18370,20897,27291,19055,30465],
+           2026:[17558,16526,14726,11428,null,null,null,null,null,null,null,null] }
   },
-  options:{
-    responsive:true, maintainAspectRatio:true,
-    plugins:{ legend:{position:'top', labels:{font:{size:12}, boxWidth:12}} },
-    scales:{
-      x:{ grid:{display:false}, ticks:{font:{size:10}} },
-      y:{ grid:{color:'#E8F5E9'}, ticks:{font:{size:11}} }
-    }
+  tn: {
+    env: { 2024:[null,null,null,null,null,null,null,null,null,null,null,null],
+           2025:[null,null,null,null,null,null,null,null,null,null,null,null],
+           2026:[null,null,null,null,null,null,null,null,null,null,null,null] },
+    bul: { 2024:[null,null,null,null,null,null,null,null,null,null,null,null],
+           2025:[null,null,null,null,null,null,null,null,null,null,null,null],
+           2026:[null,null,null,null,null,null,null,null,null,null,null,null] }
+  },
+  ur: {
+    env: { 2024:[null,null,null,null,null,null,null,null,null,null,null,null],
+           2025:[null,null,null,null,null,null,null,null,null,null,null,null],
+           2026:[null,null,null,null,null,null,null,null,null,null,null,null] },
+    bul: { 2024:[null,null,null,null,null,null,null,null,null,null,null,null],
+           2025:[null,null,null,null,null,null,null,null,null,null,null,null],
+           2026:[null,null,null,null,null,null,null,null,null,null,null,null] }
   }
+};
+// Real per-channel data
+CANAL_HIST.sc.env[2024]  = [null,null,20,186,169,721,1924,2398,2191,4207,6520,5144];
+CANAL_HIST.sc.env[2025]  = [5402,4927,6871,4352,3880,3373,3812,3278,3521,4151,4172,4707];
+CANAL_HIST.sc.env[2026]  = [4216,4265,5500,6242,1556,null,null,null,null,null,null,null];
+CANAL_HIST.sc.bul[2024]  = [null,null,20,293,218,880,2557,3454,3389,5820,8749,6415];
+CANAL_HIST.sc.bul[2025]  = [5890,7039,10837,7558,6312,5517,7338,6428,7525,8686,8661,9451];
+CANAL_HIST.sc.bul[2026]  = [9071,8952,11547,12586,3071,null,null,null,null,null,null,null];
+CANAL_HIST.tn.env[2024]  = [710,769,785,1148,1420,1212,1772,1417,1324,1729,983,918];
+CANAL_HIST.tn.env[2025]  = [1134,1003,936,1281,1169,591,891,1147,1139,1492,1827,2402];
+CANAL_HIST.tn.env[2026]  = [1791,1580,2050,1934,467,null,null,null,null,null,null,null];
+CANAL_HIST.tn.bul[2024]  = [2087,2294,3320,4703,5309,5301,6982,5225,4727,5231,3744,3628];
+CANAL_HIST.tn.bul[2025]  = [6301,5528,3609,18009,4618,6125,6061,10452,11776,17205,9131,19727];
+CANAL_HIST.tn.bul[2026]  = [7350,6909,8099,8351,2709,null,null,null,null,null,null,null];
+CANAL_HIST.ur.env[2024]  = [513,507,585,595,983,673,1277,1490,1304,1084,1715,1412];
+CANAL_HIST.ur.env[2025]  = [1676,1265,1342,1454,1859,1429,1677,1453,1323,1334,1264,1304];
+CANAL_HIST.ur.env[2026]  = [1149,971,1208,871,276,null,null,null,null,null,null,null];
+CANAL_HIST.ur.bul[2024]  = [520,508,587,596,986,674,1297,1512,1306,1087,1726,1422];
+CANAL_HIST.ur.bul[2025]  = [1683,1265,2318,1454,1885,1438,1693,1496,1641,1441,1272,1304];
+CANAL_HIST.ur.bul[2026]  = [1149,973,1210,871,276,null,null,null,null,null,null,null];
+
+function sumArrays(...arrs) {
+  return CE_MONTHS.map((_,i) => {
+    const vals = arrs.map(a => a[i]).filter(v => v !== null && v !== undefined);
+    return vals.length ? vals.reduce((a,b)=>a+b,0) : null;
+  });
+}
+const CANAL_ALL = {
+  env: {
+    2024: sumArrays(CANAL_HIST.sc.env[2024], CANAL_HIST.tn.env[2024], CANAL_HIST.ur.env[2024]),
+    2025: sumArrays(CANAL_HIST.sc.env[2025], CANAL_HIST.tn.env[2025], CANAL_HIST.ur.env[2025]),
+    2026: sumArrays(CANAL_HIST.sc.env[2026], CANAL_HIST.tn.env[2026], CANAL_HIST.ur.env[2026])
+  },
+  bul: {
+    2024: sumArrays(CANAL_HIST.sc.bul[2024], CANAL_HIST.tn.bul[2024], CANAL_HIST.ur.bul[2024]),
+    2025: sumArrays(CANAL_HIST.sc.bul[2025], CANAL_HIST.tn.bul[2025], CANAL_HIST.ur.bul[2025]),
+    2026: sumArrays(CANAL_HIST.sc.bul[2026], CANAL_HIST.tn.bul[2026], CANAL_HIST.ur.bul[2026])
+  }
+};
+
+let ceChartInst = null;
+function initCanalEvo(canal) {
+  const src = canal === 'all' ? CANAL_ALL : CANAL_HIST[canal];
+  const datasets = [
+    { label:'2024 Envíos', data:src.env[2024], borderColor:'#3B82F6', backgroundColor:'transparent', borderWidth:2, borderDash:[], pointRadius:3, tension:0.3, spanGaps:false },
+    { label:'2024 Bultos', data:src.bul[2024], borderColor:'#3B82F6', backgroundColor:'transparent', borderWidth:2, borderDash:[5,3], pointRadius:3, tension:0.3, spanGaps:false },
+    { label:'2025 Envíos', data:src.env[2025], borderColor:'#EC4899', backgroundColor:'transparent', borderWidth:2, borderDash:[], pointRadius:3, tension:0.3, spanGaps:false },
+    { label:'2025 Bultos', data:src.bul[2025], borderColor:'#EC4899', backgroundColor:'transparent', borderWidth:2, borderDash:[5,3], pointRadius:3, tension:0.3, spanGaps:false },
+    { label:'2026 Envíos', data:src.env[2026], borderColor:'#10B981', backgroundColor:'transparent', borderWidth:2, borderDash:[], pointRadius:3, tension:0.3, spanGaps:false },
+    { label:'2026 Bultos', data:src.bul[2026], borderColor:'#10B981', backgroundColor:'transparent', borderWidth:2, borderDash:[5,3], pointRadius:3, tension:0.3, spanGaps:false },
+  ];
+  datasets.forEach(ds => { if(ds.borderDash && ds.borderDash.length) ds.borderDash = ds.borderDash; });
+
+  if(ceChartInst) ceChartInst.destroy();
+  ceChartInst = new Chart(document.getElementById('ceChart').getContext('2d'), {
+    type: 'line',
+    data: { labels: CE_MONTHS, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y !== null ? ctx.parsed.y.toLocaleString('es-AR') : '—'}`
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 11 }, callback: v => v >= 1000 ? (v/1000).toFixed(0)+'k' : v } }
+      }
+    }
+  });
+  // Fix dashed lines (Chart.js uses segment or borderDash on dataset)
+  ceChartInst.data.datasets.forEach((ds, i) => {
+    if(i % 2 === 1) ceChartInst.data.datasets[i].borderDash = [5,3];
+  });
+  ceChartInst.update();
+
+  const names = { all:'Todos los canales', sc:'Seller Center', tn:'Tiendanube', ur:'Urbano' };
+  document.getElementById('ceNote').textContent = `${names[canal]} · Líneas sólidas = Envíos · Líneas punteadas = Bultos · Datos Ene 2024 – May 2026`;
+}
+
+document.querySelectorAll('.ce-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.ce-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    initCanalEvo(btn.dataset.c);
+  });
 });
+initCanalEvo('all');
 
 // ── VENDEDORES CHART ──────────────────────────────────────
 const vendLabels  = ["Mar24", "Abr24", "May24", "Jun24", "Jul24", "Ago24", "Sep24", "Oct24", "Nov24", "Dic24", "Ene25", "Feb25", "Mar25", "Abr25", "May25", "Jun25", "Jul25", "Ago25", "Sep25", "Oct25", "Nov25", "Dic25", "Ene26", "Feb26", "Mar26", "Abr26", "May26"];
