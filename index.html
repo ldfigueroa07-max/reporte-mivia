@@ -1496,7 +1496,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="sidebar-footer">
     <div class="update-badge">
       <div class="update-label">Última actualización</div>
-      <div class="update-date"><span class="update-dot"></span>22 May 2026</div>
+      <div class="update-date"><span class="update-dot"></span>24 May 2026</div>
     </div>
   </div>
 </aside>
@@ -1544,7 +1544,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="mobile-menu-footer">
       <div class="update-badge">
         <div class="update-label">Última actualización</div>
-        <div class="update-date"><span class="update-dot"></span>22 May 2026</div>
+        <div class="update-date"><span class="update-dot"></span>24 May 2026</div>
       </div>
     </div>
   </div>
@@ -1552,7 +1552,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <!-- ═══ SECCIÓN: RESUMEN ═══ -->
   <section class="section active" id="sec-resumen">
     <div class="section-title">Resumen Ejecutivo</div>
-    <div class="section-sub">Vista consolidada del período · Datos al 22 May 2026</div>
+    <div class="section-sub">Vista consolidada del período · Datos al 24 May 2026</div>
 
     <!-- Period selector tabs -->
     <div class="period-selector">
@@ -1911,7 +1911,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="card" style="margin-top:20px">
       <div class="card-header">
         <span class="card-title">📍 Rutas de Envíos — Top Sellers Marketplace</span>
-        <span class="card-badge">Ene–22 May 2026</span>
+        <span class="card-badge">Ene–24 May 2026</span>
       </div>
       <!-- Consolidado total -->
       <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
@@ -2501,7 +2501,7 @@ const PERIODOS = {
     showDiag: true,
   },
   may: {
-    label: 'Mayo 2026', sub: 'Datos al 22 May 2026',
+    label: 'Mayo 2026', sub: 'Datos al 24 May 2026',
     rec: { val: '$432,5M', v1: 'Datos al 22/5', v2: '1.731 transacciones', up1: true, up2: true },
     mp:  { val: '$23,3M', v1: 'Datos al 22/5', v2: '23 órdenes · 32 unds', up1: true, up2: false },
     ing: { val: '$599.538', v1: 'Comisiones Mayo 2026', v2: '12 transacciones', up1: false, up2: false },
@@ -3578,16 +3578,16 @@ const clarityData = {
     dispositivo: { Mobile: 69.1, Desktop: 26.7, Tablet: 4.3 }
   },
   may: {
-    nuevos: 86.3, recurrentes: 13.7,
-    origen: { Referral: 62.0, Directo: 21.1, 'Búsqueda orgánica': 16.9, Social: 0.4 },
-    conversion: 0, sessions: 3940,
+    nuevos: 82.8, recurrentes: 17.2,
+    origen: { Referral: 56.1, 'Búsqueda orgánica': 16.9, Directo: 22.9, Pauta: 0.9, Social: 3.1 },
+    conversion: 2.4, sessions: 11682,
     dispositivo: { Mobile: 73.9, Desktop: 25.7, Tablet: 0.4 }
   },
   acumulado: {
-    nuevos: 84.3, recurrentes: 15.7,
-    origen: { Referral: 48.2, 'Búsqueda orgánica': 23.9, Directo: 20.6, Pauta: 6.9, Social: 0.3 },
-    conversion: 2.1, sessions: 78087,
-    dispositivo: { Mobile: 70.5, Desktop: 25.9, Tablet: 3.5 }
+    nuevos: 84.0, recurrentes: 16.0,
+    origen: { Referral: 47.8, 'Búsqueda orgánica': 23.7, Directo: 20.7, Pauta: 6.8, Social: 0.7 },
+    conversion: 2.1, sessions: 85829,
+    dispositivo: { Mobile: 70.4, Desktop: 26.4, Tablet: 3.2 }
   }
 };
 const clarityColors = { Referral:'#077C14', 'Búsqueda orgánica':'#22C55E', Directo:'#86EFAC', Pauta:'#1565C0', Social:'#F57F17' };
@@ -3595,11 +3595,11 @@ let chartUsuariosInst=null, chartOrigenInst=null, chartSellersInst=null;
 
 function buildClaritySection(period) {
   const d = clarityData[period] || clarityData[Object.keys(clarityData).pop()];
-  const labelMap = { ene:'Enero 2026', feb:'Febrero 2026', mar:'Marzo 2026', abr:'Abril 2026', q1:'Q1 2026', acumulado:'Acumulado 2026' };
+  const labelMap = { ene:'Enero 2026', feb:'Febrero 2026', mar:'Marzo 2026', abr:'Abril 2026', may:'Mayo 2026', q1:'Q1 2026', acumulado:'Acumulado 2026' };
   const badge = document.getElementById('clarity-badge');
-  if (badge) badge.textContent = labelMap[period] || 'Marzo 2026';
+  if (badge) badge.textContent = labelMap[period] || 'Mayo 2026';
   const sellBadge = document.getElementById('sellers-badge');
-  if (sellBadge) sellBadge.textContent = labelMap[period] || 'Marzo 2026';
+  if (sellBadge) sellBadge.textContent = labelMap[period] || 'Mayo 2026';
 
   const kpisEl = document.getElementById('clarity-kpis');
   if (kpisEl) kpisEl.innerHTML = `
