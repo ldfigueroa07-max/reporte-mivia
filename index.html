@@ -2296,9 +2296,11 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><span class="card-title" style="color:var(--muted)">Envíos vs Abril 2026 · <span style="color:var(--muted)">Canales pend. ↗</span></span></div>
+        <div class="card-header"><span class="card-title" style="color:var(--g1)">Envíos vs Abril 2026 · <span style="color:var(--g1)">+5,1% ▲</span></span></div>
         <div class="caida-grid" style="grid-template-columns:1fr">
-          <div class="caida-item"><div class="caida-top"><span class="caida-name">Reporte canales</span><span class="caida-diff" style="color:var(--muted)">Pendiente</span></div><div class="caida-flow">Archivo MAY31 no disponible aún</div><div class="caida-causa">Datos de envíos por canal se actualizarán en la próxima sesión</div></div>
+          <div class="caida-item"><div class="caida-top"><span class="caida-name">Seller Center</span><span class="caida-diff" style="color:var(--g1)">+1.909</span></div><div class="caida-flow">4.242 → 6.151 (+45%)</div><div class="caida-causa">Fuerte crecimiento del canal — motor principal del mes</div></div>
+          <div class="caida-item"><div class="caida-top"><span class="caida-name">TiendaNube</span><span class="caida-diff" style="color:var(--g1)">+296</span></div><div class="caida-flow">1.934 → 2.230 (+15,3%)</div><div class="caida-causa">Crecimiento sostenido del canal e-commerce</div></div>
+          <div class="caida-item"><div class="caida-top"><span class="caida-name">Urbano</span><span class="caida-diff" style="color:var(--g1)">+253</span></div><div class="caida-flow">871 → 1.124 (+29,1%)</div><div class="caida-causa">Canal urbano retoma crecimiento luego de caída en abril</div></div>
         </div>
       </div>
     </div>
@@ -2312,7 +2314,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="punto"><div class="punto-ico">📈</div><div class="punto-txt">Recargas <strong>$528,2M — máximo histórico mensual</strong>. ▲ 27,1% vs Abril · ▲ 166,3% vs Mayo 2025. Acumulado 2026: <strong>$2.068,3M</strong> en 5 meses.</div></div>
       <div class="punto"><div class="punto-ico">⭐</div><div class="punto-txt"><strong>Roberto Picca</strong> tuvo un mes excepcional: <strong>$177,7M</strong> (33,6% del total), +119% respecto a abril. <strong>Audisio</strong> escala a 2° con $42,9M (+202%).</div></div>
       <div class="punto"><div class="punto-ico">📉</div><div class="punto-txt">Caídas a monitorear: <strong>El Madero -$5M</strong> ($11,7M → $6,7M, -43%), <strong>Estanterías Virreyes -$1,6M</strong> ($11,5M → $9,9M). Fassi Facundo también retrocedió.</div></div>
-      <div class="punto"><div class="punto-ico">🚚</div><div class="punto-txt">Envíos y bultos pendientes de cierre — Reporte Canales MAY31 disponible en próxima sesión. Datos al 22/5: 7.360 envíos · 17.447 bultos.</div></div>
+      <div class="punto"><div class="punto-ico">🚚</div><div class="punto-txt">Envíos <strong>9.505 — ▲ 5,1% vs Abril · ▲ 37,6% vs Mayo 2025</strong>. Bultos <strong>22.052 (+72,1% interanual)</strong>. Seller Center lidera con 65% del volumen (6.151 envíos).</div></div>
       <div class="punto"><div class="punto-ico">🛒</div><div class="punto-txt">Marketplace <strong>$36,8M — 37 órdenes · 44 unidades</strong>. Ticket promedio <strong>$995.160</strong>. <strong>Coop. Profega</strong> lidera con $26,4M (71,7%). Acumulado 2026: $254,4M.</div></div>
       <div class="punto"><div class="punto-ico">💹</div><div class="punto-txt">Total histórico desde lanzamiento supera <strong>$5.479,8M</strong> en recargas. El crecimiento acumulado supera <strong>x150 veces la inflación</strong> del período.</div></div>
       <div class="punto"><div class="punto-ico">👥</div><div class="punto-txt"><strong>237 vendedores MiVia · 73 Vía Compras</strong> dados de alta en 2026 (Ene–May). <strong>31 nuevos MiVia · 7 VC</strong> en mayo. Total plataforma: 729 vendedores activos.</div></div>
@@ -2502,17 +2504,17 @@ const PERIODOS = {
     rec: { val: '$528,2M', v1: '▲ 27,1% vs Abril', v2: '▲ 166,3% vs Mayo 2025', up1: true, up2: true },
     mp:  { val: '$36,8M', v1: '▼ 31,5% vs Abril', v2: '37 órdenes · 44 unds', up1: false, up2: false },
     ing: { val: '$960.547', v1: 'Comisiones Mayo 2026', v2: '19 transacciones', up1: false, up2: false },
-    env: { val: '7.360', v1: 'Datos al 22/5 (canales pend.)', v2: '', up1: true, up2: false },
-    bul: { val: '17.447', v1: 'Datos al 22/5 (canales pend.)', v2: '', up1: true, up2: false },
+    env: { val: '9.505', v1: '▲ 5,1% vs Abril', v2: '▲ 37,6% vs Mayo 2025', up1: true, up2: true },
+    bul: { val: '22.052', v1: '▲ 1,1% vs Abril', v2: '▲ 72,1% vs Mayo 2025', up1: true, up2: true },
     acum: '$5.479,8M', acum_label: 'Acumulado desde lanzamiento',
-    sc_pct: 65, sc_val: '4.794', tn_pct: 23, tn_val: '1.700', ur_pct: 12, ur_val: '866',
+    sc_pct: 65, sc_val: '6.151', tn_pct: 23, tn_val: '2.230', ur_pct: 12, ur_val: '1.124',
     evo: [0.7, 2.24, 3.56, 27.12, 70.08, 66.78, 75.15, 160.14, 230.52, 184.51, 176.16, 161.63, 220.89, 183.95, 198.37, 179.64, 194.11, 175.34, 251.16, 300.5, 284.15, 264.79, 383.31, 332.18, 409.2, 415.42, 528.2],
     evoLabels: ['Mar24','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene25','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene26','Feb26','Mar26','Abr26','May26'],
     mp_ventas: '$36,8M', mp_ordenes: '37', mp_ticket: '$995.160', mp_units: '44',
     pl_mp_resultado: '$34,8M', pl_mp_margen: '94,6%', pl_mivia_resultado: '$512,9M', pl_mivia_margen: '97,1%',
     topRec: [{n:"ROBERTO PICCA E HIJOS S.A.S.",v:177.67,val:"$177,7M"},{n:"AUDISIO FERNANDO Y FEDERICO",v:42.85,val:"$42,9M"},{n:"LARAIGNEE CARLOS",v:29.34,val:"$29,3M"},{n:"METALURGICACDG S.A",v:13.47,val:"$13,5M"},{n:"FIDPMHGS SA",v:11.03,val:"$11,0M"},{n:"ESTANTERIAS VIRREYES S.R.L.",v:9.86,val:"$9,9M"},{n:"PRADO",v:7.72,val:"$7,7M"},{n:"Fassi Facundo Y Otros",v:7.20,val:"$7,2M"},{n:"Prunus Natural",v:7.14,val:"$7,1M"},{n:"El Madero S.A.S",v:6.73,val:"$6,7M"}],
-    topEnv: [{n:"Urbano (SC)",v:866,val:"866"},{n:"LARAIGNEE CARLOS",v:556,val:"556"},{n:"METALURGICACDG S.A",v:481,val:"481"},{n:"geraldine",v:263,val:"263"},{n:"Juan Ignacio",v:262,val:"262"},{n:"pamela",v:251,val:"251"},{n:"BYT QUIMICA SRL",v:201,val:"201"},{n:"PABLO PEREIRA",v:187,val:"187"},{n:"GABRIEL OSCAR FOGOLIN",v:169,val:"169"},{n:"POPEYE PROBIKE",v:162,val:"162"}],
-    topLoc: [{n:"Neuquén",v:107},{n:"Córdoba",v:93},{n:"Rosario",v:74},{n:"Mendoza",v:66},{n:"Bahía Blanca",v:56},{n:"Santa Fe",v:56},{n:"Salta",v:55},{n:"Paraná",v:54},{n:"San Juan",v:54},{n:"San Luis",v:53},{n:"Bariloche",v:51},{n:"Santa Rosa",v:45},{n:"Plottier",v:42},{n:"Tandil",v:41},{n:"Comodoro Rivadavia",v:41}],
+    topEnv: [{n:"LARAIGNEE CARLOS",v:798,val:"798"},{n:"METALURGICACDG S.A",v:588,val:"588"},{n:"geraldine",v:406,val:"406"},{n:"Juan Ignacio",v:335,val:"335"},{n:"pamela",v:291,val:"291"},{n:"BYT QUIMICA SRL",v:264,val:"264"},{n:"PABLO PEREIRA",v:258,val:"258"},{n:"POPEYE PROBIKE",v:211,val:"211"},{n:"GABRIEL OSCAR FOGOLIN",v:209,val:"209"},{n:"Fassi Facundo Y Otros",v:185,val:"185"}],
+    topLoc: [{n:"Neuquén",v:133},{n:"Córdoba",v:114},{n:"Rosario",v:96},{n:"Mendoza",v:83},{n:"Salta",v:76},{n:"San Juan",v:75},{n:"Paraná",v:72},{n:"Santa Fe",v:70},{n:"Bahía Blanca",v:70},{n:"Bariloche",v:66},{n:"San Luis",v:61},{n:"Río Cuarto",v:52},{n:"Santa Rosa",v:52},{n:"Tandil",v:51},{n:"Comodoro Rivadavia",v:50}],
     topSellers: [{n:"COOPERATIVA DE TRABAJO PROFEGA",v:26.40,val:"$26,4M"},{n:"MUNDO OBRA",v:9.01,val:"$9,0M"},{n:"Petenatti Hogar VC",v:0.68,val:"$0,7M"},{n:"METALURGICACDG S.A",v:0.38,val:"$0,4M"},{n:"IZEL SEH",v:0.20,val:"$0,2M"}],
     showDiag: true,
   },
@@ -2631,16 +2633,16 @@ const PERIODOS = {
     rec: { val: '$2.068,3M', v1: 'Ene $383M · Feb $332M · Mar $409M · Abr $415M · May $528,2M', v2: '▲ vs Acum 2025', up1: true, up2: true },
     mp:  { val: '$254,4M', v1: 'Acum 2026 · 5 meses', v2: '~7 órdenes (mes prom)', up1: true, up2: false },
     ing: { val: '$5.116.727', v1: 'Ingresos marginales 2026', v2: '104 transacciones acum.', up1: false, up2: false },
-    env: { val: '39.137', v1: 'Ene–May 2026 (canales pend.)', v2: '▲ 1,5% vs Acum 2025', up1: true, up2: true },
-    bul: { val: '94.515', v1: 'Ene–May 2026 (canales pend.)', v2: '▲ 12,1% vs Acum 2025', up1: true, up2: true },
+    env: { val: '41.282', v1: 'Ene–May 2026 · 5 meses', v2: '▲ vs Acum 2025', up1: true, up2: true },
+    bul: { val: '99.120', v1: 'Ene–May 2026 · 5 meses', v2: '▲ vs Acum 2025', up1: true, up2: true },
     acum: '$5.479,8M', acum_label: 'Acumulado desde lanzamiento',
-    sc_pct: 64, sc_val: '25.017', tn_pct: 23, tn_val: '9.055', ur_pct: 13, ur_val: '5.065',
+    sc_pct: 64, sc_val: '26.374', tn_pct: 23, tn_val: '9.585', ur_pct: 13, ur_val: '5.323',
     evo: [383.31, 332.18, 409.2, 415.42, 528.2],
     evoLabels: ["Enero 2026", "Febrero 2026", "Marzo 2026", "Abril 2026", "Mayo 2026"],
     chartType: 'bar',
     topRec: [{n:"ROBERTO PICCA E HIJOS S.A.S.",v:473.25,val:"$473,3M"},{n:"LARAIGNEE CARLOS",v:111.38,val:"$111,4M"},{n:"AUDISIO FERNANDO Y FEDERICO",v:101.10,val:"$101,1M"},{n:"FIDPMHGS SA",v:49.80,val:"$49,8M"},{n:"ESTANTERIAS VIRREYES S.R.L.",v:41.36,val:"$41,4M"},{n:"METALURGICACDG S.A",v:38.72,val:"$38,7M"},{n:"El Madero S.A.S",v:36.85,val:"$36,9M"},{n:"Fassi Facundo Y Otros",v:30.06,val:"$30,1M"},{n:"BYT QUIMICA SRL",v:24.30,val:"$24,3M"},{n:"Magnolias",v:17.60,val:"$17,6M"}],
-    topEnv: [{n:"Urbano (SC)",v:4827,val:"4.827"},{n:"LARAIGNEE CARLOS",v:1795,val:"1.795"},{n:"pamela",v:1415,val:"1.415"},{n:"METALURGICACDG S.A",v:1321,val:"1.321"},{n:"Juan Ignacio",v:1201,val:"1.201"},{n:"geraldine",v:1186,val:"1.186"},{n:"POPEYE PROBIKE",v:1021,val:"1.021"},{n:"GABRIEL OSCAR FOGOLIN",v:741,val:"741"},{n:"Fassi Facundo Y Otros",v:739,val:"739"},{n:"MATIAS JAVIER ANDRES",v:577,val:"577"}],
-    topLoc: [{n:"Neuquén",v:472},{n:"Córdoba",v:456},{n:"Rosario",v:351},{n:"Mendoza",v:331},{n:"San Juan",v:283},{n:"Bahía Blanca",v:277},{n:"Paraná",v:268},{n:"Salta",v:262},{n:"Santa Fe",v:260},{n:"Bariloche",v:259},{n:"Santa Rosa",v:208},{n:"Cipolletti",v:153},{n:"Río Cuarto",v:147},{n:"San Miguel de Tucumán",v:143},{n:"Puerto Madryn",v:142}],
+    topEnv: [{n:"Urbano (SC)",v:5085,val:"5.085"},{n:"LARAIGNEE CARLOS",v:2037,val:"2.037"},{n:"pamela",v:1455,val:"1.455"},{n:"METALURGICACDG S.A",v:1428,val:"1.428"},{n:"geraldine",v:1329,val:"1.329"},{n:"Juan Ignacio",v:1274,val:"1.274"},{n:"POPEYE PROBIKE",v:1070,val:"1.070"},{n:"GABRIEL OSCAR FOGOLIN",v:781,val:"781"},{n:"Fassi Facundo Y Otros",v:775,val:"775"},{n:"MATIAS JAVIER ANDRES",v:591,val:"591"}],
+    topLoc: [{n:"Neuquén",v:498},{n:"Córdoba",v:477},{n:"Rosario",v:373},{n:"Mendoza",v:348},{n:"San Juan",v:304},{n:"Bahía Blanca",v:291},{n:"Paraná",v:286},{n:"Salta",v:283},{n:"Santa Fe",v:274},{n:"Bariloche",v:274},{n:"Santa Rosa",v:215},{n:"Río Cuarto",v:199},{n:"Cipolletti",v:153},{n:"San Miguel de Tucumán",v:143},{n:"Puerto Madryn",v:142}],
     topSellers: [{n:"COOPERATIVA DE TRABAJO PROFEGA",v:184.46,val:"$184,5M"},{n:"MUNDO OBRA",v:42.37,val:"$42,4M"},{n:"Petenatti Hogar VC",v:6.78,val:"$6,8M"},{n:"NORTESHOPS",v:5.99,val:"$6,0M"},{n:"ECOTECN",v:4.69,val:"$4,7M"}],
     showDiag: false,
   }
@@ -3159,22 +3161,22 @@ const CANAL_HIST = {
 // Real per-channel data
 CANAL_HIST.sc.env[2024]  = [null,null,20,186,169,721,1924,2398,2191,4207,6520,5144];
 CANAL_HIST.sc.env[2025]  = [5402,4927,6871,4352,3880,3373,3812,3278,3521,4151,4172,4707];
-CANAL_HIST.sc.env[2026]  = [4216,4265,5500,6242,4794,null,null,null,null,null,null,null];
+CANAL_HIST.sc.env[2026]  = [4216,4265,5500,6242,6151,null,null,null,null,null,null,null];
 CANAL_HIST.sc.bul[2024]  = [null,null,20,293,218,880,2557,3454,3389,5820,8749,6415];
 CANAL_HIST.sc.bul[2025]  = [5890,7039,10837,7558,6312,5517,7338,6428,7525,8686,8661,9451];
-CANAL_HIST.sc.bul[2026]  = [9071,8952,11547,12586,9456,null,null,null,null,null,null,null];
+CANAL_HIST.sc.bul[2026]  = [9071,8952,11547,12586,12209,null,null,null,null,null,null,null];
 CANAL_HIST.tn.env[2024]  = [710,769,785,1148,1420,1212,1772,1417,1324,1729,983,918];
 CANAL_HIST.tn.env[2025]  = [1134,1003,936,1281,1169,591,891,1147,1139,1492,1827,2402];
-CANAL_HIST.tn.env[2026]  = [1791,1580,2050,1934,1700,null,null,null,null,null,null,null];
+CANAL_HIST.tn.env[2026]  = [1791,1580,2050,1934,2230,null,null,null,null,null,null,null];
 CANAL_HIST.tn.bul[2024]  = [2087,2294,3320,4703,5309,5301,6982,5225,4727,5231,3744,3628];
 CANAL_HIST.tn.bul[2025]  = [6301,5528,3609,18009,4618,6125,6061,10452,11776,17205,9131,19727];
-CANAL_HIST.tn.bul[2026]  = [7350,6909,8099,8351,7125,null,null,null,null,null,null,null];
+CANAL_HIST.tn.bul[2026]  = [7350,6909,8099,8351,8719,null,null,null,null,null,null,null];
 CANAL_HIST.ur.env[2024]  = [513,507,585,595,983,673,1277,1490,1304,1084,1715,1412];
 CANAL_HIST.ur.env[2025]  = [1676,1265,1342,1454,1859,1429,1677,1453,1323,1334,1264,1304];
-CANAL_HIST.ur.env[2026]  = [1149,971,1208,871,866,null,null,null,null,null,null,null];
+CANAL_HIST.ur.env[2026]  = [1149,971,1208,871,1124,null,null,null,null,null,null,null];
 CANAL_HIST.ur.bul[2024]  = [520,508,587,596,986,674,1297,1512,1306,1087,1726,1422];
 CANAL_HIST.ur.bul[2025]  = [1683,1265,2318,1454,1885,1438,1693,1496,1641,1441,1272,1304];
-CANAL_HIST.ur.bul[2026]  = [1149,973,1210,871,866,null,null,null,null,null,null,null];
+CANAL_HIST.ur.bul[2026]  = [1149,973,1210,871,1124,null,null,null,null,null,null,null];
 
 function sumArrays(...arrs) {
   return CE_MONTHS.map((_,i) => {
