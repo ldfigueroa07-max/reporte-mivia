@@ -1570,6 +1570,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">Jun</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('q1',2026,this)">Q1</button>
+        <button class="period-btn" onclick="setPeriodAll('q2',2026,this)">Q2</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('acumulado',2026,this)">Acumulado</button>
       </div>
@@ -1707,6 +1708,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">Jun</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('q1',2026,this)">Q1</button>
+        <button class="period-btn" onclick="setPeriodAll('q2',2026,this)">Q2</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('acumulado',2026,this)">Acumulado</button>
       </div>
@@ -1766,6 +1768,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">Jun</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('q1',2026,this)">Q1</button>
+        <button class="period-btn" onclick="setPeriodAll('q2',2026,this)">Q2</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('acumulado',2026,this)">Acumulado</button>
       </div>
@@ -1837,6 +1840,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">Jun</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('q1',2026,this)">Q1</button>
+        <button class="period-btn" onclick="setPeriodAll('q2',2026,this)">Q2</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('acumulado',2026,this)">Acumulado</button>
       </div>
@@ -1961,6 +1965,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">Jun</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('q1',2026,this)">Q1</button>
+        <button class="period-btn" onclick="setPeriodAll('q2',2026,this)">Q2</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('acumulado',2026,this)">Acumulado</button>
       </div>
@@ -2075,6 +2080,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">Jun</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('q1',2026,this)">Q1</button>
+        <button class="period-btn" onclick="setPeriodAll('q2',2026,this)">Q2</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('acumulado',2026,this)">Acumulado</button>
       </div>
@@ -2543,6 +2549,26 @@ const PERIODOS = {
     topSellers: [{n:"COOPERATIVA DE TRABAJO PROFEGA",v:13.73,val:"$13,7M"},{n:"MUNDO OBRA",v:0.96,val:"$1,0M"},{n:"Fassi Facundo Y Otros",v:0.09,val:"$0,1M"}],
     showDiag: true,
   },
+  q2: {
+    label: 'Q2 2026', sub: 'Abr + May + Jun 2026 (parcial)',
+    rec: { val: '$1.023,3M', v1: 'Abr $415M · May $528M · Jun $94,2M', v2: '4.353 transacciones', up1: true, up2: true },
+    mp:  { val: '$105,3M', v1: 'Abr $53,7M · May $36,8M · Jun $14,8M', v2: '71 órdenes Q2', up1: true, up2: false },
+    ing: { val: '$1.967.393', v1: 'Ingresos marginales Q2', v2: '35 transacciones', up1: false, up2: false },
+    env: { val: '20.854', v1: 'Abr + May + Jun (parcial)', v2: '', up1: true, up2: false },
+    bul: { val: '49.502', v1: 'Abr + May + Jun (parcial)', v2: '', up1: true, up2: false },
+    acum: '$5.574,0M', acum_label: 'Acumulado desde lanzamiento',
+    sc_pct: 67, sc_val: '14.023', tn_pct: 22, tn_val: '4.642', ur_pct: 10, ur_val: '2.189',
+    evo: [415.42, 528.2, 94.2],
+    evoLabels: ["Abril 2026", "Mayo 2026", "Junio 2026"],
+    chartType: 'bar',
+    mp_ventas: '$105,3M', mp_ordenes: '71', mp_ticket: '$1.482.978', mp_units: '~',
+    pl_mp_resultado: '$99,6M', pl_mp_margen: '94,6%', pl_mivia_resultado: '$993,6M', pl_mivia_margen: '97,1%',
+    topRec: [{n:"ROBERTO PICCA E HIJOS S.A.S.",v:257.26,val:"$257,3M"},{n:"AUDISIO FERNANDO Y FEDERICO",v:64.99,val:"$65,0M"},{n:"LARAIGNEE CARLOS",v:62.40,val:"$62,4M"},{n:"METALURGICACDG S.A",v:28.30,val:"$28,3M"},{n:"FIDPMHGS SA",v:24.07,val:"$24,1M"},{n:"ESTANTERIAS VIRREYES S.R.L.",v:23.79,val:"$23,8M"},{n:"El Madero S.A.S",v:22.60,val:"$22,6M"},{n:"BYT QUIMICA SRL",v:18.22,val:"$18,2M"},{n:"GRUPO DECO HOME",v:17.46,val:"$17,5M"},{n:"Fassi Facundo Y Otros",v:16.56,val:"$16,6M"}],
+    topEnv: [{n:"LARAIGNEE CARLOS",v:1663,val:"1.663"},{n:"METALURGICACDG S.A",v:1192,val:"1.192"},{n:"Juan Ignacio",v:768,val:"768"},{n:"geraldine",v:733,val:"733"},{n:"BYT QUIMICA SRL",v:724,val:"724"},{n:"pamela",v:578,val:"578"},{n:"PABLO PEREIRA",v:487,val:"487"},{n:"GABRIEL OSCAR FOGOLIN",v:477,val:"477"},{n:"POPEYE PROBIKE",v:430,val:"430"},{n:"Fassi Facundo Y Otros",v:428,val:"428"}],
+    topLoc: [{n:"Neuquén",v:291},{n:"Córdoba",v:281},{n:"Mendoza",v:220},{n:"Rosario",v:216},{n:"Salta",v:178},{n:"San Juan",v:178},{n:"Paraná",v:173},{n:"Bahía Blanca",v:169},{n:"Santa Fe",v:158},{n:"Bariloche",v:153},{n:"San Luis",v:133},{n:"Santa Rosa",v:128},{n:"San Miguel de Tucumán",v:121},{n:"Comodoro Rivadavia",v:110},{n:"Plottier",v:109}],
+    topSellers: [{n:"COOPERATIVA DE TRABAJO PROFEGA",v:93.0,val:"$93,0M"},{n:"MUNDO OBRA",v:9.97,val:"$10,0M"},{n:"Petenatti Hogar VC",v:0.68,val:"$0,7M"},{n:"CIRIATO",v:0.60,val:"$0,6M"},{n:"NORTESHOPS",v:1.27,val:"$1,3M"}],
+    showDiag: false,
+  },
   mar: {
     label: 'Marzo 2026', sub: 'Mes completo — Marzo 2026',
     rec: { val: '$409,2M', v1: '▲ 23,2% vs Feb', v2: '▲ 85,2% vs Mar 2025', up1: true, up2: true },
@@ -2818,12 +2844,13 @@ function setPeriod(p, clickedTab) {
     abr:       { ventas: d.mp_ventas||'', total: d.mp_ventas||'', totalTag:'Abril 2026', ing: d.ing?.val||'en proceso', ingTag: d.ing?.v2||'facturación pendiente', seller:'Coop. Profega', sellerVal:'' },
     may:       { ventas: d.mp_ventas||'', total: d.mp_ventas||'', totalTag:'Mayo 2026',  ing: d.ing?.val||'$960.547', ingTag: d.ing?.v2||'19 transacciones', seller:'Coop. Profega', sellerVal:'$26,4M' },
     jun:       { ventas: d.mp_ventas||'', total: d.mp_ventas||'', totalTag:'Junio 2026',  ing: d.ing?.val||'$35.255', ingTag: d.ing?.v2||'1 transacción', seller:'Coop. Profega', sellerVal:'$13,7M' },
+    q2:        { ventas:'$105,3M',  total:'$105,3M',  totalTag:'Abr + May + Jun 2026',   ing:'$1.967.393',  ingTag:'35 transacciones Q2', seller:'Coop. Profega', sellerVal:'$93,0M' },
     q1:        { ventas:'$125,5M',  total:'$125,5M',  totalTag:'Ene + Feb + Mar',     ing:'$3.184.589',  ingTag:'70 transacciones', seller:'Coop. Profega', sellerVal:'$89,2M' },
     anual:     { ventas:'$191,5M',  total:'$191,5M',  totalTag:'Ene → Abr 2026',      ing:'$3.404.097',  ingTag:'73 transacciones', seller:'Coop. Profega', sellerVal:'$128,3M' },
     acumulado: { ventas:'$269,2M',  total:'$269,2M',  totalTag:'Ene → Jun 2026',      ing: PERIODOS.acumulado?.ing?.val||'$5.151.982', ingTag: PERIODOS.acumulado?.ing?.v2||'105 transacciones acum.', seller:'Coop. Profega', sellerVal:'$198,2M' },
   };
   const mk = mpKpiData[p] || mpKpiData.may;
-  const labelMap = { ene:'Enero 2026', feb:'Febrero 2026', mar:'Marzo 2026', abr:'Abril 2026', may:'Mayo 2026', jun:'Junio 2026', q1:'Q1 2026', anual:'Acumulado 2026', acumulado:'Acumulado 2026' };
+  const labelMap = { ene:'Enero 2026', feb:'Febrero 2026', mar:'Marzo 2026', abr:'Abril 2026', may:'Mayo 2026', jun:'Junio 2026', q1:'Q1 2026', q2:'Q2 2026', anual:'Acumulado 2026', acumulado:'Acumulado 2026' };
 
   const el = id => document.getElementById(id);
   if (el('mpKpiLabel1')) el('mpKpiLabel1').textContent = 'Ventas — ' + (labelMap[p]||p);
@@ -3291,6 +3318,7 @@ const altasData = {
   abr:       { mivia: 51, vc: 11 },
   may:       { mivia: 31, vc: 7 },
   jun:       { mivia: 2, vc: 1 },
+  q2:        { mivia: 84, vc: 19 },
   q1:        { mivia: 155, vc: 55 },
   acumulado: { mivia: 239, vc: 74 },
 };
@@ -3597,6 +3625,12 @@ const clarityData = {
     conversion: 1.17, sessions: 13319,
     dispositivo: { Mobile: 73.6, Desktop: 25.9, Tablet: 0.5 }
   },
+  q2: {
+    nuevos: 88.2, recurrentes: 11.8,
+    origen: { Referral: 56.0, 'Búsqueda orgánica': 17.2, Directo: 21.2, Pauta: 3.8, Social: 1.7 },
+    conversion: 1.74, sessions: 25001,
+    dispositivo: { Mobile: 73.7, Desktop: 25.8, Tablet: 0.5 }
+  },
   q1: {
     nuevos: 82.2, recurrentes: 17.8,
     origen: { Referral: 44.5, 'Búsqueda orgánica': 26.2, Directo: 20.6, Pauta: 7.9, Social: 0.3 },
@@ -3627,7 +3661,7 @@ let chartUsuariosInst=null, chartOrigenInst=null, chartSellersInst=null;
 
 function buildClaritySection(period) {
   const d = clarityData[period] || clarityData[Object.keys(clarityData).pop()];
-  const labelMap = { ene:'Enero 2026', feb:'Febrero 2026', mar:'Marzo 2026', abr:'Abril 2026', may:'Mayo 2026', jun:'Junio 2026', q1:'Q1 2026', acumulado:'Acumulado 2026' };
+  const labelMap = { ene:'Enero 2026', feb:'Febrero 2026', mar:'Marzo 2026', abr:'Abril 2026', may:'Mayo 2026', jun:'Junio 2026', q1:'Q1 2026', q2:'Q2 2026', acumulado:'Acumulado 2026' };
   const badge = document.getElementById('clarity-badge');
   if (badge) badge.textContent = labelMap[period] || 'Mayo 2026';
   const sellBadge = document.getElementById('sellers-badge');
