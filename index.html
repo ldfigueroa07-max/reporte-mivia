@@ -3005,7 +3005,15 @@ function setPeriod(p, clickedTab) {
           layout:{ padding:{ top:48 } },
           plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>' $'+c.parsed.y+'M'}} },
           scales:{
-            x:{ grid:{display:false}, ticks:{maxTicksLimit:7, includeBounds:true, font:{size:11}} },
+            x:{ grid:{display:false}, ticks:{
+              font:{size:11},
+              callback: function(val, index) {
+                const total = evoLbls.length;
+                const step = Math.floor(total / 6);
+                if (index === 0 || index === total-1 || index % step === 0) return evoLbls[index];
+                return '';
+              }
+            }},
             y:{ grid:{color:'#E8F5E9'}, ticks:{callback:v=>'$'+v+'M', font:{size:11}} }
           }
         },
@@ -3221,7 +3229,15 @@ const evoOpts = (canvasId) => {
         callbacks:{ label: c => ' $' + c.parsed.y + 'M' }
       }},
       scales:{
-        x:{ grid:{display:false}, ticks:{maxTicksLimit:7, includeBounds:true, font:{size:11}} },
+        x:{ grid:{display:false}, ticks:{
+              font:{size:11},
+              callback: function(val, index) {
+                const total = evoLbls.length;
+                const step = Math.floor(total / 6);
+                if (index === 0 || index === total-1 || index % step === 0) return evoLbls[index];
+                return '';
+              }
+            }},
         y:{ grid:{color:'#E8F5E9'}, ticks:{callback:v=>'$'+v+'M', font:{size:11}} }
       }
     },
