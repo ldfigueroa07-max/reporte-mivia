@@ -1400,6 +1400,29 @@ td.dim { color: var(--muted); }
   margin-top: 10px;
   display: none;
 }
+
+/* ── Servicio-Canal chart ── */
+.svc-filter-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.svc-filter-label{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.5px;min-width:60px}
+.svc-tab{padding:4px 14px;border:.5px solid var(--border);background:transparent;border-radius:20px;font-size:12px;cursor:pointer;color:var(--muted);font-family:inherit;transition:all .15s}
+.svc-tab.active{background:var(--surface2);color:var(--navy);font-weight:700;border-color:var(--g1)}
+.svc-tab:hover:not(.active){background:var(--surface2)}
+.svc-divider{width:1px;height:16px;background:var(--border);margin:0 2px}
+.part-section{margin-top:22px;border-top:1px solid var(--border);padding-top:18px}
+.part-section-title{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.part-pills{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.part-pill{background:var(--surface2);border-radius:10px;padding:14px 16px;text-align:center}
+.part-pill-name{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:4px}
+.part-pill-pct{font-size:26px;font-weight:700;line-height:1;margin-bottom:4px}
+.part-pill-n{font-size:11px;color:var(--muted)}
+.part-pill-sc .part-pill-pct{color:#077C14}
+.part-pill-tn .part-pill-pct{color:#22C55E}
+.part-pill-ur .part-pill-pct{color:#F57F17}
+.part-bar-wrap{margin-top:12px;height:8px;border-radius:4px;overflow:hidden;display:flex;gap:2px}
+.part-bar-sc{height:100%;background:#077C14;border-radius:4px;transition:width .4s}
+.part-bar-tn{height:100%;background:#22C55E;border-radius:4px;transition:width .4s}
+.part-bar-ur{height:100%;background:#F57F17;border-radius:4px;transition:width .4s}
+.part-year-note{font-size:10px;color:var(--muted);margin-top:8px;text-align:right}
 </style>
 </head>
 <body>
@@ -1810,6 +1833,65 @@ document.addEventListener('DOMContentLoaded', () => {
         <canvas id="ceChart"></canvas>
       </div>
       <div class="ce-note" id="ceNote"></div>
+    </div>
+
+    <!-- ── EVOLUCIÓN POR SERVICIO ── -->
+    <div class="card" style="margin-top:20px" id="card-svc-evo">
+      <div class="card-header">
+        <span class="card-title">Evolución Envíos por Servicio &amp; Canal</span>
+        <span class="card-badge" id="svcBadge">Ene 2024 – Jun 2026</span>
+      </div>
+      <div class="svc-filter-row">
+        <span class="svc-filter-label">Canal</span>
+        <button class="svc-tab active" data-type="canal" data-v="all">Ver todos</button>
+        <button class="svc-tab" data-type="canal" data-v="sc">Seller Center</button>
+        <button class="svc-tab" data-type="canal" data-v="tn">Tiendanube</button>
+        <button class="svc-tab" data-type="canal" data-v="ur">Urbano</button>
+      </div>
+      <div class="svc-filter-row">
+        <span class="svc-filter-label">Servicio</span>
+        <button class="svc-tab active" data-type="svc" data-v="all">Ver todos</button>
+        <div class="svc-divider"></div>
+        <button class="svc-tab" data-type="svc" data-v="s1">0001 · Dom→Dom</button>
+        <button class="svc-tab" data-type="svc" data-v="s2000">2000 · Suc→Suc</button>
+        <button class="svc-tab" data-type="svc" data-v="s3000">3000 · Dom→Suc</button>
+        <button class="svc-tab" data-type="svc" data-v="s4000">4000 · Suc→Dom</button>
+      </div>
+      <div class="ce-leg" style="margin-top:12px">
+        <span class="ce-li"><svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#3B82F6" stroke-width="2"/></svg>2024</span>
+        <span class="ce-li"><svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#EC4899" stroke-width="2"/></svg>2025</span>
+        <span class="ce-li"><svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#10B981" stroke-width="2"/></svg>2026</span>
+      </div>
+      <div style="position:relative;width:100%;height:300px">
+        <canvas id="svcChart"></canvas>
+      </div>
+      <div class="ce-note" id="svcNote"></div>
+      <div class="part-section" id="svcPartSection">
+        <div class="part-section-title">Participación por canal — Ene–Jun 2026</div>
+        <div class="part-pills">
+          <div class="part-pill part-pill-sc">
+            <div class="part-pill-name">Seller Center</div>
+            <div class="part-pill-pct" id="svcPartScPct">—</div>
+            <div class="part-pill-n" id="svcPartScN">—</div>
+          </div>
+          <div class="part-pill part-pill-tn">
+            <div class="part-pill-name">Tiendanube</div>
+            <div class="part-pill-pct" id="svcPartTnPct">—</div>
+            <div class="part-pill-n" id="svcPartTnN">—</div>
+          </div>
+          <div class="part-pill part-pill-ur">
+            <div class="part-pill-name">Urbano</div>
+            <div class="part-pill-pct" id="svcPartUrPct">—</div>
+            <div class="part-pill-n" id="svcPartUrN">—</div>
+          </div>
+        </div>
+        <div class="part-bar-wrap">
+          <div class="part-bar-sc" id="svcBarSc"></div>
+          <div class="part-bar-tn" id="svcBarTn"></div>
+          <div class="part-bar-ur" id="svcBarUr"></div>
+        </div>
+        <div class="part-year-note" id="svcPartNote"></div>
+      </div>
     </div>
   </section>
 
@@ -4297,6 +4379,102 @@ const VENDOR_HIST = {
   input.addEventListener('input', () => renderDd(input.value));
   input.addEventListener('focus', () => { if (input.value) renderDd(input.value); });
   document.addEventListener('click', e => { if (!e.target.closest('#rvSearchRow')) dropdown.style.display='none'; });
+})();
+
+// ── SERVICIO-CANAL EVOLUTION CHART ────────────────────────────────────
+(function() {
+const SVC_CANAL_DATA = {"line":{"all":{"all":{"2024":[1223,1276,1390,1929,2572,2606,4971,5305,4818,7020,9218,7474],"2025":[8212,7195,9149,7087,6908,5393,6380,5878,5983,6976,7263,8413],"2026":[7156,6816,5971,9044,9502,9838,null,null,null,null,null,null]},"s1":{"2024":[505,567,607,846,841,731,999,848,868,1073,932,851],"2025":[873,783,836,916,955,506,768,991,1018,1293,1377,1566],"2026":[1338,1256,1075,1540,1765,1862,null,null,null,null,null,null]},"s2000":{"2024":[513,507,585,703,1075,1204,2755,3374,3015,3966,5725,4622],"2025":[4415,3558,4890,4626,4588,4087,4482,3761,3702,4160,4193,4583],"2026":[3983,4094,3633,5530,5695,5832,null,null,null,null,null,null]},"s3000":{"2024":[205,202,194,363,629,539,900,682,543,776,598,433],"2025":[539,423,347,576,466,362,585,691,755,918,1041,1377],"2026":[983,710,650,856,932,998,null,null,null,null,null,null]},"s4000":{"2024":[null,null,4,17,27,132,317,401,392,1205,1963,1568],"2025":[2385,2431,3076,969,899,438,545,435,508,605,652,887],"2026":[852,756,613,1118,1110,1146,null,null,null,null,null,null]}},"sc":{"all":{"2024":[null,null,20,186,169,721,1924,2398,2191,4207,6520,5144],"2025":[5402,4927,6871,4352,3880,3373,3812,3278,3521,4151,4172,4707],"2026":[4216,4265,3742,6239,6148,6598,null,null,null,null,null,null]},"s1":{"2024":[null,null,15,34,28,44,62,80,72,79,357,240],"2025":[187,143,186,122,151,142,183,228,258,361,233,197],"2026":[220,190,145,226,201,248,null,null,null,null,null,null]},"s2000":{"2024":[null,null,null,108,92,531,1479,1884,1711,2882,4010,3210],"2025":[2739,2293,3548,3172,2729,2658,2805,2308,2379,2826,2929,3279],"2026":[2834,3123,2787,4659,4571,4953,null,null,null,null,null,null]},"s3000":{"2024":[null,null,1,27,22,14,66,33,16,41,190,126],"2025":[91,60,61,89,101,135,279,307,376,359,358,344],"2026":[310,196,197,236,266,251,null,null,null,null,null,null]},"s4000":{"2024":[null,null,4,17,27,132,317,401,392,1205,1963,1568],"2025":[2385,2431,3076,969,899,438,545,435,508,605,652,887],"2026":[852,756,613,1118,1110,1146,null,null,null,null,null,null]}},"tn":{"all":{"2024":[710,769,785,1148,1420,1212,1771,1417,1323,1729,983,918],"2025":[1134,1003,936,1281,1169,591,891,1147,1139,1491,1827,2402],"2026":[1791,1580,1383,1934,2230,2361,null,null,null,null,null,null]},"s1":{"2024":[505,567,592,812,813,687,937,768,796,994,575,611],"2025":[686,640,650,794,804,364,585,763,760,932,1144,1369],"2026":[1118,1066,930,1314,1564,1614,null,null,null,null,null,null]},"s2000":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]},"s3000":{"2024":[205,202,193,336,607,525,834,649,527,735,408,307],"2025":[448,363,286,487,365,227,306,384,379,559,683,1033],"2026":[673,514,453,620,666,747,null,null,null,null,null,null]},"s4000":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]}},"ur":{"all":{"2024":[513,507,585,595,983,673,1276,1490,1304,1084,1715,1412],"2025":[1676,1265,1342,1454,1859,1429,1677,1453,1323,1334,1264,1304],"2026":[1149,971,846,871,1124,879,null,null,null,null,null,null]},"s1":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]},"s2000":{"2024":[513,507,585,595,983,673,1276,1490,1304,1084,1715,1412],"2025":[1676,1265,1342,1454,1859,1429,1677,1453,1323,1334,1264,1304],"2026":[1149,971,846,871,1124,879,null,null,null,null,null,null]},"s3000":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]},"s4000":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]}}},"part":{"all":{"sc":64.6,"tn":23.3,"ur":12.1,"sc_n":31208,"tn_n":11279,"ur_n":5840,"total":48327},"s1":{"sc":13.9,"tn":86.1,"ur":0.0,"sc_n":1230,"tn_n":7606,"ur_n":0,"total":8836},"s2000":{"sc":79.7,"tn":0.0,"ur":20.3,"sc_n":22927,"tn_n":0,"ur_n":5840,"total":28767},"s3000":{"sc":28.4,"tn":71.6,"ur":0.0,"sc_n":1456,"tn_n":3673,"ur_n":0,"total":5129},"s4000":{"sc":100.0,"tn":0.0,"ur":0.0,"sc_n":5595,"tn_n":0,"ur_n":0,"total":5595}}};
+
+const SVC_MONTHS = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const SVC_COLORS = {'2024':'#3B82F6','2025':'#EC4899','2026':'#10B981'};
+const SVC_CANAL_LABELS = {all:'Todos los canales',sc:'Seller Center',tn:'Tiendanube',ur:'Urbano'};
+const SVC_SERV_LABELS  = {all:'Todos los servicios',s1:'0001 Dom→Dom',s2000:'2000 Suc→Suc',s3000:'3000 Dom→Suc',s4000:'4000 Suc→Dom'};
+
+let svcActivCanal = 'all', svcActivSvc = 'all';
+let svcChartInst = null;
+
+function svcMakeDatasets(canal, svc) {
+  return ['2024','2025','2026'].map(yr => ({
+    label: yr,
+    data: (SVC_CANAL_DATA.line[canal]?.[svc]?.[yr] || Array(12).fill(null)),
+    borderColor: SVC_COLORS[yr],
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    pointRadius: 3,
+    pointBackgroundColor: SVC_COLORS[yr],
+    tension: 0.3,
+    spanGaps: false
+  }));
+}
+
+function initSvcChart() {
+  const canvas = document.getElementById('svcChart');
+  if (!canvas) return;
+  if (svcChartInst) svcChartInst.destroy();
+  svcChartInst = new Chart(canvas.getContext('2d'), {
+    type: 'line',
+    data: { labels: SVC_MONTHS, datasets: svcMakeDatasets('all','all') },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => ' ' + c.dataset.label + ': ' + (c.parsed.y !== null ? c.parsed.y.toLocaleString('es-AR') : '—') }}
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 11 }, callback: v => v >= 1000 ? (v/1000).toFixed(0)+'k' : v } }
+      }
+    }
+  });
+}
+
+function updateSvcChart() {
+  if (!svcChartInst) return;
+  svcChartInst.data.datasets = svcMakeDatasets(svcActivCanal, svcActivSvc);
+  svcChartInst.update();
+  const note = SVC_CANAL_LABELS[svcActivCanal] + ' · ' + SVC_SERV_LABELS[svcActivSvc] + ' · 2024 azul · 2025 rosa · 2026 verde · Datos Ene 2024 – Jun 2026';
+  const el = document.getElementById('svcNote');
+  if (el) el.textContent = note;
+  const badge = document.getElementById('svcBadge');
+  if (badge) badge.textContent = 'Ene 2024 – Jun 2026 · ' + SVC_CANAL_LABELS[svcActivCanal] + ' · ' + SVC_SERV_LABELS[svcActivSvc];
+  updateSvcPart();
+}
+
+function updateSvcPart() {
+  const p = SVC_CANAL_DATA.part[svcActivSvc];
+  const fmt = n => n.toLocaleString('es-AR');
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('svcPartScPct', p.sc + '%'); set('svcPartScN', fmt(p.sc_n) + ' envíos');
+  set('svcPartTnPct', p.tn + '%'); set('svcPartTnN', fmt(p.tn_n) + ' envíos');
+  set('svcPartUrPct', p.ur + '%'); set('svcPartUrN', fmt(p.ur_n) + ' envíos');
+  const bsc = document.getElementById('svcBarSc'); if (bsc) bsc.style.width = p.sc + '%';
+  const btn = document.getElementById('svcBarTn'); if (btn) btn.style.width = p.tn + '%';
+  const bur = document.getElementById('svcBarUr'); if (bur) bur.style.width = p.ur + '%';
+  set('svcPartNote', 'Participación canal para ' + SVC_SERV_LABELS[svcActivSvc] + ' · Ene–Jun 2026 · Total: ' + fmt(p.total) + ' envíos');
+  const section = document.getElementById('svcPartSection');
+  if (section) section.style.display = svcActivCanal !== 'all' ? 'none' : '';
+}
+
+document.querySelectorAll('.svc-tab[data-type="canal"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.svc-tab[data-type="canal"]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    svcActivCanal = btn.dataset.v;
+    updateSvcChart();
+  });
+});
+
+document.querySelectorAll('.svc-tab[data-type="svc"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.svc-tab[data-type="svc"]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    svcActivSvc = btn.dataset.v;
+    updateSvcChart();
+  });
+});
+
+initSvcChart();
+updateSvcChart();
 })();
 
 // Inicializar selector jerárquico — al final para que el DOM esté listo
