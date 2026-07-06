@@ -1456,7 +1456,7 @@ function doLogin() {
   if (USUARIOS[u] && USUARIOS[u] === p) {
     document.getElementById('loginScreen').style.display = 'none';
     sessionStorage.setItem('auth', '1');
-    setPeriod('abr');
+    setPeriod('jul');
   } else {
     document.getElementById('loginError').style.display = 'block';
   }
@@ -1471,7 +1471,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   if (sessionStorage.getItem('auth') === '1') {
     document.getElementById('loginScreen').style.display = 'none';
-    setPeriodAll('jun', 2026, null);
+    setPeriodAll('jul', 2026, null);
   }
 });
 </script>
@@ -1519,7 +1519,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="sidebar-footer">
     <div class="update-badge">
       <div class="update-label">Última actualización</div>
-      <div class="update-date"><span class="update-dot"></span>30 Jun 2026</div>
+      <div class="update-date"><span class="update-dot"></span>6 Jul 2026</div>
     </div>
   </div>
 </aside>
@@ -1567,7 +1567,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="mobile-menu-footer">
       <div class="update-badge">
         <div class="update-label">Última actualización</div>
-        <div class="update-date"><span class="update-dot"></span>30 Jun 2026</div>
+        <div class="update-date"><span class="update-dot"></span>6 Jul 2026</div>
       </div>
     </div>
   </div>
@@ -1575,13 +1575,13 @@ document.addEventListener('DOMContentLoaded', () => {
   <!-- ═══ SECCIÓN: RESUMEN ═══ -->
   <section class="section active" id="sec-resumen">
     <div class="section-title">Resumen Ejecutivo</div>
-    <div class="section-sub">Vista consolidada del período · Datos al 30 Jun 2026</div>
+    <div class="section-sub">Vista consolidada del período · Datos al 6 Jul 2026</div>
 
     <!-- Period selector tabs -->
     <div class="period-selector">
       <div class="period-selector-row">
         <div class="period-selector-label">Año</div>
-        <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">2026</button>
+        <button class="period-btn active" onclick="setPeriodAll('jul',2026,this)">2026</button>
       </div>
       <div class="period-selector-row" id="monthsRow0">
         <div class="period-selector-label">Período</div>
@@ -1590,7 +1590,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="period-btn" onclick="setPeriodAll('mar',2026,this)">Mar</button>
         <button class="period-btn" onclick="setPeriodAll('abr',2026,this)">Abr</button>
         <button class="period-btn" onclick="setPeriodAll('may',2026,this)">May</button>
-        <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">Jun</button>
+        <button class="period-btn" onclick="setPeriodAll('jun',2026,this)">Jun</button>
+        <button class="period-btn active" onclick="setPeriodAll('jul',2026,this)">Jul</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('q1',2026,this)">Q1</button>
         <button class="period-btn" onclick="setPeriodAll('q2',2026,this)">Q2</button>
@@ -1719,7 +1720,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="period-selector">
       <div class="period-selector-row">
         <div class="period-selector-label">Año</div>
-        <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">2026</button>
+        <button class="period-btn active" onclick="setPeriodAll('jul',2026,this)">2026</button>
       </div>
       <div class="period-selector-row" id="monthsRow1">
         <div class="period-selector-label">Período</div>
@@ -1728,7 +1729,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="period-btn" onclick="setPeriodAll('mar',2026,this)">Mar</button>
         <button class="period-btn" onclick="setPeriodAll('abr',2026,this)">Abr</button>
         <button class="period-btn" onclick="setPeriodAll('may',2026,this)">May</button>
-        <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">Jun</button>
+        <button class="period-btn" onclick="setPeriodAll('jun',2026,this)">Jun</button>
+        <button class="period-btn active" onclick="setPeriodAll('jul',2026,this)">Jul</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('q1',2026,this)">Q1</button>
         <button class="period-btn" onclick="setPeriodAll('q2',2026,this)">Q2</button>
@@ -1779,7 +1781,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="period-selector">
       <div class="period-selector-row">
         <div class="period-selector-label">Año</div>
-        <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">2026</button>
+        <button class="period-btn active" onclick="setPeriodAll('jul',2026,this)">2026</button>
       </div>
       <div class="period-selector-row" id="monthsRow2">
         <div class="period-selector-label">Período</div>
@@ -1788,7 +1790,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="period-btn" onclick="setPeriodAll('mar',2026,this)">Mar</button>
         <button class="period-btn" onclick="setPeriodAll('abr',2026,this)">Abr</button>
         <button class="period-btn" onclick="setPeriodAll('may',2026,this)">May</button>
-        <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">Jun</button>
+        <button class="period-btn" onclick="setPeriodAll('jun',2026,this)">Jun</button>
+        <button class="period-btn active" onclick="setPeriodAll('jul',2026,this)">Jul</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('q1',2026,this)">Q1</button>
         <button class="period-btn" onclick="setPeriodAll('q2',2026,this)">Q2</button>
@@ -1910,7 +1913,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="period-selector">
       <div class="period-selector-row">
         <div class="period-selector-label">Año</div>
-        <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">2026</button>
+        <button class="period-btn active" onclick="setPeriodAll('jul',2026,this)">2026</button>
       </div>
       <div class="period-selector-row" id="monthsRow3">
         <div class="period-selector-label">Período</div>
@@ -1919,7 +1922,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="period-btn" onclick="setPeriodAll('mar',2026,this)">Mar</button>
         <button class="period-btn" onclick="setPeriodAll('abr',2026,this)">Abr</button>
         <button class="period-btn" onclick="setPeriodAll('may',2026,this)">May</button>
-        <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">Jun</button>
+        <button class="period-btn" onclick="setPeriodAll('jun',2026,this)">Jun</button>
+        <button class="period-btn active" onclick="setPeriodAll('jul',2026,this)">Jul</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('q1',2026,this)">Q1</button>
         <button class="period-btn" onclick="setPeriodAll('q2',2026,this)">Q2</button>
@@ -2001,7 +2005,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="card" style="margin-top:20px">
       <div class="card-header">
         <span class="card-title">📍 Rutas de Envíos — Top Sellers Marketplace</span>
-        <span class="card-badge">Ene–30 Jun 2026</span>
+        <span class="card-badge">Ene–6 Jul 2026</span>
       </div>
       <!-- Consolidado total -->
       <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
@@ -2035,7 +2039,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="period-selector">
       <div class="period-selector-row">
         <div class="period-selector-label">Año</div>
-        <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">2026</button>
+        <button class="period-btn active" onclick="setPeriodAll('jul',2026,this)">2026</button>
       </div>
       <div class="period-selector-row" id="monthsRow5">
         <div class="period-selector-label">Período</div>
@@ -2044,7 +2048,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="period-btn" onclick="setPeriodAll('mar',2026,this)">Mar</button>
         <button class="period-btn" onclick="setPeriodAll('abr',2026,this)">Abr</button>
         <button class="period-btn" onclick="setPeriodAll('may',2026,this)">May</button>
-        <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">Jun</button>
+        <button class="period-btn" onclick="setPeriodAll('jun',2026,this)">Jun</button>
+        <button class="period-btn active" onclick="setPeriodAll('jul',2026,this)">Jul</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('q1',2026,this)">Q1</button>
         <button class="period-btn" onclick="setPeriodAll('q2',2026,this)">Q2</button>
@@ -2136,7 +2141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
       <!-- 2026* — generado por el script -->
-      <div class="cal-section"><div class="cal-year-hdr"><span class="cal-year-lbl">2026*</span><span class="cal-year-total">234 altas</span></div><div class="cal-grid"><div class="cal-cell"><div class="cal-mes">Ene</div><div class="cal-num">49</div></div><div class="cal-cell"><div class="cal-mes">Feb</div><div class="cal-num">68</div></div><div class="cal-cell"><div class="cal-mes">Mar</div><div class="cal-num">38</div></div><div class="cal-cell"><div class="cal-mes">Abr</div><div class="cal-num">51</div></div><div class="cal-cell"><div class="cal-mes">May</div><div class="cal-num">12</div></div><div class="cal-cell cur"><div class="cal-mes">Jun</div><div class="cal-num">16</div></div><div class="cal-cell dim"><div class="cal-mes">Jul</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Ago</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Sep</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Oct</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Nov</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Dic</div><div class="cal-num">—</div></div></div></div>
+      <div class="cal-section"><div class="cal-year-hdr"><span class="cal-year-lbl">2026*</span><span class="cal-year-total">240 altas</span></div><div class="cal-grid"><div class="cal-cell"><div class="cal-mes">Ene</div><div class="cal-num">49</div></div><div class="cal-cell"><div class="cal-mes">Feb</div><div class="cal-num">68</div></div><div class="cal-cell"><div class="cal-mes">Mar</div><div class="cal-num">38</div></div><div class="cal-cell"><div class="cal-mes">Abr</div><div class="cal-num">51</div></div><div class="cal-cell"><div class="cal-mes">May</div><div class="cal-num">12</div></div><div class="cal-cell"><div class="cal-mes">Jun</div><div class="cal-num">16</div></div><div class="cal-cell cur"><div class="cal-mes">Jul</div><div class="cal-num">6</div></div><div class="cal-cell dim"><div class="cal-mes">Ago</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Sep</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Oct</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Nov</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Dic</div><div class="cal-num">—</div></div></div></div>
     </div>
   </section>
 
@@ -2150,7 +2155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="period-selector">
       <div class="period-selector-row">
         <div class="period-selector-label">Año</div>
-        <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">2026</button>
+        <button class="period-btn active" onclick="setPeriodAll('jul',2026,this)">2026</button>
       </div>
       <div class="period-selector-row" id="monthsRow4">
         <div class="period-selector-label">Período</div>
@@ -2159,7 +2164,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="period-btn" onclick="setPeriodAll('mar',2026,this)">Mar</button>
         <button class="period-btn" onclick="setPeriodAll('abr',2026,this)">Abr</button>
         <button class="period-btn" onclick="setPeriodAll('may',2026,this)">May</button>
-        <button class="period-btn active" onclick="setPeriodAll('jun',2026,this)">Jun</button>
+        <button class="period-btn" onclick="setPeriodAll('jun',2026,this)">Jun</button>
+        <button class="period-btn active" onclick="setPeriodAll('jul',2026,this)">Jul</button>
         <div class="period-sep"></div>
         <button class="period-btn" onclick="setPeriodAll('q1',2026,this)">Q1</button>
         <button class="period-btn" onclick="setPeriodAll('q2',2026,this)">Q2</button>
@@ -2466,7 +2472,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <!-- ═══ SECCIÓN: SPRINT GDM ═══ -->
   <section class="section" id="sec-sprint">
     <div class="section-title">Sprint — Gestión de Mejoras Vía Compras</div>
-    <div class="section-sub">Issues proyecto GDMVC · ViaBariloche · Actualizado 30 Jun 2026</div>
+    <div class="section-sub">Issues proyecto GDMVC · ViaBariloche · Actualizado 6 Jul 2026</div>
 
     <!-- Resumen KPIs -->
     <div class="sprint-summary">
@@ -2678,6 +2684,25 @@ const PERIODOS = {
     topSellers: [{n:"COOPERATIVA DE TRABAJO PROFEGA LIMITADA",v:31.24,val:"$31,2M"},{n:"MUNDO OBRA",v:5.18,val:"$5,2M"},{n:"CIRIATO",v:1.50,val:"$1,5M"},{n:"Petenatti Hogar VC",v:0.93,val:"$0,9M"},{n:"CTkayaks",v:0.29,val:"$0,3M"}],
     showDiag: true,
   },
+  jul: {
+    label: 'Julio 2026', sub: 'Semana 1 — datos al 6 Jul 2026',
+    rec: { val: '$102,2M', v1: 'Semana 1 — al 6 Jul', v2: '328 transacciones', up1: false, up2: false },
+    mp:  { val: '$0,24M', v1: 'Semana 1 — al 6 Jul', v2: '11 órdenes · 14 unds', up1: false, up2: false },
+    ing: { val: '$15.636', v1: 'Comisiones Julio 2026', v2: '1 transacción', up1: false, up2: false },
+    env: { val: '1.476', v1: 'Semana 1 — al 6 Jul', v2: '', up1: false, up2: false },
+    bul: { val: '3.866', v1: 'Semana 1 — al 6 Jul', v2: '', up1: false, up2: false },
+    acum: '$6.108,0M', acum_label: 'Acumulado desde lanzamiento',
+    sc_pct: 65, sc_val: '953', tn_pct: 27, tn_val: '397', ur_pct: 9, ur_val: '126',
+    evo: [0.7, 2.24, 3.56, 27.12, 70.08, 66.78, 75.15, 160.14, 230.52, 184.51, 176.16, 161.63, 220.89, 183.95, 198.37, 179.64, 194.11, 175.34, 251.16, 300.5, 284.15, 264.79, 383.31, 332.18, 409.2, 415.42, 528.2, 526.0, 102.2],
+    evoLabels: ['Mar24','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene25','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene26','Feb26','Mar26','Abr26','May26','Jun26','Jul26'],
+    mp_ventas: '$0,24M', mp_ordenes: '11', mp_ticket: '$21.652', mp_units: '14',
+    pl_mp_resultado: '$0,2M', pl_mp_margen: '94,6%', pl_mivia_resultado: '$99,3M', pl_mivia_margen: '97,2%',
+    topRec: [{n:"ROBERTO PICCA E HIJOS S.A.S.",v:25.60,val:"$25,6M"},{n:"MARCELO NICOLAS RUIZ",v:11.12,val:"$11,1M"},{n:"AUDISIO FERNANDO Y FEDERICO",v:6.43,val:"$6,4M"},{n:"ESTANTERIAS VIRREYES S.R.L.",v:3.52,val:"$3,5M"},{n:"GAMER FACTORY",v:3.00,val:"$3,0M"},{n:"METALURGICACDG S.A",v:2.78,val:"$2,8M"},{n:"El Madero S.A.S",v:2.58,val:"$2,6M"},{n:"PRADO",v:2.29,val:"$2,3M"},{n:"POPLAY",v:2.21,val:"$2,2M"},{n:"MIJORMI SRL",v:2.05,val:"$2,1M"}],
+    topEnv: [{n:"METALURGICACDG S.A",v:117,val:"117"},{n:"LARAIGNEE",v:105,val:"105"},{n:"geraldine",v:76,val:"76"},{n:"pamela",v:56,val:"56"},{n:"Juan Ignacio",v:44,val:"44"},{n:"POPEYE PROBIKE",v:41,val:"41"},{n:"BYT QUIMICA",v:41,val:"41"},{n:"GABRIEL FOGOLIN",v:41,val:"41"},{n:"FRANMAROL",v:39,val:"39"},{n:"casa rustica",v:36,val:"36"}],
+    topLoc: [{n:"Córdoba",v:21},{n:"Neuquén",v:20},{n:"Mendoza",v:18},{n:"Santa Fe",v:14},{n:"Cutral Có",v:14},{n:"San Miguel de Tucumán",v:13},{n:"Santa Rosa",v:12},{n:"Río Gallegos",v:11},{n:"San Nicolás",v:10},{n:"Tandil",v:10}],
+    topSellers: [{n:"COOPERATIVA DE TRABAJO PROFEGA LIMITADA",v:0.23,val:"$0,23M"},{n:"MUNDO OBRA",v:0.008,val:"$0,01M"},{n:"Petenatti Hogar VC",v:0.003,val:"$0,003M"}],
+    showDiag: false,
+  },
   q2: {
     label: 'Q2 2026', sub: 'Q2 2026 completo',
     rec: { val: '$1.469,6M', v1: 'Abr $415M · May $528M · Jun $526M', v2: '5.917 transacciones', up1: true, up2: true },
@@ -2809,13 +2834,13 @@ const PERIODOS = {
     showDiag: false,
   },
   acumulado: {
-    label: 'Acumulado 2026', sub: 'Enero a Junio 2026 — 6 meses',
-    rec: { val: '$2.594,3M', v1: 'Ene $383M · Feb $332M · Mar $409M · Abr $415M · May $528M · Jun $526,0M', v2: '▲ vs Acum 2025', up1: true, up2: true },
+    label: 'Acumulado 2026', sub: 'Enero a Julio 2026 — semana 1 incluida',
+    rec: { val: '$2.696,5M', v1: 'Ene $383M · Feb $332M · Mar $409M · Abr $415M · May $528M · Jun $526M · Jul $102M', v2: '▲ vs Acum 2025', up1: true, up2: true },
     mp:  { val: '$290,8M', v1: 'Acum 2026 · 6 meses', v2: '~5 órdenes (mes prom)', up1: true, up2: false },
     ing: { val: '$5.365.834', v1: 'Ingresos marginales 2026', v2: '110 transacciones acum.', up1: false, up2: false },
-    env: { val: '49.953', v1: 'Ene–Jun 2026 · 6 meses', v2: '▲ vs Acum 2025', up1: true, up2: true },
-    bul: { val: '126.339', v1: 'Ene–Jun 2026 · 6 meses', v2: '▲ vs Acum 2025', up1: true, up2: true },
-    acum: '$6.061,6M', acum_label: 'Acumulado desde lanzamiento',
+    env: { val: '51.429', v1: 'Ene–6 Jul 2026', v2: '▲ vs Acum 2025', up1: true, up2: true },
+    bul: { val: '130.205', v1: 'Ene–6 Jul 2026', v2: '▲ vs Acum 2025', up1: true, up2: true },
+    acum: '$6.163,8M', acum_label: 'Acumulado desde lanzamiento',
     sc_pct: 64, sc_val: '32.131', tn_pct: 23, tn_val: '11.699', ur_pct: 13, ur_val: '6.123',
     evo: [383.31, 332.18, 409.2, 415.42, 528.2, 526.0],
     evoLabels: ["Enero 2026", "Febrero 2026", "Marzo 2026", "Abril 2026", "Mayo 2026", "Junio 2026"],
@@ -2977,10 +3002,10 @@ function setPeriod(p, clickedTab) {
     q2:        { ventas:'$105,3M',  total:'$105,3M',  totalTag:'Abr + May + Jun 2026',   ing:'$1.967.393',  ingTag:'35 transacciones Q2', seller:'Coop. Profega', sellerVal:'$93,0M' },
     q1:        { ventas:'$125,5M',  total:'$125,5M',  totalTag:'Ene + Feb + Mar',     ing:'$3.184.589',  ingTag:'70 transacciones', seller:'Coop. Profega', sellerVal:'$89,2M' },
     anual:     { ventas:'$191,5M',  total:'$191,5M',  totalTag:'Ene → Abr 2026',      ing:'$3.404.097',  ingTag:'73 transacciones', seller:'Coop. Profega', sellerVal:'$128,3M' },
-    acumulado: { ventas:'$273,0M',  total:'$273,0M',  totalTag:'Ene → Jun 2026',      ing: PERIODOS.acumulado?.ing?.val||'$5.270.922', ingTag: PERIODOS.acumulado?.ing?.v2||'107 transacciones acum.', seller:'Coop. Profega', sellerVal:'$215,7M' },
+    acumulado: { ventas:'$273,0M',  total:'$273,0M',  totalTag:'Ene → 6 Jul 2026',    ing: PERIODOS.acumulado?.ing?.val||'$5.270.922', ingTag: PERIODOS.acumulado?.ing?.v2||'107 transacciones acum.', seller:'Coop. Profega', sellerVal:'$215,7M' },
   };
   const mk = mpKpiData[p] || mpKpiData.may;
-  const labelMap = { ene:'Enero 2026', feb:'Febrero 2026', mar:'Marzo 2026', abr:'Abril 2026', may:'Mayo 2026', jun:'Junio 2026', q1:'Q1 2026', q2:'Q2 2026', anual:'Acumulado 2026', acumulado:'Acumulado 2026' };
+  const labelMap = { ene:'Enero 2026', feb:'Febrero 2026', mar:'Marzo 2026', abr:'Abril 2026', may:'Mayo 2026', jun:'Junio 2026', jul:'Julio 2026', q1:'Q1 2026', q2:'Q2 2026', anual:'Acumulado 2026', acumulado:'Acumulado 2026' };
 
   const el = id => document.getElementById(id);
   if (el('mpKpiLabel1')) el('mpKpiLabel1').textContent = 'Ventas — ' + (labelMap[p]||p);
@@ -3333,7 +3358,7 @@ const CANAL_HIST = {
   sc: {
     env: { 2024:[null,null,null,null,null,null,null,null,null,7020,9208,6978],
            2025:[6892,5630,6871,6999,6878,5377,6379,5872,5970,6959,7254,8398],
-           2026:[7146,6807,5968,4819,null,6598,null,null,null,null,null,null] },
+           2026:[7146,6807,5968,4819,null,6598,953,null,null,null,null,null] },
     bul: { 2024:[null,null,null,null,null,null,null,null,null,12138,14219,11463],
            2025:[13284,11442,13485,26692,12780,13057,15091,18370,20897,27291,19055,30465],
            2026:[17558,16526,14726,11428,null,14316,null,null,null,null,null,null] }
@@ -3448,11 +3473,11 @@ document.querySelectorAll('.ce-tab').forEach(btn => {
 initCanalEvo('all');
 
 // ── VENDEDORES CHART ──────────────────────────────────────
-const vendLabels  = ["Mar24", "Abr24", "May24", "Jun24", "Jul24", "Ago24", "Sep24", "Oct24", "Nov24", "Dic24", "Ene25", "Feb25", "Mar25", "Abr25", "May25", "Jun25", "Jul25", "Ago25", "Sep25", "Oct25", "Nov25", "Dic25", "Ene26", "Feb26", "Mar26", "Abr26", "May26", "Jun26"];
-const vendMiVia   = [4, 6, 53, 5, 6, 5, 3, 1, 4, 11, 9, 22, 35, 30, 31, 29, 28, 52, 46, 42, 41, 28, 49, 68, 38, 51, 31, 18];
-const vendVC      = [0, 0, 3, 0, 2, 1, 0, 0, 1, 3, 2, 1, 3, 0, 1, 1, 3, 4, 5, 3, 8, 8, 10, 31, 14, 11, 7, 2];
-const altasMiVia  = 11;
-const altasVC     = 1;
+const vendLabels  = ["Mar24", "Abr24", "May24", "Jun24", "Jul24", "Ago24", "Sep24", "Oct24", "Nov24", "Dic24", "Ene25", "Feb25", "Mar25", "Abr25", "May25", "Jun25", "Jul25", "Ago25", "Sep25", "Oct25", "Nov25", "Dic25", "Ene26", "Feb26", "Mar26", "Abr26", "May26", "Jun26", "Jul26"];
+const vendMiVia   = [4, 6, 53, 5, 6, 5, 3, 1, 4, 11, 9, 22, 35, 30, 31, 29, 28, 52, 46, 42, 41, 28, 49, 68, 38, 51, 31, 18, 6];
+const vendVC      = [0, 0, 3, 0, 2, 1, 0, 0, 1, 3, 2, 1, 3, 0, 1, 1, 3, 4, 5, 3, 8, 8, 10, 31, 14, 11, 7, 2, 0];
+const altasMiVia  = 6;
+const altasVC     = 0;
 
 // Datos por período
 const altasData = {
@@ -3462,6 +3487,7 @@ const altasData = {
   abr:       { mivia: 51, vc: 11 },
   may:       { mivia: 31, vc: 7 },
   jun:       { mivia: 18, vc: 2 },
+  jul:       { mivia: 6, vc: 0 },
   q2:        { mivia: 107, vc: 20 },
   q1:        { mivia: 155, vc: 55 },
   acumulado: { mivia: 262, vc: 75 },
@@ -3805,7 +3831,7 @@ let chartUsuariosInst=null, chartOrigenInst=null, chartSellersInst=null;
 
 function buildClaritySection(period) {
   const d = clarityData[period] || clarityData[Object.keys(clarityData).pop()];
-  const labelMap = { ene:'Enero 2026', feb:'Febrero 2026', mar:'Marzo 2026', abr:'Abril 2026', may:'Mayo 2026', jun:'Junio 2026', q1:'Q1 2026', q2:'Q2 2026', acumulado:'Acumulado 2026' };
+  const labelMap = { ene:'Enero 2026', feb:'Febrero 2026', mar:'Marzo 2026', abr:'Abril 2026', may:'Mayo 2026', jun:'Junio 2026', jul:'Julio 2026', q1:'Q1 2026', q2:'Q2 2026', acumulado:'Acumulado 2026' };
   const badge = document.getElementById('clarity-badge');
   if (badge) badge.textContent = labelMap[period] || 'Mayo 2026';
   const sellBadge = document.getElementById('sellers-badge');
@@ -4383,7 +4409,7 @@ const VENDOR_HIST = {
 
 // ── SERVICIO-CANAL EVOLUTION CHART ────────────────────────────────────
 (function() {
-const SVC_CANAL_DATA = {"line":{"all":{"all":{"2024":[1223,1276,1390,1929,2572,2606,4971,5305,4818,7020,9218,7474],"2025":[8212,7195,9149,7087,6908,5393,6380,5878,5983,6976,7263,8413],"2026":[7156,6816,5971,9044,9502,9838,null,null,null,null,null,null]},"s1":{"2024":[505,567,607,846,841,731,999,848,868,1073,932,851],"2025":[873,783,836,916,955,506,768,991,1018,1293,1377,1566],"2026":[1338,1256,1075,1540,1765,1862,null,null,null,null,null,null]},"s2000":{"2024":[513,507,585,703,1075,1204,2755,3374,3015,3966,5725,4622],"2025":[4415,3558,4890,4626,4588,4087,4482,3761,3702,4160,4193,4583],"2026":[3983,4094,3633,5530,5695,5832,null,null,null,null,null,null]},"s3000":{"2024":[205,202,194,363,629,539,900,682,543,776,598,433],"2025":[539,423,347,576,466,362,585,691,755,918,1041,1377],"2026":[983,710,650,856,932,998,null,null,null,null,null,null]},"s4000":{"2024":[null,null,4,17,27,132,317,401,392,1205,1963,1568],"2025":[2385,2431,3076,969,899,438,545,435,508,605,652,887],"2026":[852,756,613,1118,1110,1146,null,null,null,null,null,null]}},"sc":{"all":{"2024":[null,null,20,186,169,721,1924,2398,2191,4207,6520,5144],"2025":[5402,4927,6871,4352,3880,3373,3812,3278,3521,4151,4172,4707],"2026":[4216,4265,3742,6239,6148,6598,null,null,null,null,null,null]},"s1":{"2024":[null,null,15,34,28,44,62,80,72,79,357,240],"2025":[187,143,186,122,151,142,183,228,258,361,233,197],"2026":[220,190,145,226,201,248,null,null,null,null,null,null]},"s2000":{"2024":[null,null,null,108,92,531,1479,1884,1711,2882,4010,3210],"2025":[2739,2293,3548,3172,2729,2658,2805,2308,2379,2826,2929,3279],"2026":[2834,3123,2787,4659,4571,4953,null,null,null,null,null,null]},"s3000":{"2024":[null,null,1,27,22,14,66,33,16,41,190,126],"2025":[91,60,61,89,101,135,279,307,376,359,358,344],"2026":[310,196,197,236,266,251,null,null,null,null,null,null]},"s4000":{"2024":[null,null,4,17,27,132,317,401,392,1205,1963,1568],"2025":[2385,2431,3076,969,899,438,545,435,508,605,652,887],"2026":[852,756,613,1118,1110,1146,null,null,null,null,null,null]}},"tn":{"all":{"2024":[710,769,785,1148,1420,1212,1771,1417,1323,1729,983,918],"2025":[1134,1003,936,1281,1169,591,891,1147,1139,1491,1827,2402],"2026":[1791,1580,1383,1934,2230,2361,null,null,null,null,null,null]},"s1":{"2024":[505,567,592,812,813,687,937,768,796,994,575,611],"2025":[686,640,650,794,804,364,585,763,760,932,1144,1369],"2026":[1118,1066,930,1314,1564,1614,null,null,null,null,null,null]},"s2000":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]},"s3000":{"2024":[205,202,193,336,607,525,834,649,527,735,408,307],"2025":[448,363,286,487,365,227,306,384,379,559,683,1033],"2026":[673,514,453,620,666,747,null,null,null,null,null,null]},"s4000":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]}},"ur":{"all":{"2024":[513,507,585,595,983,673,1276,1490,1304,1084,1715,1412],"2025":[1676,1265,1342,1454,1859,1429,1677,1453,1323,1334,1264,1304],"2026":[1149,971,846,871,1124,879,null,null,null,null,null,null]},"s1":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]},"s2000":{"2024":[513,507,585,595,983,673,1276,1490,1304,1084,1715,1412],"2025":[1676,1265,1342,1454,1859,1429,1677,1453,1323,1334,1264,1304],"2026":[1149,971,846,871,1124,879,null,null,null,null,null,null]},"s3000":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]},"s4000":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]}}},"part":{"all":{"sc":64.6,"tn":23.3,"ur":12.1,"sc_n":31208,"tn_n":11279,"ur_n":5840,"total":48327},"s1":{"sc":13.9,"tn":86.1,"ur":0.0,"sc_n":1230,"tn_n":7606,"ur_n":0,"total":8836},"s2000":{"sc":79.7,"tn":0.0,"ur":20.3,"sc_n":22927,"tn_n":0,"ur_n":5840,"total":28767},"s3000":{"sc":28.4,"tn":71.6,"ur":0.0,"sc_n":1456,"tn_n":3673,"ur_n":0,"total":5129},"s4000":{"sc":100.0,"tn":0.0,"ur":0.0,"sc_n":5595,"tn_n":0,"ur_n":0,"total":5595}}};
+const SVC_CANAL_DATA = {"line":{"all":{"all":{"2024":[1223,1276,1390,1929,2572,2606,4971,5305,4818,7020,9218,7474],"2025":[8212,7195,9149,7087,6908,5393,6380,5878,5983,6976,7263,8413],"2026":[7156,6816,5971,9044,9502,9838,1476,null,null,null,null,null]},"s1":{"2024":[505,567,607,846,841,731,999,848,868,1073,932,851],"2025":[873,783,836,916,955,506,768,991,1018,1293,1377,1566],"2026":[1338,1256,1075,1540,1765,1862,307,null,null,null,null,null]},"s2000":{"2024":[513,507,585,703,1075,1204,2755,3374,3015,3966,5725,4622],"2025":[4415,3558,4890,4626,4588,4087,4482,3761,3702,4160,4193,4583],"2026":[3983,4094,3633,5530,5695,5832,830,null,null,null,null,null]},"s3000":{"2024":[205,202,194,363,629,539,900,682,543,776,598,433],"2025":[539,423,347,576,466,362,585,691,755,918,1041,1377],"2026":[983,710,650,856,932,998,161,null,null,null,null,null]},"s4000":{"2024":[null,null,4,17,27,132,317,401,392,1205,1963,1568],"2025":[2385,2431,3076,969,899,438,545,435,508,605,652,887],"2026":[852,756,613,1118,1110,1146,178,null,null,null,null,null]}},"sc":{"all":{"2024":[null,null,20,186,169,721,1924,2398,2191,4207,6520,5144],"2025":[5402,4927,6871,4352,3880,3373,3812,3278,3521,4151,4172,4707],"2026":[4216,4265,3742,6239,6148,6598,953,null,null,null,null,null]},"s1":{"2024":[null,null,15,34,28,44,62,80,72,79,357,240],"2025":[187,143,186,122,151,142,183,228,258,361,233,197],"2026":[220,190,145,226,201,248,39,null,null,null,null,null]},"s2000":{"2024":[null,null,null,108,92,531,1479,1884,1711,2882,4010,3210],"2025":[2739,2293,3548,3172,2729,2658,2805,2308,2379,2826,2929,3279],"2026":[2834,3123,2787,4659,4571,4953,704,null,null,null,null,null]},"s3000":{"2024":[null,null,1,27,22,14,66,33,16,41,190,126],"2025":[91,60,61,89,101,135,279,307,376,359,358,344],"2026":[310,196,197,236,266,251,32,null,null,null,null,null]},"s4000":{"2024":[null,null,4,17,27,132,317,401,392,1205,1963,1568],"2025":[2385,2431,3076,969,899,438,545,435,508,605,652,887],"2026":[852,756,613,1118,1110,1146,178,null,null,null,null,null]}},"tn":{"all":{"2024":[710,769,785,1148,1420,1212,1771,1417,1323,1729,983,918],"2025":[1134,1003,936,1281,1169,591,891,1147,1139,1491,1827,2402],"2026":[1791,1580,1383,1934,2230,2361,397,null,null,null,null,null]},"s1":{"2024":[505,567,592,812,813,687,937,768,796,994,575,611],"2025":[686,640,650,794,804,364,585,763,760,932,1144,1369],"2026":[1118,1066,930,1314,1564,1614,268,null,null,null,null,null]},"s2000":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]},"s3000":{"2024":[205,202,193,336,607,525,834,649,527,735,408,307],"2025":[448,363,286,487,365,227,306,384,379,559,683,1033],"2026":[673,514,453,620,666,747,129,null,null,null,null,null]},"s4000":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]}},"ur":{"all":{"2024":[513,507,585,595,983,673,1276,1490,1304,1084,1715,1412],"2025":[1676,1265,1342,1454,1859,1429,1677,1453,1323,1334,1264,1304],"2026":[1149,971,846,871,1124,879,126,null,null,null,null,null]},"s1":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]},"s2000":{"2024":[513,507,585,595,983,673,1276,1490,1304,1084,1715,1412],"2025":[1676,1265,1342,1454,1859,1429,1677,1453,1323,1334,1264,1304],"2026":[1149,971,846,871,1124,879,126,null,null,null,null,null]},"s3000":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]},"s4000":{"2024":[null,null,null,null,null,null,null,null,null,null,null,null],"2025":[null,null,null,null,null,null,null,null,null,null,null,null],"2026":[null,null,null,null,null,null,null,null,null,null,null,null]}}},"part":{"all":{"sc":64.6,"tn":23.4,"ur":12.0,"sc_n":32161,"tn_n":11676,"ur_n":5966,"total":49803},"s1":{"sc":13.9,"tn":86.1,"ur":0.0,"sc_n":1269,"tn_n":7874,"ur_n":0,"total":9143},"s2000":{"sc":79.8,"tn":0.0,"ur":20.2,"sc_n":23631,"tn_n":0,"ur_n":5966,"total":29597},"s3000":{"sc":28.1,"tn":71.9,"ur":0.0,"sc_n":1488,"tn_n":3802,"ur_n":0,"total":5290},"s4000":{"sc":100.0,"tn":0.0,"ur":0.0,"sc_n":5773,"tn_n":0,"ur_n":0,"total":5773}}};
 
 const SVC_MONTHS = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 const SVC_COLORS = {'2024':'#3B82F6','2025':'#EC4899','2026':'#10B981'};
