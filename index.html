@@ -2225,11 +2225,12 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="card-badge" style="background:#E3F2FD;color:#1565C0;border:1px solid #90CAF9">Vtex</span>
         </div>
         <table class="pl-table">
-          <!-- JUNIO (parcial) -->
-          <tr class="pl-row-header"><td colspan="2">JUNIO 2026 · Datos al 26/6 (parcial)</td></tr>
-          <tr class="pl-row-item"><td>↑ Ventas Marketplace</td><td>$36.408.455</td></tr>
-          <tr class="pl-row-item"><td>↓ Vtex (Plataforma + Comisiones)</td><td style="color:var(--red)">-$1.966.057</td></tr>
-          <tr class="pl-row-subtotal"><td>Resultado Junio (parcial)</td><td style="color:var(--g1)">$34.442.398</td></tr>
+          <!-- JUNIO (completo) -->
+          <tr class="pl-row-header"><td colspan="2">JUNIO 2026 · Mes completo · Vtex confirmado</td></tr>
+          <tr class="pl-row-item"><td>↑ Ventas Marketplace</td><td>$39.700.000</td></tr>
+          <tr class="pl-row-item"><td>↓ Vtex Plataforma (Fact. 26051 + 26109)</td><td style="color:var(--red)">-$1.063.158</td></tr>
+          <tr class="pl-row-item"><td>↓ Vtex Comisiones TakeRate (Fact. 25944)</td><td style="color:var(--red)">-$1.143.893</td></tr>
+          <tr class="pl-row-subtotal"><td>Resultado Junio (confirmado)</td><td style="color:var(--g1)">$37.492.949</td></tr>
           <tr style="height:4px"><td colspan="2"></td></tr>
 
           <!-- MAYO -->
@@ -2268,7 +2269,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <tr class="pl-row-subtotal"><td>Resultado Enero</td><td style="color:var(--g1)">$18.403.482</td></tr>
           <tr style="height:4px"><td colspan="2"></td></tr>
 
-          <tr class="pl-row-result positive"><td>💼 TOTAL MARKETPLACE Ene–Jun</td><td>$247,3M*</td></tr>
+          <tr class="pl-row-result positive"><td>💼 TOTAL MARKETPLACE Ene–Jun</td><td>$250,4M</td></tr>
         </table>
 
         <!-- Margen por mes -->
@@ -2296,8 +2297,8 @@ document.addEventListener('DOMContentLoaded', () => {
               <div style="font-size:16px;font-weight:700;color:var(--g1)">94,6%</div>
             </div>
             <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
-              <div style="font-size:10px;color:var(--gray)">Jun *</div>
-              <div style="font-size:16px;font-weight:700;color:var(--g1)">94,6%</div>
+              <div style="font-size:10px;color:var(--gray)">Jun</div>
+              <div style="font-size:16px;font-weight:700;color:var(--g1)">94,4%</div>
             </div>
           </div>
         </div>
@@ -2677,7 +2678,7 @@ const PERIODOS = {
     evo: [0.7, 2.24, 3.56, 27.12, 70.08, 66.78, 75.15, 160.14, 230.52, 184.51, 176.16, 161.63, 220.89, 183.95, 198.37, 179.64, 194.11, 175.34, 251.16, 300.5, 284.15, 264.79, 383.31, 332.18, 409.2, 415.42, 528.2, 526.0],
     evoLabels: ['Mar24','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene25','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Ene26','Feb26','Mar26','Abr26','May26','Jun26'],
     mp_ventas: '$39,7M', mp_ordenes: '34', mp_ticket: '$1.166.689', mp_units: '35',
-    pl_mp_resultado: '$37,6M', pl_mp_margen: '94,6%', pl_mivia_resultado: '$511,3M', pl_mivia_margen: '97,2%',
+    pl_mp_resultado: '$37,5M', pl_mp_margen: '94,4%', pl_mivia_resultado: '$511,3M', pl_mivia_margen: '97,2%',
     topRec: [{n:"ROBERTO PICCA E HIJOS S.A.S.",v:81.63,val:"$81,6M"},{n:"Magnolias",v:54.33,val:"$54,3M"},{n:"AUDISIO FERNANDO Y FEDERICO",v:28.89,val:"$28,9M"},{n:"LARAIGNEE CARLOS",v:27.73,val:"$27,7M"},{n:"El Madero S.A.S",v:17.83,val:"$17,8M"},{n:"FRANMAROL SA",v:12.27,val:"$12,3M"},{n:"POPLAY",v:10.14,val:"$10,1M"},{n:"METALURGICACDG S.A",v:9.48,val:"$9,5M"},{n:"MARCELO NICOLAS RUIZ",v:9.23,val:"$9,2M"},{n:"ESTANTERIAS VIRREYES S.R.L.",v:8.87,val:"$8,9M"}],
     topEnv: [{n:"LARAIGNEE CARLOS",v:715,val:"715"},{n:"METALURGICACDG S.A",v:473,val:"473"},{n:"geraldine",v:461,val:"461"},{n:"BYT QUIMICA SRL",v:307,val:"307"},{n:"Juan Ignacio",v:286,val:"286"},{n:"pamela",v:270,val:"270"},{n:"FRANMAROL S.A.",v:239,val:"239"},{n:"GABRIEL OSCAR FOGOLIN",v:233,val:"233"},{n:"POPEYE PROBIKE",v:230,val:"230"},{n:"MIJORMI SRL",v:215,val:"215"}],
     topLoc: [{n:"Neuquén",v:131},{n:"Córdoba",v:123},{n:"Mendoza",v:123},{n:"Rosario",v:91},{n:"San Juan",v:90},{n:"Bahía Blanca",v:88},{n:"Salta",v:87},{n:"Paraná",v:77},{n:"Bariloche",v:76},{n:"Santa Fe",v:71}],
@@ -2849,7 +2850,7 @@ const PERIODOS = {
     topEnv: [{n:"LARAIGNEE CARLOS",v:2613,val:"2.613"},{n:"METALURGICACDG S.A",v:1702,val:"1.702"},{n:"pamela",v:1619,val:"1.619"},{n:"geraldine",v:1631,val:"1.631"},{n:"Juan Ignacio",v:1498,val:"1.498"},{n:"POPEYE PROBIKE",v:1208,val:"1.208"},{n:"GABRIEL OSCAR FOGOLIN",v:955,val:"955"},{n:"Fassi Facundo Y Otros",v:810,val:"810"},{n:"MATIAS JAVIER ANDRES",v:616,val:"616"},{n:"BYT QUIMICA SRL",v:877,val:"877"}],
     topLoc: [{n:"Neuquén",v:630},{n:"Córdoba",v:598},{n:"Mendoza",v:468},{n:"Rosario",v:460},{n:"Bahía Blanca",v:384},{n:"Paraná",v:374},{n:"Salta",v:367},{n:"San Juan",v:364},{n:"Bariloche",v:355},{n:"Santa Fe",v:338},{n:"Santa Rosa",v:225},{n:"Río Cuarto",v:210},{n:"Cipolletti",v:189},{n:"Puerto Madryn",v:156},{n:"San Miguel de Tucumán",v:143}],
     topSellers: [{n:"COOPERATIVA DE TRABAJO PROFEGA LIMITADA",v:223.66,val:"$223,7M"},{n:"MUNDO OBRA",v:43.85,val:"$43,9M"},{n:"Petenatti Hogar VC",v:7.71,val:"$7,7M"},{n:"NORTESHOPS",v:5.99,val:"$6,0M"},{n:"ECOTECN",v:4.69,val:"$4,7M"}],
-    pl_mp_resultado: '$247,3M*', pl_mp_margen: '94,6%*', pl_mivia_resultado: '$2.441,3M*', pl_mivia_margen: '97,1%*',
+    pl_mp_resultado: '$250,4M', pl_mp_margen: '94,0%', pl_mivia_resultado: '$2.441,3M*', pl_mivia_margen: '97,1%*',
     showDiag: false,
   }
 };
@@ -3629,19 +3630,19 @@ const initTopSell = [{n:"COOPERATIVA DE TRABAJO PROFEGA",v:8.85,val:"$8,8M"},{n:
 new Chart(document.getElementById('chartPL').getContext('2d'), {
   type: 'bar',
   data: {
-    labels: ['Enero 2026', 'Febrero 2026', 'Marzo 2026', 'Abril 2026*'],
+    labels: ['Enero 2026', 'Febrero 2026', 'Marzo 2026', 'Abril 2026', 'Mayo 2026', 'Junio 2026'],
     datasets: [
       {
         label: 'MiVia & Recargas',
-        data: [369.4, 318.6, 397.0, 92.7],
-        backgroundColor: ['#077C14','#077C14','#077C14','rgba(7,124,20,0.5)'],
+        data: [369.4, 318.6, 397.0, 395.8, 516.4, 511.3],
+        backgroundColor: ['#077C14','#077C14','#077C14','#077C14','#077C14','#077C14'],
         borderRadius: 6,
         stack: 'resultado'
       },
       {
         label: 'Marketplace Via Compras',
-        data: [18.4, 45.5, 53.2, 7.9],
-        backgroundColor: ['#1565C0','#1565C0','#1565C0','rgba(21,101,192,0.5)'],
+        data: [18.4, 45.5, 53.2, 60.9, 34.8, 37.5],
+        backgroundColor: ['#1565C0','#1565C0','#1565C0','#1565C0','#1565C0','#1565C0'],
         borderRadius: 6,
         stack: 'resultado'
       }
