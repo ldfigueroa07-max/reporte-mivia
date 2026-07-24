@@ -2721,7 +2721,92 @@ const PERIODOS = {
     topLoc: [{n:"Neuquén",v:715},{n:"Córdoba",v:658},{n:"Mendoza",v:548},{n:"Rosario",v:524},{n:"Bahía Blanca",v:442},{n:"San Juan",v:425},{n:"Salta",v:421},{n:"Paraná",v:384},{n:"Santa Fe",v:381},{n:"Bariloche",v:362},{n:"Santa Rosa",v:260},{n:"Río Cuarto",v:224},{n:"Cipolletti",v:204},{n:"San Miguel de Tucumán",v:171},{n:"Puerto Madryn",v:167}],
     topSellers: [{n:"COOPERATIVA DE TRABAJO PROFEGA LIMITADA",v:239.0,val:"$239,0M"},{n:"MUNDO OBRA",v:48.8,val:"$48,8M"},{n:"Petenatti Hogar VC",v:8.2,val:"$8,2M"},{n:"NORTESHOPS",v:5.99,val:"$6,0M"},{n:"ECOTECN",v:4.69,val:"$4,7M"}],
     pl_mp_resultado: '$293,5M', pl_mp_margen: '94,0%', pl_mivia_resultado: '$2.973,4M', pl_mivia_margen: '97,0%',
-  };  const envLabel = document.getElementById('envLabel');
+  }
+};
+
+let currentPeriod = 'jun';
+let currentYear = 2026;
+let evoChart1 = null, evoChart2 = null;
+
+function setPeriodAll(p, year, clickedBtn) {
+  currentPeriod = p;
+  currentYear = year || 2026;
+
+  // Sincronizar todos los botones de período en todas las secciones
+  document.querySelectorAll('.period-btn').forEach(btn => {
+    const btnOnclick = btn.getAttribute('onclick') || '';
+    btn.classList.toggle('active', btnOnclick === (clickedBtn ? clickedBtn.getAttribute('onclick') : ''));
+  });
+
+  // Sincronizar año — activar el año correcto en todos los selectores
+  document.querySelectorAll('.period-btn').forEach(btn => {
+    const onclick = btn.getAttribute('onclick') || '';
+    if (onclick.includes(`'mar',${currentYear}`) || onclick.includes(`'mar', ${currentYear}`)) {
+      if (onclick.startsWith(`setPeriodAll('mar',${currentYear}`)) {
+        // es botón de año
+      }
+    }
+  });
+
+  setPeriod(p);
+}
+
+
+function setPeriod(p, clickedTab) {
+  currentPeriod = p;
+  const d = PERIODOS[p];
+
+  // Actualizar subtítulo
+  const sub = document.querySelector('#sec-resumen .section-sub');
+  if (sub) sub.textContent = d.sub;
+
+  // Actualizar chip topbar
+  document.querySelector('.period-chip').textContent = d.label;
+
+  // Actualizar KPIs
+  const kpis = document.querySelectorAll('#sec-resumen .kpi');
+  if (kpis.length >= 5) {
+    // Recargas (span 2)
+    kpis[0].querySelector('.kpi-value').textContent = d.rec.val;
+    const recTags = kpis[0].querySelectorAll('.kpi-tag');
+    recTags[0].className = 'kpi-tag ' + (d.rec.up1 ? 'up' : 'down');
+    recTags[0].textContent = d.rec.v1;
+    recTags[1].className = 'kpi-tag ' + (d.rec.up2 ? 'up' : 'down');
+    recTags[1].textContent = d.rec.v2;
+
+    // Marketplace
+    kpis[1].querySelector('.kpi-value').textContent = d.mp.val;
+    const mpTags = kpis[1].querySelectorAll('.kpi-tag');
+    mpTags[0].className = 'kpi-tag ' + (d.mp.up1 ? 'up' : 'neutral');
+    mpTags[0].textContent = d.mp.v1;
+    mpTags[1].className = 'kpi-tag neutral';
+    mpTags[1].textContent = d.mp.v2;
+
+    // Ingreso Marginal
+    kpis[2].querySelector('.kpi-value').textContent = d.ing.val;
+    const ingTags = kpis[2].querySelectorAll('.kpi-tag');
+    ingTags[0].textContent = d.ing.v1;
+    ingTags[1].textContent = d.ing.v2;
+
+    // Envíos
+    kpis[3].querySelector('.kpi-value').textContent = d.env.val;
+    const envTags = kpis[3].querySelectorAll('.kpi-tag');
+    envTags[0].className = 'kpi-tag ' + (d.env.up1 ? 'up' : 'down');
+    envTags[0].textContent = d.env.v1;
+    envTags[1].className = 'kpi-tag ' + (d.env.up2 ? 'up' : 'down');
+    envTags[1].textContent = d.env.v2;
+
+    // Actualizar sección Envíos & Logística
+  const refMap = {
+    ene:        { label:'Dic 2025',   env:'8.413',  bul:'30.482 bultos' },
+    feb:        { label:'Ene 2026',   env:'7.156',  bul:'17.570 bultos' },
+    mar:        { label:'Feb 2026',   env:'6.816',  bul:'16.834 bultos' },
+    abr:        { label:'Mar 2026',   env:'8.758',  bul:'20.856 bultos' },
+    may:        { label:'Abr 2026',   env:'9.047',  bul:'21.808 bultos' },
+    q1:         { label:'Q1 2025',    env:'24.556', bul:'44.470 bultos' },
+    acumulado:  { label:'Acum 2025',  env:'38.551', bul:'84.306 bultos' },
+  };
+  const envLabel = document.getElementById('envLabel');
   const envVal   = document.getElementById('envVal');
   const bulLabel = document.getElementById('bulLabel');
   const enviosBulVal = document.getElementById('enviosBulVal');
