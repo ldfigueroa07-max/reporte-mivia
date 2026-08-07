@@ -2019,18 +2019,18 @@ document.addEventListener('DOMContentLoaded', () => {
       <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
         <div style="flex:1;min-width:140px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px">
           <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Total identificado</div>
-          <div style="font-size:22px;font-weight:700;color:var(--g1)">$350.010.212</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px">280 transacciones</div>
+          <div style="font-size:22px;font-weight:700;color:var(--g1)">$8.244.523</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">152 transacciones</div>
         </div>
         <div style="flex:1;min-width:140px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px">
           <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Orígenes</div>
-          <div style="font-size:22px;font-weight:700;color:var(--navy)">17</div>
+          <div style="font-size:22px;font-weight:700;color:var(--navy)">14</div>
           <div style="font-size:11px;color:var(--muted);margin-top:2px">rutas confirmadas</div>
         </div>
         <div style="flex:1;min-width:140px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px">
           <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Ruta mayor</div>
-          <div style="font-size:22px;font-weight:700;color:var(--navy)">$22.240.000</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px">Isidro Casanova → Bahía Blanca</div>
+          <div style="font-size:22px;font-weight:700;color:var(--navy)">$725.777</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">Santa Fe → Isidro Casanova</div>
         </div>
       </div>
       <div class="rutas-grid" id="rutas-grid">
@@ -4207,120 +4207,81 @@ const sprintIssues = [
 
 // ── RUTAS DE ENVÍOS — VENTAS MARKETPLACE (cruce VTEX trackings × canales) ────
 const mpRutasData = [
-  {orig:'Isidro Casanova', cp_o:'1824', total:259665000, tx:122, color:'#378ADD', routes:[
-    {d:'Bahía Blanca',cp:'8000',m:22240000,t:10},
-    {d:'San Nicolás',cp:'2900',m:19060000,t:10},
-    {d:'Neuquén',cp:'8300',m:15945000,t:4},
-    {d:'Macachín',cp:'6307',m:12950000,t:4},
-    {d:'I. Casanova',cp:'1765',m:12790000,t:7},
-    {d:'Posadas',cp:'3300',m:10100000,t:6},
-    {d:'General Pico',cp:'6360',m:9750000,t:5},
-    {d:'General Roca',cp:'8332',m:9390000,t:3},
-    {d:'Punta Alta',cp:'8109',m:9250000,t:3},
-    {d:'Candelaria',cp:'3308',m:7760000,t:4}
+  {orig:"Santa Fe", cp_o:"3000", total:4243276, tx:50, color:"#378ADD", routes:[
+    {d:"Isidro Casanova", cp:"1765", m:725777, t:6},
+    {d:"Neuqu\u00e9n", cp:"8300", m:542804, t:4},
+    {d:"CABA", cp:"1431", m:354437, t:3},
+    {d:"San Rafael", cp:"5600", m:247450, t:3},
+    {d:"Mar del Plata", cp:"7600", m:236291, t:2},
+    {d:"Rivadavia", cp:"5400", m:234950, t:2},
+    {d:"Allen", cp:"8328", m:234949, t:2},
+    {d:"Embalse", cp:"5856", m:234949, t:2},
+    {d:"Junin", cp:"6000", m:234949, t:2},
+    {d:"Ceres", cp:"2340", m:118940, t:1}
   ]},
-  {orig:'Santa Fe', cp_o:'3000', total:58390139, tx:85, color:'#1D9E75', routes:[
-    {d:'Funes',cp:'2132',m:3238380,t:1},
-    {d:'Puerto Madryn',cp:'9120',m:2719780,t:2},
-    {d:'Concordia',cp:'3200',m:2585190,t:2},
-    {d:'Centenario',cp:'8309',m:2359000,t:1},
-    {d:'Venado Tuerto',cp:'2600',m:2100000,t:1},
-    {d:'San Martín de los Andes',cp:'8370',m:2037790,t:2},
-    {d:'Paraná',cp:'3100',m:1999880,t:2},
-    {d:'Posadas',cp:'3300',m:1709970,t:2},
-    {d:'Realico',cp:'6200',m:1639600,t:1},
-    {d:'Villa Maria',cp:'5900',m:1399990,t:1}
+  {orig:"Isidro Casanova", cp_o:"1824", total:2897174, tx:73, color:"#1D9E75", routes:[
+    {d:"Paran\u00e1", cp:"3100", m:103645, t:2},
+    {d:"Puerto Madryn", cp:"9120", m:100000, t:2},
+    {d:"Venado Tuerto", cp:"2600", m:95000, t:1},
+    {d:"Realic\u00f3", cp:"6200", m:95000, t:1},
+    {d:"Funes", cp:"2132", m:94999, t:1},
+    {d:"Bah\u00eda Blanca", cp:"8000", m:93329, t:3},
+    {d:"Las Heras", cp:"9017", m:83000, t:2},
+    {d:"El Calafate", cp:"9405", m:79189, t:2},
+    {d:"Concordia", cp:"3200", m:76011, t:2},
+    {d:"Santa Fe", cp:"3000", m:73400, t:3}
   ]},
-  {orig:'San Rafael', cp_o:'5600', total:8790692, tx:21, color:'#D85A30', routes:[
-    {d:'San Justo',cp:'1754',m:1189967,t:1},
-    {d:'San Miguel',cp:'1663',m:1189967,t:1},
-    {d:'Villa Gesell',cp:'7165',m:933134,t:1},
-    {d:'Caleta Olivia',cp:'9011',m:732562,t:1},
-    {d:'Florida Oeste',cp:'1602',m:683201,t:1},
-    {d:'Bariloche',cp:'8400',m:642887,t:1},
-    {d:'Apóstoles',cp:'3350',m:578925,t:1},
-    {d:'Rosário',cp:'2000',m:446114,t:2},
-    {d:'Concepción',cp:'4146',m:440100,t:1},
-    {d:'Pablo Nogues',cp:'1613',m:423930,t:1}
+  {orig:"Esquel", cp_o:"9200", total:380359, tx:6, color:"#D85A30", routes:[
+    {d:"Esquel", cp:"9200", m:110528, t:2},
+    {d:"Corrientes", cp:"3400", m:89400, t:1},
+    {d:"Villa La Angostura", cp:"8407", m:80894, t:1},
+    {d:"Trevelin", cp:"9203", m:72624, t:1},
+    {d:"Rawson", cp:"9103", m:26910, t:1}
   ]},
-  {orig:'San Justo', cp_o:'1754', total:6825340, tx:9, color:'#7F77DD', routes:[
-    {d:'Chajarí',cp:'3228',m:1490000,t:1},
-    {d:'Balcarce',cp:'7620',m:1265000,t:1},
-    {d:'Villa Carlos Paz',cp:'5152',m:1265000,t:1},
-    {d:'San Pedro',cp:'2930',m:1173000,t:1},
-    {d:'San Andrés',cp:'1651',m:793040,t:1},
-    {d:'Moreno',cp:'1738',m:320000,t:1},
-    {d:'Luis Guillon',cp:'1838',m:320000,t:1},
-    {d:'Plottier',cp:'8316',m:104400,t:1},
-    {d:'Merlo, Mariano Acosta',cp:'1723',m:94900,t:1}
+  {orig:"C\u00f3rdoba", cp_o:"5000", total:196283, tx:6, color:"#7F77DD", routes:[
+    {d:"Jun\u00edn (Bs. As.)", cp:"6000", m:76876, t:1},
+    {d:"Cipolletti", cp:"R8324", m:67018, t:2},
+    {d:"Alta Gracia", cp:"5186", m:22889, t:1},
+    {d:"Bariloche", cp:"8400", m:17000, t:1},
+    {d:"General Roca", cp:"8332", m:12500, t:1}
   ]},
-  {orig:'Lomas de Zamora', cp_o:'1834', total:4686100, tx:6, color:'#0F6E56', routes:[
-    {d:'Salliquelo',cp:'6339',m:1399000,t:1},
-    {d:'Gerli',cp:'1870',m:1049000,t:1},
-    {d:'Buenos Aires',cp:'1672',m:819000,t:1},
-    {d:'Paso De Rey',cp:'1742',m:709000,t:1},
-    {d:'El Palomar',cp:'1684',m:709000,t:1},
-    {d:'CABA',cp:'1288',m:1100,t:1}
+  {orig:"San Miguel", cp_o:"1663", total:132099, tx:2, color:"#0F6E56", routes:[
+    {d:"Chajar\u00ed", cp:"3228", m:69074, t:1},
+    {d:"San Pedro", cp:"2930", m:63025, t:1}
   ]},
-  {orig:'Pergamino', cp_o:'2700', total:2852880, tx:6, color:'#BA7517', routes:[
-    {d:'Esquel',cp:'9200',m:877600,t:2},
-    {d:'Villa La Angostura',cp:'8407',m:650660,t:1},
-    {d:'Corrientes',cp:'3400',m:635960,t:1},
-    {d:'Trevelin',cp:'9203',m:513960,t:1},
-    {d:'Rawson',cp:'9103',m:174700,t:1}
+  {orig:"Varios", cp_o:"0000", total:100499, tx:6, color:"#BA7517", routes:[
+    {d:"Gerli", cp:"1870", m:33000, t:1},
+    {d:"Caseros", cp:"1678", m:14999, t:1},
+    {d:"Dock Sud", cp:"1871", m:14999, t:1},
+    {d:"Merlo", cp:"1722", m:12500, t:1},
+    {d:"Posadas", cp:"3301", m:12500, t:1},
+    {d:"Ramos Mej\u00eda", cp:"1704", m:12500, t:1}
   ]},
-  {orig:'Rufino', cp_o:'2607', total:2841077, tx:8, color:'#888780', routes:[
-    {d:'Plottier',cp:'8316',m:599000,t:1},
-    {d:'Pueblo Esther',cp:'2129',m:599000,t:1},
-    {d:'Rosario De La Frontera',cp:'4190',m:549000,t:1},
-    {d:'Cipolletti',cp:'8324',m:533041,t:1},
-    {d:'Alta Gracia',cp:'5186',m:220000,t:1},
-    {d:'Hipolito Yrigoyen',cp:'4533',m:135000,t:1},
-    {d:'General Roca',cp:'8332',m:115000,t:1},
-    {d:'Bariloche',cp:'8400',m:91036,t:1}
+  {orig:"Rufino", cp_o:"2607", total:77721, tx:2, color:"#888780", routes:[
+    {d:"Moreno", cp:"1738", m:42467, t:1},
+    {d:"Luis Guill\u00f3n", cp:"1838", m:35254, t:1}
   ]},
-  {orig:'Virreyes', cp_o:'1645', total:1203800, tx:1, color:'#639922', routes:[
-    {d:'Capital',cp:'5000',m:1203800,t:1}
+  {orig:"Virreyes", cp_o:"1645", total:50000, tx:1, color:"#639922", routes:[
+    {d:"San Fernando", cp:"1646", m:50000, t:1}
   ]},
-  {orig:'Mataderos', cp_o:'1440', total:867000, tx:3, color:'#D4537E', routes:[
-    {d:'Berisso',cp:'1923',m:367000,t:1},
-    {d:'Merlo',cp:'1722',m:250000,t:1},
-    {d:'San Andres',cp:'1651',m:250000,t:1}
+  {orig:"Mataderos", cp_o:"1440", total:49680, tx:1, color:"#D4537E", routes:[
+    {d:"C\u00f3rdoba", cp:"5000", m:49680, t:1}
   ]},
-  {orig:'Tigre', cp_o:'1648', total:709996, tx:4, color:'#E24B4A', routes:[
-    {d:'Posadas',cp:'3301',m:249999,t:1},
-    {d:'CABA',cp:'1037',m:199999,t:1},
-    {d:'CABA',cp:'1043',m:179999,t:1},
-    {d:'I. Casanova',cp:'1765',m:79999,t:1}
+  {orig:"Ca\u00f1ada de G\u00f3mez", cp_o:"2500", total:35254, tx:1, color:"#E24B4A", routes:[
+    {d:"Marcos Paz", cp:"1727", m:35254, t:1}
   ]},
-  {orig:'Villa Martelli', cp_o:'1603', total:649000, tx:2, color:'#185FA5', routes:[
-    {d:'Junin',cp:'6000',m:385000,t:1},
-    {d:'Cipolletti',cp:'8324',m:264000,t:1}
+  {orig:"Capiov\u00ed", cp_o:"3332", total:24402, tx:1, color:"#185FA5", routes:[
+    {d:"Catamarca", cp:"4700", m:24402, t:1}
   ]},
-  {orig:'Rosario', cp_o:'2000', total:549777, tx:1, color:'#888780', routes:[
-    {d:'Virrey Del Pino',cp:'1763',m:549777,t:1}
+  {orig:"Villa Lynch", cp_o:"1672", total:22889, tx:1, color:"#D85A30", routes:[
+    {d:"C\u00f3rdoba", cp:"5000", m:22889, t:1}
   ]},
-  {orig:'El Ortondo', cp_o:'3000', total:512000, tx:5, color:'#D4537E', routes:[
-    {d:'Merlo',cp:'1722',m:182000,t:2},
-    {d:'Monte Grande',cp:'1842',m:133000,t:1},
-    {d:'CABA',cp:'1437',m:124000,t:1},
-    {d:'Villa Dominico',cp:'1874',m:73000,t:1}
+  {orig:"Loma Hermosa", cp_o:"1657", total:18260, tx:1, color:"#7F77DD", routes:[
+    {d:"San Andres", cp:"1651", m:18260, t:1}
   ]},
-  {orig:'Córdoba', cp_o:'5000', total:470830, tx:4, color:'#1D9E75', routes:[
-    {d:'Villa Maria',cp:'5900',m:226800,t:1},
-    {d:'Colonia Tirolesa',cp:'5101',m:102600,t:1},
-    {d:'San Fernando Del Valle De Catamarca',cp:'4700',m:71500,t:1},
-    {d:'Salta',cp:'4400',m:69930,t:1}
+  {orig:"Mar del Plata", cp_o:"7600", total:16627, tx:1, color:"#378ADD", routes:[
+    {d:"Trelew", cp:"9100", m:16627, t:1}
   ]},
-  {orig:'Neuquén', cp_o:'8300', total:378566, tx:1, color:'#078ADD', routes:[
-    {d:'Marcos Paz',cp:'1727',m:378566,t:1}
-  ]},
-  {orig:'Gral. Villegas', cp_o:'6230', total:332015, tx:1, color:'#8F77DD', routes:[
-    {d:'Dock Sud',cp:'1871',m:332015,t:1}
-  ]},
-  {orig:'San Miguel', cp_o:'1663', total:286000, tx:1, color:'#2D9E75', routes:[
-    {d:'General Roca',cp:'8332',m:286000,t:1}
-  ]}
 ];
 
 (function buildMpRutas() {
