@@ -2043,7 +2043,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <!-- ═══ SECCIÓN: VENDEDORES ═══ -->
   <section class="section" id="sec-vendedores">
     <div class="section-title">Vendedores Dados de Alta</div>
-    <div class="section-sub">Evolución de incorporaciones — 2026</div>
+    <div class="section-sub">Evolución de incorporaciones — Actualizado 13 Ago 2026</div>
     <div class="period-selector">
       <div class="period-selector-row">
         <div class="period-selector-label">Año</div>
@@ -2152,6 +2152,23 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <!-- 2026* — generado por el script -->
       <div class="cal-section"><div class="cal-year-hdr"><span class="cal-year-lbl">2026*</span><span class="cal-year-total">249 altas</span></div><div class="cal-grid"><div class="cal-cell"><div class="cal-mes">Ene</div><div class="cal-num">49</div></div><div class="cal-cell"><div class="cal-mes">Feb</div><div class="cal-num">68</div></div><div class="cal-cell"><div class="cal-mes">Mar</div><div class="cal-num">38</div></div><div class="cal-cell"><div class="cal-mes">Abr</div><div class="cal-num">51</div></div><div class="cal-cell"><div class="cal-mes">May</div><div class="cal-num">12</div></div><div class="cal-cell"><div class="cal-mes">Jun</div><div class="cal-num">16</div></div><div class="cal-cell cur"><div class="cal-mes">Jul</div><div class="cal-num">15</div></div><div class="cal-cell dim"><div class="cal-mes">Ago</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Sep</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Oct</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Nov</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Dic</div><div class="cal-num">—</div></div></div></div>
+    </div>
+
+    <!-- Gráfico altas por Account Manager -->
+    <div class="card" style="margin-top:20px">
+      <div class="card-header">
+        <span class="card-title">Altas por Account Manager</span>
+        <span class="card-badge">Ene 2025 – Ago 2026</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)"><div style="width:10px;height:10px;border-radius:2px;background:#2a78d6"></div>Mailen Herrera <strong style="margin-left:2px">228</strong></div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)"><div style="width:10px;height:10px;border-radius:2px;background:#eb6834"></div>Julieta Garavaglia <strong style="margin-left:2px">178</strong></div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)"><div style="width:10px;height:10px;border-radius:2px;background:#1baf7a"></div>Brisa Rodriguez <strong style="margin-left:2px">79</strong></div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)"><div style="width:10px;height:10px;border-radius:2px;background:#e87ba4"></div>Melina Navarro <strong style="margin-left:2px">43</strong></div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)"><div style="width:10px;height:10px;border-radius:2px;background:#eda100"></div>Ailen Peraza <strong style="margin-left:2px">29</strong></div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)"><div style="width:10px;height:10px;border-radius:2px;background:#4a3aa7"></div>Lucas Figueroa <strong style="margin-left:2px">15</strong></div>
+      </div>
+      <canvas id="chartAM" height="200"></canvas>
     </div>
   </section>
 
@@ -3593,6 +3610,30 @@ new Chart(document.getElementById('chartVend').getContext('2d'), {
     scales:{
       x:{grid:{display:false}, ticks:{font:{size:10}, maxRotation:45}},
       y:{grid:{color:'#E8F5E9'}, ticks:{font:{size:11}}}
+    }
+  }
+});
+
+// ── ALTAS POR ACCOUNT MANAGER ─────────────────────────────
+new Chart(document.getElementById('chartAM').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: ["Ene '25","Feb '25","Mar '25","Abr '25","May '25","Jun '25","Jul '25","Ago '25","Sep '25","Oct '25","Nov '25","Dic '25","Ene '26","Feb '26","Mar '26","Abr '26","May '26","Jun '26","Jul '26","Ago '26"],
+    datasets: [
+      { label:'Mailen Herrera',    data:[2,11,12,16,3,0,0,13,16,14,18,14,25,31,11,22,20,0,0,0],  backgroundColor:'#2a78d6', stack:'am', borderRadius:3 },
+      { label:'Julieta Garavaglia',data:[3,8,16,9,13,15,12,5,0,2,0,0,22,16,24,29,4,0,0,0],       backgroundColor:'#eb6834', stack:'am', borderRadius:3 },
+      { label:'Brisa Rodriguez',   data:[1,2,0,0,0,0,0,6,28,18,11,12,1,0,0,0,0,0,0,0],           backgroundColor:'#1baf7a', stack:'am', borderRadius:3 },
+      { label:'Melina Navarro',    data:[0,0,4,0,1,2,0,0,0,0,0,0,0,0,0,0,3,11,12,10],            backgroundColor:'#e87ba4', stack:'am', borderRadius:3 },
+      { label:'Ailen Peraza',      data:[3,0,0,0,1,2,1,0,0,0,0,0,1,0,1,0,2,4,6,8],              backgroundColor:'#eda100', stack:'am', borderRadius:3 },
+      { label:'Lucas Figueroa',    data:[0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,2,3,6,2],              backgroundColor:'#4a3aa7', stack:'am', borderRadius:3 }
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:true,
+    plugins:{ legend:{ display:false } },
+    scales:{
+      x:{ stacked:true, grid:{display:false}, ticks:{font:{size:10}, maxRotation:45, autoSkip:false} },
+      y:{ stacked:true, grid:{color:'#E8F5E9'}, ticks:{font:{size:11}} }
     }
   }
 });
