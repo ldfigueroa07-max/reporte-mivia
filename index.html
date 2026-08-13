@@ -2154,21 +2154,110 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="cal-section"><div class="cal-year-hdr"><span class="cal-year-lbl">2026*</span><span class="cal-year-total">249 altas</span></div><div class="cal-grid"><div class="cal-cell"><div class="cal-mes">Ene</div><div class="cal-num">49</div></div><div class="cal-cell"><div class="cal-mes">Feb</div><div class="cal-num">68</div></div><div class="cal-cell"><div class="cal-mes">Mar</div><div class="cal-num">38</div></div><div class="cal-cell"><div class="cal-mes">Abr</div><div class="cal-num">51</div></div><div class="cal-cell"><div class="cal-mes">May</div><div class="cal-num">12</div></div><div class="cal-cell"><div class="cal-mes">Jun</div><div class="cal-num">16</div></div><div class="cal-cell cur"><div class="cal-mes">Jul</div><div class="cal-num">15</div></div><div class="cal-cell dim"><div class="cal-mes">Ago</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Sep</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Oct</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Nov</div><div class="cal-num">—</div></div><div class="cal-cell dim"><div class="cal-mes">Dic</div><div class="cal-num">—</div></div></div></div>
     </div>
 
-    <!-- Gráfico altas por Account Manager -->
+    <!-- Ranking altas por Account Manager -->
     <div class="card" style="margin-top:20px">
       <div class="card-header">
         <span class="card-title">Altas por Account Manager</span>
-        <span class="card-badge">Ene 2025 – Ago 2026</span>
+        <span class="card-badge">Mar 2024 – Ago 2026</span>
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px">
-        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)"><div style="width:10px;height:10px;border-radius:2px;background:#2a78d6"></div>Mailen Herrera <strong style="margin-left:2px">228</strong></div>
-        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)"><div style="width:10px;height:10px;border-radius:2px;background:#eb6834"></div>Julieta Garavaglia <strong style="margin-left:2px">178</strong></div>
-        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)"><div style="width:10px;height:10px;border-radius:2px;background:#1baf7a"></div>Brisa Rodriguez <strong style="margin-left:2px">79</strong></div>
-        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)"><div style="width:10px;height:10px;border-radius:2px;background:#e87ba4"></div>Melina Navarro <strong style="margin-left:2px">43</strong></div>
-        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)"><div style="width:10px;height:10px;border-radius:2px;background:#eda100"></div>Ailen Peraza <strong style="margin-left:2px">29</strong></div>
-        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)"><div style="width:10px;height:10px;border-radius:2px;background:#4a3aa7"></div>Lucas Figueroa <strong style="margin-left:2px">15</strong></div>
-      </div>
-      <canvas id="chartAM" height="200"></canvas>
+      <div id="am-period-label" style="margin-bottom:10px;"></div>
+      <div id="am-month-strip" style="overflow-x:auto;white-space:nowrap;margin-bottom:16px;padding-bottom:4px;"></div>
+      <div id="am-ranking-list"></div>
+      <script>
+(function(){
+  const ams = ['Mailen Herrera','Julieta Garavaglia','Brisa Rodriguez','Melina Navarro','Ailen Peraza','Lucas Figueroa'];
+  const colors = {'Mailen Herrera':'#2a78d6','Julieta Garavaglia':'#eb6834','Brisa Rodriguez':'#1baf7a','Melina Navarro':'#e87ba4','Ailen Peraza':'#eda100','Lucas Figueroa':'#4a3aa7'};
+  const initials = {'Mailen Herrera':'MH','Julieta Garavaglia':'JG','Brisa Rodriguez':'BR','Melina Navarro':'MN','Ailen Peraza':'AP','Lucas Figueroa':'LF'};
+  const labels = ["Mar '24","Abr '24","May '24","Jun '24","Jul '24","Ago '24","Sep '24","Oct '24","Nov '24","Dic '24","Ene '25","Feb '25","Mar '25","Abr '25","May '25","Jun '25","Jul '25","Ago '25","Sep '25","Oct '25","Nov '25","Dic '25","Ene '26","Feb '26","Mar '26","Abr '26","May '26","Jun '26","Jul '26","Ago '26"];
+  const values = {
+    'Mailen Herrera':    [0,0,0,0,0,0,0,0,0,2,2,11,12,16,3,0,0,13,16,14,18,14,25,31,11,22,20,0,0,0],
+    'Julieta Garavaglia':[0,0,0,0,0,0,0,0,0,0,3,8,16,9,13,15,12,5,0,2,0,0,22,16,24,29,4,0,0,0],
+    'Brisa Rodriguez':   [0,0,1,0,0,0,0,0,0,1,1,2,0,0,0,0,0,6,28,18,11,12,1,0,0,0,0,0,0,0],
+    'Melina Navarro':    [0,0,0,0,0,0,0,0,0,0,0,0,4,0,1,2,0,0,0,0,0,0,0,0,0,0,3,11,12,10],
+    'Ailen Peraza':      [0,0,0,0,0,1,2,0,2,3,3,0,0,0,1,2,1,0,0,0,0,0,1,0,1,0,2,4,6,8],
+    'Lucas Figueroa':    [2,6,50,5,6,2,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,2,3,6,2]
+  };
+  const acumulado = {};
+  ams.forEach(am => { acumulado[am] = values[am].reduce((a,b)=>a+b,0); });
+
+  const strip = document.getElementById('am-month-strip');
+  let activeBtn = null;
+
+  function makeBtn(text, cb, isAccum) {
+    const btn = document.createElement('button');
+    btn.textContent = text;
+    btn.style.cssText = 'display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;cursor:pointer;margin-right:4px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:inherit;white-space:nowrap;';
+    btn.onclick = () => { cb(); setActive(btn); };
+    if (isAccum) btn.style.marginRight = '12px';
+    return btn;
+  }
+  function setActive(btn) {
+    if (activeBtn) { activeBtn.style.background='transparent'; activeBtn.style.color='var(--muted)'; activeBtn.style.border='1px solid var(--border)'; activeBtn.style.fontWeight='400'; }
+    btn.style.background='var(--navy)'; btn.style.color='#fff'; btn.style.border='1px solid var(--navy)'; btn.style.fontWeight='500';
+    activeBtn = btn;
+  }
+
+  const btnAcum = makeBtn('Acumulado', () => render(-1), true);
+  strip.appendChild(btnAcum);
+
+  let lastYear = null;
+  labels.forEach((lbl, i) => {
+    const year = lbl.includes("'24")?'2024':lbl.includes("'25")?'2025':'2026';
+    if (year !== lastYear) {
+      const sep = document.createElement('span');
+      sep.textContent = year;
+      sep.style.cssText = 'font-size:10px;color:var(--muted);margin-right:5px;vertical-align:middle;font-weight:600;';
+      strip.appendChild(sep);
+      lastYear = year;
+    }
+    const btn = makeBtn(lbl.split(' ')[0], () => render(i), false);
+    btn.dataset.idx = i;
+    strip.appendChild(btn);
+  });
+
+  function render(monthIdx) {
+    let data, periodLabel, total;
+    if (monthIdx === -1) {
+      data = ams.map(am => ({ am, count: acumulado[am] }));
+      periodLabel = 'Acumulado total'; total = Object.values(acumulado).reduce((a,b)=>a+b,0);
+    } else {
+      data = ams.map(am => ({ am, count: values[am][monthIdx] }));
+      periodLabel = labels[monthIdx]; total = data.reduce((a,b)=>a+b.count,0);
+    }
+    data.sort((a,b)=>b.count-a.count);
+    const maxCount = Math.max(...data.map(d=>d.count),1);
+
+    document.getElementById('am-period-label').innerHTML =
+      '<span style="font-size:13px;font-weight:600;color:var(--navy)">'+periodLabel+'</span>'+
+      '<span style="font-size:12px;color:var(--muted);margin-left:8px;">'+total+' altas</span>';
+
+    const list = document.getElementById('am-ranking-list');
+    list.innerHTML = '';
+    const medals = ['🥇','🥈','🥉'];
+    const rankBgs = ['rgba(255,200,0,0.10)','rgba(160,160,160,0.10)','rgba(205,120,50,0.09)'];
+
+    data.forEach((d,i) => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;margin-bottom:7px;background:'+(i<3?rankBgs[i]:'rgba(0,0,0,0.02)')+';';
+      const pct = Math.round(d.count/maxCount*100);
+      row.innerHTML =
+        '<div style="width:26px;text-align:center;flex-shrink:0;">'+(i<3?'<span style="font-size:18px;">'+medals[i]+'</span>':'<span style="font-size:12px;font-weight:600;color:var(--muted);">'+(i+1)+'</span>')+'</div>'+
+        '<div style="width:28px;height:28px;border-radius:50%;background:'+colors[d.am]+'22;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:9px;font-weight:700;color:'+colors[d.am]+';">'+initials[d.am]+'</span></div>'+
+        '<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+d.am+'</div>'+(monthIdx!==-1?'<div style="font-size:11px;color:var(--muted);margin-top:1px;">Total histórico: '+acumulado[d.am]+'</div>':'')+'</div>'+
+        '<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">'+
+        '<div style="width:100px;background:rgba(0,0,0,0.07);border-radius:4px;height:7px;overflow:hidden;"><div style="width:'+pct+'%;height:7px;border-radius:4px;background:'+colors[d.am]+';"></div></div>'+
+        '<div style="width:30px;text-align:right;font-size:15px;font-weight:700;color:'+(d.count>0?colors[d.am]:'var(--muted)')+';">'+d.count+'</div>'+
+        '</div>';
+      list.appendChild(row);
+    });
+  }
+
+  const allMonthBtns = strip.querySelectorAll('button[data-idx]');
+  const lastMonthBtn = allMonthBtns[allMonthBtns.length-1];
+  setActive(lastMonthBtn);
+  render(29);
+})();
+      </script>
     </div>
   </section>
 
@@ -3610,30 +3699,6 @@ new Chart(document.getElementById('chartVend').getContext('2d'), {
     scales:{
       x:{grid:{display:false}, ticks:{font:{size:10}, maxRotation:45}},
       y:{grid:{color:'#E8F5E9'}, ticks:{font:{size:11}}}
-    }
-  }
-});
-
-// ── ALTAS POR ACCOUNT MANAGER ─────────────────────────────
-new Chart(document.getElementById('chartAM').getContext('2d'), {
-  type: 'bar',
-  data: {
-    labels: ["Ene '25","Feb '25","Mar '25","Abr '25","May '25","Jun '25","Jul '25","Ago '25","Sep '25","Oct '25","Nov '25","Dic '25","Ene '26","Feb '26","Mar '26","Abr '26","May '26","Jun '26","Jul '26","Ago '26"],
-    datasets: [
-      { label:'Mailen Herrera',    data:[2,11,12,16,3,0,0,13,16,14,18,14,25,31,11,22,20,0,0,0],  backgroundColor:'#2a78d6', stack:'am', borderRadius:3 },
-      { label:'Julieta Garavaglia',data:[3,8,16,9,13,15,12,5,0,2,0,0,22,16,24,29,4,0,0,0],       backgroundColor:'#eb6834', stack:'am', borderRadius:3 },
-      { label:'Brisa Rodriguez',   data:[1,2,0,0,0,0,0,6,28,18,11,12,1,0,0,0,0,0,0,0],           backgroundColor:'#1baf7a', stack:'am', borderRadius:3 },
-      { label:'Melina Navarro',    data:[0,0,4,0,1,2,0,0,0,0,0,0,0,0,0,0,3,11,12,10],            backgroundColor:'#e87ba4', stack:'am', borderRadius:3 },
-      { label:'Ailen Peraza',      data:[3,0,0,0,1,2,1,0,0,0,0,0,1,0,1,0,2,4,6,8],              backgroundColor:'#eda100', stack:'am', borderRadius:3 },
-      { label:'Lucas Figueroa',    data:[0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,2,3,6,2],              backgroundColor:'#4a3aa7', stack:'am', borderRadius:3 }
-    ]
-  },
-  options: {
-    responsive:true, maintainAspectRatio:true,
-    plugins:{ legend:{ display:false } },
-    scales:{
-      x:{ stacked:true, grid:{display:false}, ticks:{font:{size:10}, maxRotation:45, autoSkip:false} },
-      y:{ stacked:true, grid:{color:'#E8F5E9'}, ticks:{font:{size:11}} }
     }
   }
 });
