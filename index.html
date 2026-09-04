@@ -1456,7 +1456,7 @@ function doLogin() {
   if (USUARIOS[u] && USUARIOS[u] === p) {
     document.getElementById('loginScreen').style.display = 'none';
     sessionStorage.setItem('auth', '1');
-    setPeriod('jul');
+    setPeriod('sep');
   } else {
     document.getElementById('loginError').style.display = 'block';
   }
@@ -3062,7 +3062,12 @@ function setPeriodAll(p, year, clickedBtn) {
   // Sincronizar todos los botones de período en todas las secciones
   document.querySelectorAll('.period-btn').forEach(btn => {
     const btnOnclick = btn.getAttribute('onclick') || '';
-    btn.classList.toggle('active', btnOnclick === (clickedBtn ? clickedBtn.getAttribute('onclick') : ''));
+    if (clickedBtn) {
+      btn.classList.toggle('active', btnOnclick === clickedBtn.getAttribute('onclick'));
+    } else {
+      // Llamada programática (DOMContentLoaded): activar botones que coincidan con el período
+      btn.classList.toggle('active', btnOnclick.includes("'" + p + "'"));
+    }
   });
 
   // Sincronizar año — activar el año correcto en todos los selectores
@@ -4735,7 +4740,7 @@ updateSvcChart();
 
 // Inicializar selector jerárquico — al final para que el DOM esté listo
 renderSelectors();
-setPeriod('abr');
+setPeriod('sep');
 
 </script>
 </body>
