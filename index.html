@@ -1882,7 +1882,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <div class="ce-note" id="svcNote"></div>
       <div class="part-section" id="svcPartSection">
-        <div class="part-section-title">Participación por canal — Ene–Sep 2026</div>
+        <div class="part-section-title">Participación por canal — Ene–Oct 2026</div>
         <div class="part-pills">
           <div class="part-pill part-pill-sc">
             <div class="part-pill-name">Seller Center</div>
@@ -2191,7 +2191,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const yearRanges = {
     '2024':{idxs:[0,1,2,3,4,5,6,7,8,9],label:'2024 (Mar–Dic)'},
     '2025':{idxs:[10,11,12,13,14,15,16,17,18,19,20,21],label:'2025 (Año completo)'},
-    '2026':{idxs:[22,23,24,25,26,27,28,29,30],label:'2026 (Ene–Sep)'}
+    '2026':{idxs:[22,23,24,25,26,27,28,29,30,31],label:'2026 (Ene–Oct)'}
   };
   const acumulado = {};
   ams.forEach(am => { acumulado[am] = values[am].reduce((a,b)=>a+b,0); });
@@ -5159,7 +5159,7 @@ function updateSvcChart() {
   if (!svcChartInst) return;
   svcChartInst.data.datasets = svcMakeDatasets(svcActivCanal, svcActivSvc);
   svcChartInst.update();
-  const note = SVC_CANAL_LABELS[svcActivCanal] + ' · ' + SVC_SERV_LABELS[svcActivSvc] + ' · 2024 azul · 2025 rosa · 2026 verde · Datos Ene 2024 – Sep 2026';
+  const note = SVC_CANAL_LABELS[svcActivCanal] + ' · ' + SVC_SERV_LABELS[svcActivSvc] + ' · 2024 azul · 2025 rosa · 2026 verde · Datos Ene 2024 – Oct 2026';
   const el = document.getElementById('svcNote');
   if (el) el.textContent = note;
   const badge = document.getElementById('svcBadge');
@@ -5177,7 +5177,7 @@ function updateSvcPart() {
   const bsc = document.getElementById('svcBarSc'); if (bsc) bsc.style.width = p.sc + '%';
   const btn = document.getElementById('svcBarTn'); if (btn) btn.style.width = p.tn + '%';
   const bur = document.getElementById('svcBarUr'); if (bur) bur.style.width = p.ur + '%';
-  set('svcPartNote', 'Participación canal para ' + SVC_SERV_LABELS[svcActivSvc] + ' · Ene–Ago 2026 · Total: ' + fmt(p.total) + ' envíos');
+  set('svcPartNote', 'Participación canal para ' + SVC_SERV_LABELS[svcActivSvc] + ' · Ene–Oct 2026 · Total: ' + fmt(p.total) + ' envíos');
   const section = document.getElementById('svcPartSection');
   if (section) section.style.display = svcActivCanal !== 'all' ? 'none' : '';
 }
