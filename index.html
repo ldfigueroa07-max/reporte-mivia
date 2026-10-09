@@ -1456,7 +1456,7 @@ function doLogin() {
   if (USUARIOS[u] && USUARIOS[u] === p) {
     document.getElementById('loginScreen').style.display = 'none';
     sessionStorage.setItem('auth', '1');
-    setPeriod('sep');
+    setPeriodAll('oct', 2026, null);
   } else {
     document.getElementById('loginError').style.display = 'block';
   }
