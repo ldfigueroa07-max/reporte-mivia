@@ -3343,7 +3343,7 @@ function setPeriod(p, clickedTab) {
         data:{ labels:evoLbls, datasets:[{
           label:'Recargas ($M)', data:evoFull,
           borderColor:'#077C14', borderWidth:2.5,
-          pointRadius: evoFull.map((_,i)=> i===evoFull.length-1 ? 7 : 0),
+          pointRadius: evoFull.map((v,i)=> { const li=evoFull.map((x,j)=>x!=null?j:-1).reduce((a,b)=>b>a?b:a,-1); return i===li?7:0; }),
           pointBackgroundColor:'#077C14',
           fill:true, backgroundColor:grad, tension:.4
         }]},
@@ -3371,7 +3371,8 @@ function setPeriod(p, clickedTab) {
           afterDatasetsDraw(chart) {
             const {ctx:c, data, scales:{x,y}} = chart;
             const ds = data.datasets[0];
-            const lastIdx = ds.data.length-1, lastVal = ds.data[lastIdx];
+            const lastIdx = ds.data.map((x,j)=>x!=null?j:-1).reduce((a,b)=>b>a?b:a,-1);
+            const lastVal = lastIdx>=0 ? ds.data[lastIdx] : null;
             if (!lastVal) return;
             const px = x.getPixelForValue(lastIdx), py = y.getPixelForValue(lastVal);
             const label = '$'+lastVal+'M';
@@ -3528,8 +3529,9 @@ function makeLastPointPlugin(canvasId) {
       const { ctx: c, data, scales: { x, y } } = chart;
       const ds = data.datasets[0];
       if (!ds.data.length) return;
-      const lastIdx = ds.data.length - 1;
-      const lastVal = ds.data[lastIdx];
+      const lastIdx = ds.data.map((x,j)=>x!=null?j:-1).reduce((a,b)=>b>a?b:a,-1);
+      const lastVal = lastIdx>=0 ? ds.data[lastIdx] : null;
+      if (!lastVal) return;
       const px = x.getPixelForValue(lastIdx);
       const py = y.getPixelForValue(lastVal);
       const label = '$' + lastVal.toFixed(1) + 'M';
@@ -3567,7 +3569,7 @@ const evoOpts = (canvasId) => {
     data:{ labels: initLabels, datasets:[{
       label:'Recargas ($M)', data: initData,
       borderColor:'#077C14', borderWidth:2.5,
-      pointRadius: initData.map((_,i) => i === initData.length-1 ? 7 : 0),
+      pointRadius: initData.map((v,i) => { const li=initData.map((x,j)=>x!=null?j:-1).reduce((a,b)=>b>a?b:a,-1); return i===li?7:0; }),
       pointBackgroundColor:'#077C14',
       fill:true, backgroundColor:grad, tension:.4
     }]},
