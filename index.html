@@ -1515,6 +1515,10 @@ document.addEventListener('DOMContentLoaded', () => {
     <button class="nav-item" onclick="showSection('sprint')">
       <span class="nav-icon">🎯</span> Sprint VC
     </button>
+    <div class="nav-section">IA</div>
+    <button class="nav-item" onclick="showSection('ai')">
+      <span class="nav-icon">🤖</span> Asistente IA
+    </button>
   </nav>
   <div class="sidebar-footer">
     <div class="update-badge">
@@ -1563,6 +1567,8 @@ document.addEventListener('DOMContentLoaded', () => {
       <button class="nav-item" onclick="showSection('puntos');toggleMobileMenu()"><span class="nav-icon">⚡</span> Puntos Clave</button>
       <div class="nav-section">Tech</div>
       <button class="nav-item" onclick="showSection('sprint');toggleMobileMenu()"><span class="nav-icon">🎯</span> Sprint VC</button>
+      <div class="nav-section">IA</div>
+      <button class="nav-item" onclick="showSection('ai');toggleMobileMenu()"><span class="nav-icon">🤖</span> Asistente IA</button>
     </nav>
     <div class="mobile-menu-footer">
       <div class="update-badge">
@@ -5241,6 +5247,183 @@ updateSvcChart();
 renderSelectors();
 setPeriod('sep');
 
+// ── ASISTENTE IA (Gemini) ─────────────────────────────────
+(function() {
+  const GEMINI_KEY = 'AIzaSyAQ.Ab8RN6LA3mFaOenb_hXd72LIBmQ6e3KubGexcgWgIZesgohPhw';
+  const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + GEMINI_KEY;
+
+  const SUGGESTED = [
+    '¿Cuál fue el mejor mes de recargas en 2026?',
+    '¿Qué canal creció más entre Q1 y Q3?',
+    '¿Cómo va Octubre vs Septiembre?',
+    '¿Cuál es el vendedor con mayor monto acumulado?',
+    '¿Cómo viene el acumulado de envíos en 2026?',
+    '¿Qué servicio concentra más envíos en SC?'
+  ];
+
+  function buildContext() {
+    const periodoKeys = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','q1','q2','q3','acumulado'];
+    const periodosSummary = {};
+    periodoKeys.forEach(k => {
+      const p = PERIODOS[k];
+      if (!p) return;
+      periodosSummary[k] = {
+        label: p.label,
+        recargas: p.rec ? p.rec.val : null,
+        envios: p.env ? p.env.val : null,
+        bultos: p.bul ? p.bul.val : null,
+        marketplace: p.mp ? p.mp.val : null,
+        ingresomarginal: p.ing ? p.ing.val : null,
+        acumuladoLanzamiento: p.acum || null,
+        canal_sc_pct: p.sc_pct || null,
+        canal_tn_pct: p.tn_pct || null,
+        canal_ur_pct: p.ur_pct || null,
+        topRecargas: (p.topRec || []).slice(0,5).map(x => x.n + ': ' + x.val)
+      };
+    });
+    const canalEnvios2026 = {
+      sc: CANAL_HIST.sc.env[2026],
+      tn: CANAL_HIST.tn.env[2026],
+      ur: CANAL_HIST.ur.env[2026]
+    };
+    const vendHist = {};
+    Object.keys(VENDOR_HIST).forEach(v => {
+      vendHist[v] = VENDOR_HIST[v][2026];
+    });
+    return JSON.stringify({ periodos: periodosSummary, canal_envios_2026: canalEnvios2026, vendor_hist_2026: vendHist }, null, 0);
+  }
+
+  const history = [];
+
+  async function askGemini(userMsg) {
+    const ctx = buildContext();
+    const systemPrompt = `Sos el asistente analítico del dashboard MiVia de Vía Compras (ecommerce logístico B2B argentino).
+Respondés preguntas sobre los datos del reporte en español, de forma concisa y directa.
+Los montos están en pesos argentinos. "M" = millones. Los canales son SC (Seller Center), TN (TiendaNube), UR (Urbano).
+Índices de canal_envios_2026: 0=Ene, 1=Feb, 2=Mar, 3=Abr, 4=May, 5=Jun, 6=Jul, 7=Ago, 8=Sep, 9=Oct.
+Vendor_hist_2026 está en millones de pesos.
+Cuando no tenés datos suficientes, decilo claramente.
+DATOS ACTUALES DEL DASHBOARD:
+${ctx}`;
+
+    const messages = history.map(m => ({ role: m.role, parts: [{ text: m.text }] }));
+    messages.push({ role: 'user', parts: [{ text: userMsg }] });
+
+    const body = {
+      system_instruction: { parts: [{ text: systemPrompt }] },
+      contents: messages,
+      generationConfig: { temperature: 0.3, maxOutputTokens: 512 }
+    };
+
+    const resp = await fetch(GEMINI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!resp.ok) {
+      const err = await resp.json();
+      throw new Error(err.error?.message || 'Error ' + resp.status);
+    }
+    const data = await resp.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || '(Sin respuesta)';
+  }
+
+  function addMessage(role, text) {
+    const log = document.getElementById('ai-chat-log');
+    if (!log) return;
+    const isUser = role === 'user';
+    const div = document.createElement('div');
+    div.style.cssText = `display:flex;justify-content:${isUser?'flex-end':'flex-start'};margin-bottom:12px;`;
+    div.innerHTML = `<div style="
+      max-width:80%;padding:10px 14px;border-radius:${isUser?'16px 16px 4px 16px':'16px 16px 16px 4px'};
+      background:${isUser?'var(--navy)':'#F1F5F9'};color:${isUser?'#fff':'var(--navy)'};
+      font-size:13px;line-height:1.5;white-space:pre-wrap;
+    ">${text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`;
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+    history.push({ role: isUser ? 'user' : 'model', text });
+  }
+
+  function addTyping() {
+    const log = document.getElementById('ai-chat-log');
+    if (!log) return;
+    const div = document.createElement('div');
+    div.id = 'ai-typing';
+    div.style.cssText = 'display:flex;justify-content:flex-start;margin-bottom:12px;';
+    div.innerHTML = `<div style="padding:10px 14px;border-radius:16px 16px 16px 4px;background:#F1F5F9;color:var(--muted);font-size:13px;">Pensando…</div>`;
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function removeTyping() {
+    const t = document.getElementById('ai-typing');
+    if (t) t.remove();
+  }
+
+  async function handleSend() {
+    const input = document.getElementById('ai-input');
+    const btn = document.getElementById('ai-send-btn');
+    const msg = input.value.trim();
+    if (!msg) return;
+    input.value = '';
+    btn.disabled = true;
+    addMessage('user', msg);
+    addTyping();
+    try {
+      const reply = await askGemini(msg);
+      removeTyping();
+      addMessage('model', reply);
+    } catch(e) {
+      removeTyping();
+      addMessage('model', '⚠️ Error al conectar con Gemini: ' + e.message);
+    }
+    btn.disabled = false;
+    input.focus();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('ai-input');
+    const btn = document.getElementById('ai-send-btn');
+    if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }});
+    if (btn) btn.addEventListener('click', handleSend);
+
+    document.querySelectorAll('.ai-suggest-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        const input = document.getElementById('ai-input');
+        if (input) { input.value = b.dataset.q; handleSend(); }
+      });
+    });
+  });
+})();
+
 </script>
+
+<!-- SECCIÓN: Asistente IA -->
+<section class="section" id="sec-ai">
+  <div class="section-title">Asistente IA — MiVia</div>
+  <div class="section-sub">Powered by Gemini 1.5 Flash · Contexto: datos actuales del dashboard</div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
+    <button class="ai-suggest-btn" data-q="¿Cuál fue el mejor mes de recargas en 2026?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">💳 Mejor mes de recargas</button>
+    <button class="ai-suggest-btn" data-q="¿Qué canal creció más entre Q1 y Q3?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">📦 Canal con más crecimiento</button>
+    <button class="ai-suggest-btn" data-q="¿Cómo va Octubre vs Septiembre en recargas y envíos?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">📊 Oct vs Sep</button>
+    <button class="ai-suggest-btn" data-q="¿Cuál es el vendedor con mayor monto acumulado en 2026?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">🏆 Top vendedor 2026</button>
+    <button class="ai-suggest-btn" data-q="¿Cómo viene el acumulado de envíos y recargas en 2026 vs los meses del año?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">📈 Tendencia 2026</button>
+    <button class="ai-suggest-btn" data-q="¿Qué servicio concentra más envíos en Seller Center?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">🔍 Mix de servicios SC</button>
+  </div>
+
+  <div id="ai-chat-log" style="height:380px;overflow-y:auto;background:#FAFBFC;border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;"></div>
+
+  <div style="display:flex;gap:8px;align-items:flex-end;">
+    <textarea id="ai-input" rows="2" placeholder="Hacé una pregunta sobre los datos del dashboard…"
+      style="flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);font-size:13px;font-family:inherit;resize:none;outline:none;background:#fff;color:var(--navy);line-height:1.4;"></textarea>
+    <button id="ai-send-btn"
+      style="padding:10px 20px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;height:56px;white-space:nowrap;">
+      Enviar ↑
+    </button>
+  </div>
+  <div style="font-size:11px;color:var(--muted);margin-top:8px;">Enter para enviar · Shift+Enter para nueva línea</div>
+</section>
+
 </body>
 </
