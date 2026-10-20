@@ -2664,6 +2664,45 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
   </section>
 
+  <!-- SECCIÓN: Asistente IA -->
+  <section class="section" id="sec-ai">
+    <div class="section-title">Asistente IA — MiVia</div>
+    <div class="section-sub">Powered by Gemini 1.5 Flash · Contexto: datos actuales del dashboard</div>
+
+    <!-- Config key (guardada en localStorage, nunca en el repo) -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;padding:12px 14px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;">
+      <span style="font-size:12px;color:var(--muted);white-space:nowrap;">🔑 API Key:</span>
+      <input id="ai-key-input" type="password" placeholder="Pegá tu Gemini API key acá…"
+        style="flex:1;padding:6px 10px;border-radius:7px;border:1px solid var(--border);font-size:12px;font-family:inherit;outline:none;" />
+      <button id="ai-key-save"
+        style="padding:6px 14px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">
+        Guardar
+      </button>
+      <span id="ai-key-status" style="font-size:11px;color:var(--muted);white-space:nowrap;"></span>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
+      <button class="ai-suggest-btn" data-q="¿Cuál fue el mejor mes de recargas en 2026?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">💳 Mejor mes de recargas</button>
+      <button class="ai-suggest-btn" data-q="¿Qué canal creció más entre Q1 y Q3?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">📦 Canal con más crecimiento</button>
+      <button class="ai-suggest-btn" data-q="¿Cómo va Octubre vs Septiembre en recargas y envíos?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">📊 Oct vs Sep</button>
+      <button class="ai-suggest-btn" data-q="¿Cuál es el vendedor con mayor monto acumulado en 2026?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">🏆 Top vendedor 2026</button>
+      <button class="ai-suggest-btn" data-q="¿Cómo viene el acumulado de envíos y recargas en 2026 vs los meses del año?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">📈 Tendencia 2026</button>
+      <button class="ai-suggest-btn" data-q="¿Qué servicio concentra más envíos en Seller Center?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">🔍 Mix de servicios SC</button>
+    </div>
+
+    <div id="ai-chat-log" style="height:380px;overflow-y:auto;background:#FAFBFC;border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;"></div>
+
+    <div style="display:flex;gap:8px;align-items:flex-end;">
+      <textarea id="ai-input" rows="2" placeholder="Hacé una pregunta sobre los datos del dashboard…"
+        style="flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);font-size:13px;font-family:inherit;resize:none;outline:none;background:#fff;color:var(--navy);line-height:1.4;"></textarea>
+      <button id="ai-send-btn"
+        style="padding:10px 20px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;height:56px;white-space:nowrap;">
+        Enviar ↑
+      </button>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:8px;">Enter para enviar · Shift+Enter para nueva línea</div>
+  </section>
+
 </main>
 
 <script>
@@ -5385,79 +5424,38 @@ ${ctx}`;
     input.focus();
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const input = document.getElementById('ai-input');
-    const btn = document.getElementById('ai-send-btn');
-    if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }});
-    if (btn) btn.addEventListener('click', handleSend);
+  // Init directo — el script corre al final del body, DOM ya disponible
+  const aiInput = document.getElementById('ai-input');
+  const aiBtn = document.getElementById('ai-send-btn');
+  if (aiInput) aiInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }});
+  if (aiBtn) aiBtn.addEventListener('click', handleSend);
 
-    document.querySelectorAll('.ai-suggest-btn').forEach(b => {
-      b.addEventListener('click', () => {
-        const input = document.getElementById('ai-input');
-        if (input) { input.value = b.dataset.q; handleSend(); }
-      });
+  document.querySelectorAll('.ai-suggest-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      const inp = document.getElementById('ai-input');
+      if (inp) { inp.value = b.dataset.q; handleSend(); }
     });
-
-    // Key config
-    const keyInput = document.getElementById('ai-key-input');
-    const keySave = document.getElementById('ai-key-save');
-    const keyStatus = document.getElementById('ai-key-status');
-    if (keyInput) {
-      const saved = getKey();
-      if (saved) { keyInput.value = saved; keyStatus.textContent = '✓ Key guardada'; keyStatus.style.color = '#16a34a'; }
-    }
-    if (keySave) {
-      keySave.addEventListener('click', () => {
-        const val = (keyInput?.value || '').trim();
-        if (!val) { keyStatus.textContent = '⚠ Pegá la key primero'; keyStatus.style.color = '#dc2626'; return; }
-        saveKey(val);
-        keyStatus.textContent = '✓ Key guardada';
-        keyStatus.style.color = '#16a34a';
-      });
-    }
   });
+
+  // Key config
+  const keyInput = document.getElementById('ai-key-input');
+  const keySave = document.getElementById('ai-key-save');
+  const keyStatus = document.getElementById('ai-key-status');
+  if (keyInput) {
+    const saved = getKey();
+    if (saved) { keyInput.value = saved; if(keyStatus){keyStatus.textContent = '✓ Key guardada'; keyStatus.style.color = '#16a34a';} }
+  }
+  if (keySave) {
+    keySave.addEventListener('click', () => {
+      const val = (keyInput ? keyInput.value : '').trim();
+      if (!val) { if(keyStatus){keyStatus.textContent = '⚠ Pegá la key primero'; keyStatus.style.color = '#dc2626';} return; }
+      saveKey(val);
+      if(keyStatus){keyStatus.textContent = '✓ Key guardada'; keyStatus.style.color = '#16a34a';}
+    });
+  }
 })();
 
 </script>
-
-<!-- SECCIÓN: Asistente IA -->
-<section class="section" id="sec-ai">
-  <div class="section-title">Asistente IA — MiVia</div>
-  <div class="section-sub">Powered by Gemini 1.5 Flash · Contexto: datos actuales del dashboard</div>
-
-  <!-- Config key (guardada en localStorage, nunca en el repo) -->
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;padding:12px 14px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;">
-    <span style="font-size:12px;color:var(--muted);white-space:nowrap;">🔑 API Key:</span>
-    <input id="ai-key-input" type="password" placeholder="Pegá tu Gemini API key acá…"
-      style="flex:1;padding:6px 10px;border-radius:7px;border:1px solid var(--border);font-size:12px;font-family:inherit;outline:none;" />
-    <button id="ai-key-save"
-      style="padding:6px 14px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">
-      Guardar
-    </button>
-    <span id="ai-key-status" style="font-size:11px;color:var(--muted);white-space:nowrap;"></span>
-  </div>
-
-  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
-    <button class="ai-suggest-btn" data-q="¿Cuál fue el mejor mes de recargas en 2026?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">💳 Mejor mes de recargas</button>
-    <button class="ai-suggest-btn" data-q="¿Qué canal creció más entre Q1 y Q3?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">📦 Canal con más crecimiento</button>
-    <button class="ai-suggest-btn" data-q="¿Cómo va Octubre vs Septiembre en recargas y envíos?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">📊 Oct vs Sep</button>
-    <button class="ai-suggest-btn" data-q="¿Cuál es el vendedor con mayor monto acumulado en 2026?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">🏆 Top vendedor 2026</button>
-    <button class="ai-suggest-btn" data-q="¿Cómo viene el acumulado de envíos y recargas en 2026 vs los meses del año?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">📈 Tendencia 2026</button>
-    <button class="ai-suggest-btn" data-q="¿Qué servicio concentra más envíos en Seller Center?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">🔍 Mix de servicios SC</button>
-  </div>
-
-  <div id="ai-chat-log" style="height:380px;overflow-y:auto;background:#FAFBFC;border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;"></div>
-
-  <div style="display:flex;gap:8px;align-items:flex-end;">
-    <textarea id="ai-input" rows="2" placeholder="Hacé una pregunta sobre los datos del dashboard…"
-      style="flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);font-size:13px;font-family:inherit;resize:none;outline:none;background:#fff;color:var(--navy);line-height:1.4;"></textarea>
-    <button id="ai-send-btn"
-      style="padding:10px 20px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;height:56px;white-space:nowrap;">
-      Enviar ↑
-    </button>
-  </div>
-  <div style="font-size:11px;color:var(--muted);margin-top:8px;">Enter para enviar · Shift+Enter para nueva línea</div>
-</section>
 
 </body>
 </
