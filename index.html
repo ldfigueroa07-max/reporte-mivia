@@ -5335,7 +5335,20 @@ function aiBuildContext() {
     // Canal acumulado
     const part = (typeof SVC_CANAL_DATA!=='undefined'&&SVC_CANAL_DATA.part)||{};
     const canal = 'SC:'+((part.sc_n)||'-')+',TN:'+((part.tn_n)||'-')+',UR:'+((part.ur_n)||'-');
-    return '{meses:{'+rows+'},'+acum+',top5rec:['+top5+'],canal:{'+canal+'}}';
+    // Vendedores: ene→oct y total 2026 (en millones)
+    const vh = {};
+    if(typeof VENDOR_HIST!=='undefined'){
+      Object.keys(VENDOR_HIST).forEach(v=>{
+        const arr=(VENDOR_HIST[v][2026]||[]);
+        const vals=arr.filter(x=>x!=null);
+        if(!vals.length)return;
+        const tot=vals.reduce((a,b)=>a+b,0).toFixed(1);
+        const ini=(arr[0]||0).toFixed(1);
+        const fin=(arr[arr.length-1]||0).toFixed(1);
+        vh[v.split(' ')[0]]={ini:+ini,fin:+fin,tot:+tot};
+      });
+    }
+    return '{meses:{'+rows+'},'+acum+',top5rec:['+top5+'],canal:{'+canal+'},vend:'+JSON.stringify(vh)+'}';
   } catch(e) { return '{}'; }
 }
 
