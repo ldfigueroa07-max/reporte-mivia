@@ -5398,7 +5398,7 @@ async function aiHandleSend() {
     const msgs = [{role:'system', content:sys}]
       .concat(_AI_HIST.slice(0,-1).map(m => ({role:m.role==='model'?'assistant':m.role, content:m.text})))
       .concat([{role:'user', content:msg}]);
-    const body = { model:'llama-3.3-70b-versatile', messages:msgs, temperature:0.3, max_tokens:2048 };
+    const body = { model:'llama-3.1-70b-versatile', messages:msgs, temperature:0.3, max_tokens:2048 };
     const r = await fetch('https://api.groq.com/openai/v1/chat/completions',
       {method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+key}, body:JSON.stringify(body)});
     if (!r.ok) { const e=await r.json().catch(()=>({})); throw new Error('['+r.status+'] '+(e.error&&e.error.message?e.error.message:JSON.stringify(e))); }
