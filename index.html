@@ -2667,7 +2667,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <!-- SECCIÓN: Asistente IA -->
   <section class="section" id="sec-ai">
     <div class="section-title">Asistente IA — MiVia</div>
-    <div class="section-sub">Powered by Gemini 3.8 Flash · Contexto: datos actuales del dashboard</div>
+    <div class="section-sub">Powered by Groq · Llama 3.3 70B · Contexto: datos actuales del dashboard</div>
 
     <!-- Config key -->
     <div id="ai-key-ok" style="display:none;align-items:center;gap:10px;margin-bottom:18px;padding:10px 14px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;">
@@ -2677,7 +2677,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     <div id="ai-key-form" style="display:flex;align-items:center;gap:8px;margin-bottom:18px;padding:12px 14px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;">
       <span style="font-size:12px;color:var(--muted);white-space:nowrap;">🔑 API Key:</span>
-      <input id="ai-key-input" type="text" autocomplete="off" placeholder="Pegá tu Gemini API key acá…"
+      <input id="ai-key-input" type="text" autocomplete="off" placeholder="Pegá tu Groq API key (gsk_…)"
         style="flex:1;padding:6px 10px;border-radius:7px;border:1px solid var(--border);font-size:12px;font-family:monospace;outline:none;" />
       <button onclick="aiSaveKeyFn()"
         style="padding:6px 14px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">
@@ -5395,15 +5395,15 @@ async function aiHandleSend() {
       'Canales: SC=Seller Center, TN=TiendaNube, UR=Urbano. '+
       'Índices canal_2026: 0=Ene..9=Oct. vendedores_2026 en millones. '+
       'DATOS: '+ctx;
-    const msgs = _AI_HIST.slice(0,-1).map(m => ({role:m.role, parts:[{text:m.text}]}));
-    msgs.push({role:'user', parts:[{text:msg}]});
-    const body = { system_instruction:{parts:[{text:sys}]}, contents:msgs,
-      generationConfig:{temperature:0.3, maxOutputTokens:2048} };
-    const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key='+key,
-      {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+    const msgs = [{role:'system', content:sys}]
+      .concat(_AI_HIST.slice(0,-1).map(m => ({role:m.role==='model'?'assistant':m.role, content:m.text})))
+      .concat([{role:'user', content:msg}]);
+    const body = { model:'llama-3.3-70b-versatile', messages:msgs, temperature:0.3, max_tokens:2048 };
+    const r = await fetch('https://api.groq.com/openai/v1/chat/completions',
+      {method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+key}, body:JSON.stringify(body)});
     if (!r.ok) { const e=await r.json().catch(()=>({})); throw new Error('['+r.status+'] '+(e.error&&e.error.message?e.error.message:JSON.stringify(e))); }
     const data = await r.json();
-    const reply = (data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text) || '(Sin respuesta)';
+    const reply = (data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content) || '(Sin respuesta)';
     aiRemoveTyping();
     aiAddMsg('model', reply);
   } catch(e) {
