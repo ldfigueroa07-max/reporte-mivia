@@ -5286,9 +5286,12 @@ updateSvcChart();
 renderSelectors();
 setPeriod('sep');
 
-// ── ASISTENTE IA (Gemini) ─────────────────────────────────
+// ── ASISTENTE IA (Gemini) — todo global, sin IIFE ─────────
 const _AI_LS = 'mivia_gemini_key';
+const _AI_HIST = [];
+
 function aiGetKey() { try { return localStorage.getItem(_AI_LS) || ''; } catch(e) { return ''; } }
+
 function aiSaveKeyFn() {
   const inp = document.getElementById('ai-key-input');
   const st  = document.getElementById('ai-key-status');
@@ -5297,157 +5300,108 @@ function aiSaveKeyFn() {
   try { localStorage.setItem(_AI_LS, val); } catch(e) {}
   if(st){ st.textContent='✓ Key guardada'; st.style.color='#16a34a'; }
 }
-(function() {
-  function getUrl(k) { return 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + k; }
 
-  const SUGGESTED = [
-    '¿Cuál fue el mejor mes de recargas en 2026?',
-    '¿Qué canal creció más entre Q1 y Q3?',
-    '¿Cómo va Octubre vs Septiembre?',
-    '¿Cuál es el vendedor con mayor monto acumulado?',
-    '¿Cómo viene el acumulado de envíos en 2026?',
-    '¿Qué servicio concentra más envíos en SC?'
-  ];
-
-  function buildContext() {
-    const periodoKeys = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','q1','q2','q3','acumulado'];
-    const periodosSummary = {};
-    periodoKeys.forEach(k => {
-      const p = PERIODOS[k];
-      if (!p) return;
-      periodosSummary[k] = {
-        label: p.label,
-        recargas: p.rec ? p.rec.val : null,
-        envios: p.env ? p.env.val : null,
-        bultos: p.bul ? p.bul.val : null,
-        marketplace: p.mp ? p.mp.val : null,
-        ingresomarginal: p.ing ? p.ing.val : null,
-        acumuladoLanzamiento: p.acum || null,
-        canal_sc_pct: p.sc_pct || null,
-        canal_tn_pct: p.tn_pct || null,
-        canal_ur_pct: p.ur_pct || null,
-        topRecargas: (p.topRec || []).slice(0,5).map(x => x.n + ': ' + x.val)
-      };
+function aiBuildContext() {
+  try {
+    const keys = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','q1','q2','q3','acumulado'];
+    const ps = {};
+    keys.forEach(k => {
+      const p = PERIODOS[k]; if (!p) return;
+      ps[k] = { label:p.label, recargas:p.rec?p.rec.val:null, envios:p.env?p.env.val:null,
+        marketplace:p.mp?p.mp.val:null, ingreso:p.ing?p.ing.val:null,
+        sc_pct:p.sc_pct||null, tn_pct:p.tn_pct||null, ur_pct:p.ur_pct||null,
+        topRec:(p.topRec||[]).slice(0,5).map(x=>x.n+':'+x.val) };
     });
-    const canalEnvios2026 = {
-      sc: CANAL_HIST.sc.env[2026],
-      tn: CANAL_HIST.tn.env[2026],
-      ur: CANAL_HIST.ur.env[2026]
-    };
-    const vendHist = {};
-    Object.keys(VENDOR_HIST).forEach(v => {
-      vendHist[v] = VENDOR_HIST[v][2026];
-    });
-    return JSON.stringify({ periodos: periodosSummary, canal_envios_2026: canalEnvios2026, vendor_hist_2026: vendHist }, null, 0);
-  }
+    const ce = { sc:CANAL_HIST.sc.env[2026], tn:CANAL_HIST.tn.env[2026], ur:CANAL_HIST.ur.env[2026] };
+    const vh = {};
+    Object.keys(VENDOR_HIST).forEach(v => { vh[v] = VENDOR_HIST[v][2026]; });
+    return JSON.stringify({periodos:ps, canal_2026:ce, vendedores_2026:vh});
+  } catch(e) { return '{}'; }
+}
 
-  const history = [];
+function aiAddMsg(role, text) {
+  const log = document.getElementById('ai-chat-log');
+  if (!log) return;
+  const isUser = role === 'user';
+  const d = document.createElement('div');
+  d.style.cssText = 'display:flex;justify-content:'+(isUser?'flex-end':'flex-start')+';margin-bottom:12px;';
+  d.innerHTML = '<div style="max-width:80%;padding:10px 14px;border-radius:'+(isUser?'16px 16px 4px 16px':'16px 16px 16px 4px')+
+    ';background:'+(isUser?'var(--navy)':'#F1F5F9')+';color:'+(isUser?'#fff':'var(--navy)')+
+    ';font-size:13px;line-height:1.5;white-space:pre-wrap;">'+
+    text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>';
+  log.appendChild(d);
+  log.scrollTop = log.scrollHeight;
+  _AI_HIST.push({ role: isUser?'user':'model', text });
+}
 
-  async function askGemini(userMsg) {
-    const ctx = buildContext();
-    const systemPrompt = `Sos el asistente analítico del dashboard MiVia de Vía Compras (ecommerce logístico B2B argentino).
-Respondés preguntas sobre los datos del reporte en español, de forma concisa y directa.
-Los montos están en pesos argentinos. "M" = millones. Los canales son SC (Seller Center), TN (TiendaNube), UR (Urbano).
-Índices de canal_envios_2026: 0=Ene, 1=Feb, 2=Mar, 3=Abr, 4=May, 5=Jun, 6=Jul, 7=Ago, 8=Sep, 9=Oct.
-Vendor_hist_2026 está en millones de pesos.
-Cuando no tenés datos suficientes, decilo claramente.
-DATOS ACTUALES DEL DASHBOARD:
-${ctx}`;
+function aiAddTyping() {
+  const log = document.getElementById('ai-chat-log'); if (!log) return;
+  const d = document.createElement('div'); d.id = 'ai-typing';
+  d.style.cssText = 'display:flex;justify-content:flex-start;margin-bottom:12px;';
+  d.innerHTML = '<div style="padding:10px 14px;border-radius:16px 16px 16px 4px;background:#F1F5F9;color:#888;font-size:13px;">Pensando…</div>';
+  log.appendChild(d); log.scrollTop = log.scrollHeight;
+}
 
-    const messages = history.map(m => ({ role: m.role, parts: [{ text: m.text }] }));
-    messages.push({ role: 'user', parts: [{ text: userMsg }] });
+function aiRemoveTyping() { const t=document.getElementById('ai-typing'); if(t) t.remove(); }
 
-    const body = {
-      system_instruction: { parts: [{ text: systemPrompt }] },
-      contents: messages,
-      generationConfig: { temperature: 0.3, maxOutputTokens: 512 }
-    };
-
+async function aiHandleSend() {
+  const inp = document.getElementById('ai-input');
+  const btn = document.getElementById('ai-send-btn');
+  if (!inp) return;
+  const msg = inp.value.trim();
+  if (!msg) return;
+  inp.value = '';
+  if (btn) btn.disabled = true;
+  aiAddMsg('user', msg);
+  aiAddTyping();
+  try {
     const key = aiGetKey();
-    if (!key) throw new Error('No hay API key configurada. Ingresala en el campo de arriba.');
-    const resp = await fetch(getUrl(key), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    if (!resp.ok) {
-      const err = await resp.json().catch(() => ({}));
-      throw new Error('[' + resp.status + '] ' + (err.error?.message || JSON.stringify(err)));
-    }
-    const data = await resp.json();
-    return data.candidates?.[0]?.content?.parts?.[0]?.text || '(Sin respuesta)';
+    if (!key) throw new Error('No hay API key. Guardala en el campo de arriba.');
+    const ctx = aiBuildContext();
+    const sys = 'Sos el asistente analítico del dashboard MiVia (Vía Compras, B2B logístico argentino). '+
+      'Respondés en español, de forma concisa. Montos en pesos. M=millones. '+
+      'Canales: SC=Seller Center, TN=TiendaNube, UR=Urbano. '+
+      'Índices canal_2026: 0=Ene..9=Oct. vendedores_2026 en millones. '+
+      'DATOS: '+ctx;
+    const msgs = _AI_HIST.slice(0,-1).map(m => ({role:m.role, parts:[{text:m.text}]}));
+    msgs.push({role:'user', parts:[{text:msg}]});
+    const body = { system_instruction:{parts:[{text:sys}]}, contents:msgs,
+      generationConfig:{temperature:0.3, maxOutputTokens:512} };
+    const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key='+key,
+      {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+    if (!r.ok) { const e=await r.json().catch(()=>({})); throw new Error('['+r.status+'] '+(e.error&&e.error.message?e.error.message:JSON.stringify(e))); }
+    const data = await r.json();
+    const reply = (data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text) || '(Sin respuesta)';
+    aiRemoveTyping();
+    aiAddMsg('model', reply);
+  } catch(e) {
+    aiRemoveTyping();
+    aiAddMsg('model', '⚠️ '+e.message);
   }
+  if (btn) btn.disabled = false;
+  if (inp) inp.focus();
+}
 
-  function addMessage(role, text) {
-    const log = document.getElementById('ai-chat-log');
-    if (!log) return;
-    const isUser = role === 'user';
-    const div = document.createElement('div');
-    div.style.cssText = `display:flex;justify-content:${isUser?'flex-end':'flex-start'};margin-bottom:12px;`;
-    div.innerHTML = `<div style="
-      max-width:80%;padding:10px 14px;border-radius:${isUser?'16px 16px 4px 16px':'16px 16px 16px 4px'};
-      background:${isUser?'var(--navy)':'#F1F5F9'};color:${isUser?'#fff':'var(--navy)'};
-      font-size:13px;line-height:1.5;white-space:pre-wrap;
-    ">${text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`;
-    log.appendChild(div);
-    log.scrollTop = log.scrollHeight;
-    history.push({ role: isUser ? 'user' : 'model', text });
-  }
-
-  function addTyping() {
-    const log = document.getElementById('ai-chat-log');
-    if (!log) return;
-    const div = document.createElement('div');
-    div.id = 'ai-typing';
-    div.style.cssText = 'display:flex;justify-content:flex-start;margin-bottom:12px;';
-    div.innerHTML = `<div style="padding:10px 14px;border-radius:16px 16px 16px 4px;background:#F1F5F9;color:var(--muted);font-size:13px;">Pensando…</div>`;
-    log.appendChild(div);
-    log.scrollTop = log.scrollHeight;
-  }
-
-  function removeTyping() {
-    const t = document.getElementById('ai-typing');
-    if (t) t.remove();
-  }
-
-  async function handleSend() { return aiHandleSend(); }
-  window.aiHandleSend = async function() {
-    const input = document.getElementById('ai-input');
-    const btn = document.getElementById('ai-send-btn');
-    const msg = input.value.trim();
-    if (!msg) return;
-    input.value = '';
-    btn.disabled = true;
-    addMessage('user', msg);
-    addTyping();
-    try {
-      const reply = await askGemini(msg);
-      removeTyping();
-      addMessage('model', reply);
-    } catch(e) {
-      removeTyping();
-      addMessage('model', '⚠️ Error al conectar con Gemini: ' + e.message);
-    }
-    btn.disabled = false;
-    input.focus();
-  }
-
-  // Init — el script corre al final del body, DOM ya disponible
-  const aiInput = document.getElementById('ai-input');
-  if (aiInput) aiInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }});
-
-  document.querySelectorAll('.ai-suggest-btn').forEach(b => {
-    b.addEventListener('click', () => {
-      const inp = document.getElementById('ai-input');
-      if (inp) { inp.value = b.dataset.q; handleSend(); }
-    });
+// Suggest buttons
+document.querySelectorAll('.ai-suggest-btn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    var inp = document.getElementById('ai-input');
+    if (inp) { inp.value = b.getAttribute('data-q'); aiHandleSend(); }
   });
+});
 
-  // Restaurar key guardada
-  const saved = aiGetKey();
-  const ki = document.getElementById('ai-key-input');
-  const ks = document.getElementById('ai-key-status');
-  if (ki && saved) { ki.value = saved; if(ks){ ks.textContent='✓ Key guardada'; ks.style.color='#16a34a'; } }
+// Enter key en textarea
+var _aiTa = document.getElementById('ai-input');
+if (_aiTa) _aiTa.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); aiHandleSend(); }
+});
+
+// Restaurar key guardada al cargar
+(function(){
+  var k = aiGetKey();
+  var ki = document.getElementById('ai-key-input');
+  var ks = document.getElementById('ai-key-status');
+  if (ki && k) { ki.value = k; if(ks){ ks.textContent='✓ Key guardada'; ks.style.color='#16a34a'; } }
 })();
 
 </script>
