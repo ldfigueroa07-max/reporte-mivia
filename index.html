@@ -2667,7 +2667,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <!-- SECCIÓN: Asistente IA -->
   <section class="section" id="sec-ai">
     <div class="section-title">Asistente IA — MiVia</div>
-    <div class="section-sub">Powered by Gemini 1.5 Flash · Contexto: datos actuales del dashboard</div>
+    <div class="section-sub">Powered by Gemini 3.8 Flash · Contexto: datos actuales del dashboard</div>
 
     <!-- Config key -->
     <div id="ai-key-ok" style="display:none;align-items:center;gap:10px;margin-bottom:18px;padding:10px 14px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;">
@@ -5381,7 +5381,7 @@ async function aiHandleSend() {
     const msgs = _AI_HIST.slice(0,-1).map(m => ({role:m.role, parts:[{text:m.text}]}));
     msgs.push({role:'user', parts:[{text:msg}]});
     const body = { system_instruction:{parts:[{text:sys}]}, contents:msgs,
-      generationConfig:{temperature:0.3, maxOutputTokens:512} };
+      generationConfig:{temperature:0.3, maxOutputTokens:2048} };
     const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key='+key,
       {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
     if (!r.ok) { const e=await r.json().catch(()=>({})); throw new Error('['+r.status+'] '+(e.error&&e.error.message?e.error.message:JSON.stringify(e))); }
