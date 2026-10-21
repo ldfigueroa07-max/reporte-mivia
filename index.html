@@ -2674,7 +2674,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <span style="font-size:12px;color:var(--muted);white-space:nowrap;">🔑 API Key:</span>
       <input id="ai-key-input" type="password" placeholder="Pegá tu Gemini API key acá…"
         style="flex:1;padding:6px 10px;border-radius:7px;border:1px solid var(--border);font-size:12px;font-family:inherit;outline:none;" />
-      <button id="ai-key-save"
+      <button onclick="aiSaveKeyFn()"
         style="padding:6px 14px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">
         Guardar
       </button>
@@ -2695,7 +2695,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div style="display:flex;gap:8px;align-items:flex-end;">
       <textarea id="ai-input" rows="2" placeholder="Hacé una pregunta sobre los datos del dashboard…"
         style="flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);font-size:13px;font-family:inherit;resize:none;outline:none;background:#fff;color:var(--navy);line-height:1.4;"></textarea>
-      <button id="ai-send-btn"
+      <button id="ai-send-btn" onclick="aiHandleSend()"
         style="padding:10px 20px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;height:56px;white-space:nowrap;">
         Enviar ↑
       </button>
@@ -5287,10 +5287,17 @@ renderSelectors();
 setPeriod('sep');
 
 // ── ASISTENTE IA (Gemini) ─────────────────────────────────
+const _AI_LS = 'mivia_gemini_key';
+function aiGetKey() { try { return localStorage.getItem(_AI_LS) || ''; } catch(e) { return ''; } }
+function aiSaveKeyFn() {
+  const inp = document.getElementById('ai-key-input');
+  const st  = document.getElementById('ai-key-status');
+  const val = inp ? inp.value.trim() : '';
+  if (!val) { if(st){ st.textContent='⚠ Pegá la key primero'; st.style.color='#dc2626'; } return; }
+  try { localStorage.setItem(_AI_LS, val); } catch(e) {}
+  if(st){ st.textContent='✓ Key guardada'; st.style.color='#16a34a'; }
+}
 (function() {
-  const LS_KEY = 'mivia_gemini_key';
-  function getKey() { try { return localStorage.getItem(LS_KEY) || ''; } catch(e) { return ''; } }
-  function saveKey(k) { try { localStorage.setItem(LS_KEY, k); } catch(e) {} }
   function getUrl(k) { return 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + k; }
 
   const SUGGESTED = [
@@ -5356,7 +5363,7 @@ ${ctx}`;
       generationConfig: { temperature: 0.3, maxOutputTokens: 512 }
     };
 
-    const key = getKey();
+    const key = aiGetKey();
     if (!key) throw new Error('No hay API key configurada. Ingresala en el campo de arriba.');
     const resp = await fetch(getUrl(key), {
       method: 'POST',
@@ -5403,7 +5410,8 @@ ${ctx}`;
     if (t) t.remove();
   }
 
-  async function handleSend() {
+  async function handleSend() { return aiHandleSend(); }
+  window.aiHandleSend = async function() {
     const input = document.getElementById('ai-input');
     const btn = document.getElementById('ai-send-btn');
     const msg = input.value.trim();
@@ -5424,11 +5432,9 @@ ${ctx}`;
     input.focus();
   }
 
-  // Init directo — el script corre al final del body, DOM ya disponible
+  // Init — el script corre al final del body, DOM ya disponible
   const aiInput = document.getElementById('ai-input');
-  const aiBtn = document.getElementById('ai-send-btn');
   if (aiInput) aiInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }});
-  if (aiBtn) aiBtn.addEventListener('click', handleSend);
 
   document.querySelectorAll('.ai-suggest-btn').forEach(b => {
     b.addEventListener('click', () => {
@@ -5437,22 +5443,11 @@ ${ctx}`;
     });
   });
 
-  // Key config
-  const keyInput = document.getElementById('ai-key-input');
-  const keySave = document.getElementById('ai-key-save');
-  const keyStatus = document.getElementById('ai-key-status');
-  if (keyInput) {
-    const saved = getKey();
-    if (saved) { keyInput.value = saved; if(keyStatus){keyStatus.textContent = '✓ Key guardada'; keyStatus.style.color = '#16a34a';} }
-  }
-  if (keySave) {
-    keySave.addEventListener('click', () => {
-      const val = (keyInput ? keyInput.value : '').trim();
-      if (!val) { if(keyStatus){keyStatus.textContent = '⚠ Pegá la key primero'; keyStatus.style.color = '#dc2626';} return; }
-      saveKey(val);
-      if(keyStatus){keyStatus.textContent = '✓ Key guardada'; keyStatus.style.color = '#16a34a';}
-    });
-  }
+  // Restaurar key guardada
+  const saved = aiGetKey();
+  const ki = document.getElementById('ai-key-input');
+  const ks = document.getElementById('ai-key-status');
+  if (ki && saved) { ki.value = saved; if(ks){ ks.textContent='✓ Key guardada'; ks.style.color='#16a34a'; } }
 })();
 
 </script>
