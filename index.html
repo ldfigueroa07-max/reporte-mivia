@@ -2695,6 +2695,9 @@ document.addEventListener('DOMContentLoaded', () => {
       <button class="ai-suggest-btn" data-q="¿Qué servicio concentra más envíos en Seller Center?" style="padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:#F8FAFC;color:var(--navy);font-size:12px;cursor:pointer;font-family:inherit;">🔍 Mix de servicios SC</button>
     </div>
 
+    <div style="display:flex;justify-content:flex-end;margin-bottom:6px;">
+      <button onclick="aiClearChat()" style="padding:4px 12px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;cursor:pointer;font-family:inherit;">🗑 Limpiar chat</button>
+    </div>
     <div id="ai-chat-log" style="height:380px;overflow-y:auto;background:#FAFBFC;border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;"></div>
 
     <div style="display:flex;gap:8px;align-items:flex-end;">
@@ -5334,19 +5337,33 @@ function aiBuildContext() {
   } catch(e) { return '{}'; }
 }
 
+function aiMarkdown(text) {
+  return text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/\n/g,'<br>');
+}
 function aiAddMsg(role, text) {
   const log = document.getElementById('ai-chat-log');
   if (!log) return;
   const isUser = role === 'user';
   const d = document.createElement('div');
   d.style.cssText = 'display:flex;justify-content:'+(isUser?'flex-end':'flex-start')+';margin-bottom:12px;';
+  const content = isUser
+    ? text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    : aiMarkdown(text);
   d.innerHTML = '<div style="max-width:80%;padding:10px 14px;border-radius:'+(isUser?'16px 16px 4px 16px':'16px 16px 16px 4px')+
     ';background:'+(isUser?'var(--navy)':'#F1F5F9')+';color:'+(isUser?'#fff':'var(--navy)')+
-    ';font-size:13px;line-height:1.5;white-space:pre-wrap;">'+
-    text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>';
+    ';font-size:13px;line-height:1.5;">'+content+'</div>';
   log.appendChild(d);
   log.scrollTop = log.scrollHeight;
   _AI_HIST.push({ role: isUser?'user':'model', text });
+}
+function aiClearChat() {
+  const log = document.getElementById('ai-chat-log');
+  if (log) log.innerHTML = '';
+  _AI_HIST.length = 0;
 }
 
 function aiAddTyping() {
