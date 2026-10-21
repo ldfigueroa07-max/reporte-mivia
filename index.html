@@ -1825,7 +1825,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     <div class="chart-grid">
       <div class="card">
-        <div class="card-header"><span class="card-title" id="envRankTitle">Top 10 Remitentes</span><span class="card-badge">Mar 2026</span></div>
+        <div class="card-header"><span class="card-title" id="envRankTitle">Top 10 Remitentes</span><span class="card-badge" id="envRankBadge">Envíos</span></div>
         <div id="topEnvRanking"></div>
       </div>
       <div class="card">
@@ -3472,6 +3472,7 @@ function setPeriod(p, clickedTab) {
       c.appendChild(row);
     });
     if (document.getElementById('envRankTitle')) document.getElementById('envRankTitle').textContent = 'Top 10 Remitentes — ' + d.label;
+    if (document.getElementById('envRankBadge')) document.getElementById('envRankBadge').textContent = 'Envíos · ' + d.label;
   }
 
   // ── Actualizar Top Localidades ──
