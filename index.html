@@ -5382,7 +5382,7 @@ async function aiHandleSend() {
     msgs.push({role:'user', parts:[{text:msg}]});
     const body = { system_instruction:{parts:[{text:sys}]}, contents:msgs,
       generationConfig:{temperature:0.3, maxOutputTokens:512} };
-    const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key='+key,
+    const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+key,
       {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
     if (!r.ok) { const e=await r.json().catch(()=>({})); throw new Error('['+r.status+'] '+(e.error&&e.error.message?e.error.message:JSON.stringify(e))); }
     const data = await r.json();
