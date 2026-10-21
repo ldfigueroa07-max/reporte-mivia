@@ -5287,13 +5287,11 @@ initSvcChart();
 updateSvcChart();
 })();
 
-// Inicializar selector jerárquico — al final para que el DOM esté listo
-renderSelectors();
-setPeriod('sep');
+// ── ASISTENTE IA — declaraciones globales (antes de cualquier llamada) ──
+var _AI_LS = 'mivia_gemini_key';
+var _AI_HIST = [];
 
-// ── ASISTENTE IA (Gemini) — todo global, sin IIFE ─────────
-const _AI_LS = 'mivia_gemini_key';
-const _AI_HIST = [];
+setPeriod('sep');
 
 function aiGetKey() { try { return localStorage.getItem(_AI_LS) || ''; } catch(e) { return ''; } }
 
