@@ -2669,11 +2669,16 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="section-title">Asistente IA — MiVia</div>
     <div class="section-sub">Powered by Gemini 1.5 Flash · Contexto: datos actuales del dashboard</div>
 
-    <!-- Config key (guardada en localStorage, nunca en el repo) -->
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;padding:12px 14px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;">
+    <!-- Config key -->
+    <div id="ai-key-ok" style="display:none;align-items:center;gap:10px;margin-bottom:18px;padding:10px 14px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;">
+      <span style="font-size:13px;">✅</span>
+      <span style="font-size:12px;color:#16a34a;font-weight:600;">API Key configurada</span>
+      <button onclick="aiShowKeyInput()" style="margin-left:auto;padding:4px 10px;border-radius:6px;border:1px solid #BBF7D0;background:transparent;color:#16a34a;font-size:11px;cursor:pointer;font-family:inherit;">Cambiar</button>
+    </div>
+    <div id="ai-key-form" style="display:flex;align-items:center;gap:8px;margin-bottom:18px;padding:12px 14px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;">
       <span style="font-size:12px;color:var(--muted);white-space:nowrap;">🔑 API Key:</span>
-      <input id="ai-key-input" type="password" placeholder="Pegá tu Gemini API key acá…"
-        style="flex:1;padding:6px 10px;border-radius:7px;border:1px solid var(--border);font-size:12px;font-family:inherit;outline:none;" />
+      <input id="ai-key-input" type="text" autocomplete="off" placeholder="Pegá tu Gemini API key acá…"
+        style="flex:1;padding:6px 10px;border-radius:7px;border:1px solid var(--border);font-size:12px;font-family:monospace;outline:none;" />
       <button onclick="aiSaveKeyFn()"
         style="padding:6px 14px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">
         Guardar
@@ -5292,13 +5297,25 @@ const _AI_HIST = [];
 
 function aiGetKey() { try { return localStorage.getItem(_AI_LS) || ''; } catch(e) { return ''; } }
 
+function aiShowKeyOk() {
+  var ok = document.getElementById('ai-key-ok');
+  var form = document.getElementById('ai-key-form');
+  if(ok) ok.style.display='flex';
+  if(form) form.style.display='none';
+}
+function aiShowKeyInput() {
+  var ok = document.getElementById('ai-key-ok');
+  var form = document.getElementById('ai-key-form');
+  if(ok) ok.style.display='none';
+  if(form) form.style.display='flex';
+}
 function aiSaveKeyFn() {
   const inp = document.getElementById('ai-key-input');
   const st  = document.getElementById('ai-key-status');
   const val = inp ? inp.value.trim() : '';
   if (!val) { if(st){ st.textContent='⚠ Pegá la key primero'; st.style.color='#dc2626'; } return; }
   try { localStorage.setItem(_AI_LS, val); } catch(e) {}
-  if(st){ st.textContent='✓ Key guardada'; st.style.color='#16a34a'; }
+  aiShowKeyOk();
 }
 
 function aiBuildContext() {
@@ -5396,12 +5413,15 @@ if (_aiTa) _aiTa.addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); aiHandleSend(); }
 });
 
-// Restaurar key guardada al cargar
+// Restaurar estado de key al cargar
 (function(){
   var k = aiGetKey();
+  if (k) {
+    aiShowKeyOk();
+  }
+  // Enter en key input → guardar
   var ki = document.getElementById('ai-key-input');
-  var ks = document.getElementById('ai-key-status');
-  if (ki && k) { ki.value = k; if(ks){ ks.textContent='✓ Key guardada'; ks.style.color='#16a34a'; } }
+  if (ki) ki.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); aiSaveKeyFn(); } });
 })();
 
 </script>
