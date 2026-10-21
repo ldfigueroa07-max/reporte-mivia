@@ -5321,19 +5321,21 @@ function aiSaveKeyFn() {
 
 function aiBuildContext() {
   try {
-    const keys = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','q1','q2','q3','acumulado'];
-    const ps = {};
-    keys.forEach(k => {
-      const p = PERIODOS[k]; if (!p) return;
-      ps[k] = { label:p.label, recargas:p.rec?p.rec.val:null, envios:p.env?p.env.val:null,
-        marketplace:p.mp?p.mp.val:null, ingreso:p.ing?p.ing.val:null,
-        sc_pct:p.sc_pct||null, tn_pct:p.tn_pct||null, ur_pct:p.ur_pct||null,
-        topRec:(p.topRec||[]).slice(0,5).map(x=>x.n+':'+x.val) };
-    });
-    const ce = { sc:CANAL_HIST.sc.env[2026], tn:CANAL_HIST.tn.env[2026], ur:CANAL_HIST.ur.env[2026] };
-    const vh = {};
-    Object.keys(VENDOR_HIST).forEach(v => { vh[v] = VENDOR_HIST[v][2026]; });
-    return JSON.stringify({periodos:ps, canal_2026:ce, vendedores_2026:vh});
+    // Resumen compacto — solo datos clave para no exceder límite de tokens
+    const meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct'];
+    const rows = meses.map(k => {
+      const p = PERIODOS[k]; if (!p) return null;
+      return k+':{rec:'+((p.rec&&p.rec.val)||'-')+',env:'+((p.env&&p.env.val)||'-')+',mp:'+((p.mp&&p.mp.val)||'-')+'}';
+    }).filter(Boolean).join(',');
+    const ac = PERIODOS['acumulado']||{};
+    const acum = 'acum:{rec:'+((ac.rec&&ac.rec.val)||'-')+',env:'+((ac.env&&ac.env.val)||'-')+',mp:'+((ac.mp&&ac.mp.val)||'-')+',ing:'+((ac.ing&&ac.ing.val)||'-')+'}';
+    // Top 5 recargadores del mes actual
+    const cur = PERIODOS['oct']||PERIODOS['sep']||{};
+    const top5 = (cur.topRec||[]).slice(0,5).map(x=>x.n.split(' ')[0]+':'+x.val).join(',');
+    // Canal acumulado
+    const part = (typeof SVC_CANAL_DATA!=='undefined'&&SVC_CANAL_DATA.part)||{};
+    const canal = 'SC:'+((part.sc_n)||'-')+',TN:'+((part.tn_n)||'-')+',UR:'+((part.ur_n)||'-');
+    return '{meses:{'+rows+'},'+acum+',top5rec:['+top5+'],canal:{'+canal+'}}';
   } catch(e) { return '{}'; }
 }
 
@@ -5390,13 +5392,10 @@ async function aiHandleSend() {
     const key = aiGetKey();
     if (!key) throw new Error('No hay API key. Guardala en el campo de arriba.');
     const ctx = aiBuildContext();
-    const sys = 'Sos el asistente analítico del dashboard MiVia (Vía Compras, B2B logístico argentino). '+
-      'Respondés en español, de forma concisa. Montos en pesos. M=millones. '+
-      'Canales: SC=Seller Center, TN=TiendaNube, UR=Urbano. '+
-      'Índices canal_2026: 0=Ene..9=Oct. vendedores_2026 en millones. '+
-      'DATOS: '+ctx;
+    const sys = 'Asistente MiVia (B2B logístico AR). Español conciso. $=pesos. M=millones. SC=Seller Center,TN=TiendaNube,UR=Urbano. DATOS:'+ctx;
+    const hist = _AI_HIST.slice(-6,-1); // solo últimos 3 intercambios
     const msgs = [{role:'system', content:sys}]
-      .concat(_AI_HIST.slice(0,-1).map(m => ({role:m.role==='model'?'assistant':m.role, content:m.text})))
+      .concat(hist.map(m => ({role:m.role==='model'?'assistant':m.role, content:m.text})))
       .concat([{role:'user', content:msg}]);
     const body = { model:'openai/gpt-oss-20b', messages:msgs, temperature:0.3, max_tokens:2048 };
     const r = await fetch('https://api.groq.com/openai/v1/chat/completions',
