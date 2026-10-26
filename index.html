@@ -2923,7 +2923,7 @@ const PERIODOS = {
     label: 'Octubre 2026', sub: 'Oct 2026 — S3 · Cierre 26 Oct',
     rec: { val: '$459,4M', v1: 'Oct 2026 — S3', v2: '1.490 transacciones', up1: false, up2: false },
     mp:  { val: '$25,3M', v1: 'Oct 2026 — S3', v2: '29 órdenes', up1: false, up2: false },
-    ing: { val: '$531.718', v1: 'Fee envíos MP — Oct 2026', v2: '11 guías', up1: false, up2: false },
+    ing: { val: '$1.119.559', v1: 'Fee envíos MP — Oct 2026', v2: '22 guías', up1: false, up2: false },
     env: { val: '7.721', v1: 'Oct 2026 — S3', v2: '', up1: false, up2: false },
     bul: { val: '19.212', v1: 'Oct 2026 — S3', v2: '', up1: false, up2: false },
     acum: '$7.477,5M', acum_label: 'Acumulado desde lanzamiento',
@@ -3114,7 +3114,7 @@ const PERIODOS = {
     label: 'Acumulado 2026', sub: 'Enero a Octubre 2026 — Cierre 26 Oct',
     rec: { val: '$4.909,1M', v1: 'Ene $383M · Feb $332M · Mar $409M · Abr $415M · May $528M · Jun $526M · Jul $626M · Ago $575M · Sep $654M · Oct $459M', v2: '▲ vs Acum 2025', up1: true, up2: true },
     mp:  { val: '$428,3M', v1: 'Acum 2026 · Oct S3 incluido', v2: '~425 órdenes acum.', up1: true, up2: false },
-    ing: { val: '$13.860.155', v1: 'Fee envíos MP — 2026 YTD', v2: 'Ene–26 Oct 2026', up1: false, up2: false },
+    ing: { val: '$14.447.996', v1: 'Fee envíos MP — 2026 YTD', v2: 'Ene–26 Oct 2026', up1: false, up2: false },
     env: { val: '88.978', v1: 'Ene–26 Oct 2026', v2: '▲ vs Acum 2025', up1: true, up2: true },
     bul: { val: '231.057', v1: 'Ene–26 Oct 2026', v2: '▲ vs Acum 2025', up1: true, up2: true },
     acum: '$7.477,5M', acum_label: 'Acumulado desde lanzamiento',
@@ -3283,13 +3283,13 @@ function setPeriod(p, clickedTab) {
     jun:       { ventas: d.mp_ventas||'', total: d.mp_ventas||'', totalTag:'Junio 2026',  ing: d.ing?.val||'$154.195', ingTag: d.ing?.v2||'2 transacciones', seller:'Coop. Profega', sellerVal:'$17,5M' },
     jul:       { ventas:'$52,5M',   total:'$52,5M',   totalTag:'Julio 2026 — Mes completo',  ing: PERIODOS.jul?.ing?.val||'$1.992.098', ingTag: PERIODOS.jul?.ing?.v2||'35 transacciones', seller:'Coop. Profega', sellerVal:'$42,0M' },
     ago:       { ventas:'$41,0M',   total:'$41,0M',   totalTag:'Agosto 2026 — Mes completo',       ing: PERIODOS.ago?.ing?.val||'en proceso',  ingTag: PERIODOS.ago?.ing?.v2||'—',                seller:'Coop. Profega',   sellerVal:'$22,3M'  },
-    oct:       { ventas:'$25,3M',   total:'$25,3M',   totalTag:'Oct 2026 — S3',                     ing:'$531.718',                             ingTag:'11 guías',                                seller:'Marianela Q.',    sellerVal:'$4,0M'   },
+    oct:       { ventas:'$25,3M',   total:'$25,3M',   totalTag:'Oct 2026 — S3',                     ing:'$1.119.559',                           ingTag:'22 guías',                                seller:'Marianela Q.',    sellerVal:'$4,0M'   },
     sep:       { ventas:'$36,2M',   total:'$36,2M',   totalTag:'Sep 2026 — S5',                     ing:'$3.699.333',                           ingTag:'45 guías',                                seller:'Coop. Profega',   sellerVal:'$25,1M'  },
     q3:        { ventas:'$129,7M',  total:'$129,7M',  totalTag:'Q3 2026 — Jul + Ago + Sep',       ing:'$7.321.291',                            ingTag:'Jul+Ago+Sep',                             seller:'Coop. Profega', sellerVal:'$79,9M' },
     q2:        { ventas:'$105,3M',  total:'$105,3M',  totalTag:'Abr + May + Jun 2026',   ing:'$1.967.393',  ingTag:'35 transacciones Q2', seller:'Coop. Profega', sellerVal:'$93,0M' },
     q1:        { ventas:'$125,5M',  total:'$125,5M',  totalTag:'Ene + Feb + Mar',     ing:'$3.184.589',  ingTag:'70 transacciones', seller:'Coop. Profega', sellerVal:'$89,2M' },
     anual:     { ventas:'$191,5M',  total:'$191,5M',  totalTag:'Ene → Abr 2026',      ing:'$3.404.097',  ingTag:'73 transacciones', seller:'Coop. Profega', sellerVal:'$128,3M' },
-    acumulado: { ventas:'$428,3M',  total:'$428,3M',  totalTag:'Ene → 26 Oct 2026',  ing: PERIODOS.acumulado?.ing?.val||'$13.860.155', ingTag: PERIODOS.acumulado?.ing?.v2||'acumulado 2026', seller:'Coop. Profega', sellerVal:'$286,2M' },
+    acumulado: { ventas:'$428,3M',  total:'$428,3M',  totalTag:'Ene → 26 Oct 2026',  ing: PERIODOS.acumulado?.ing?.val||'$14.447.996', ingTag: PERIODOS.acumulado?.ing?.v2||'acumulado 2026', seller:'Coop. Profega', sellerVal:'$286,2M' },
   };
   const mk = mpKpiData[p] || mpKpiData.may;
   const labelMap = { ene:'Enero 2026', feb:'Febrero 2026', mar:'Marzo 2026', abr:'Abril 2026', may:'Mayo 2026', jun:'Junio 2026', jul:'Julio 2026', ago:'Agosto 2026', sep:'Septiembre 2026', oct:'Octubre 2026', q1:'Q1 2026', q2:'Q2 2026', q3:'Q3 2026', anual:'Acumulado 2026', acumulado:'Acumulado 2026' };
