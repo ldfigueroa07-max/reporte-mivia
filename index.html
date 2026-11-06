@@ -4484,12 +4484,14 @@ const sprintIssues = [
     if (!containers.todo) return;
     const counts = { todo: 0, inprogress: 0, done: 0 };
     sprintIssues.forEach(issue => {
-      if (!containers[issue.cat]) return;
-      counts[issue.cat]++;
+      const cat = issue.cat || issue.status;
+      const key = issue.key || issue.id;
+      if (!containers[cat]) return;
+      counts[cat]++;
       const div = document.createElement('div');
       div.className = 'sprint-issue';
-      div.innerHTML = `<div class="sprint-issue-key">${issue.key}</div><div class="sprint-issue-title">${issue.title}</div>`;
-      containers[issue.cat].appendChild(div);
+      div.innerHTML = `<div class="sprint-issue-key">${key}</div><div class="sprint-issue-title">${issue.title}</div>`;
+      containers[cat].appendChild(div);
     });
     ['todo','inprogress','done'].forEach(cat => {
       const badge = document.getElementById('badge-' + cat);
