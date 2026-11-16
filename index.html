@@ -993,6 +993,23 @@ td.dim { color: var(--muted); }
 .pl-table tr:last-child { border-bottom: none; }
 .pl-table td { padding: 11px 14px; font-size: 14px; }
 .pl-table td:last-child { text-align: right; font-weight: 600; }
+/* ── Pivot P&L ── */
+.pl-pivot-th-label { text-align:left; padding:10px 14px; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--gray); position:sticky; left:0; background:#F5F5F5; min-width:155px; z-index:2; }
+.pl-pivot-th { text-align:right; padding:10px 10px; font-size:11px; font-weight:700; color:var(--gray); min-width:62px; }
+.pl-pivot-th-total { text-align:right; padding:10px 14px; font-size:11px; font-weight:700; color:var(--gray); background:#ECEFF1; border-left:2px solid var(--border); min-width:72px; }
+.pl-pivot-section-hdr td { padding:7px 14px; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; }
+.pl-pivot-section-label { position:sticky; left:0; z-index:1; }
+.pl-pivot-row { border-bottom:1px solid var(--border); }
+.pl-pivot-resultado { border-bottom:1px solid var(--border); }
+.pl-pivot-label { text-align:left; padding:9px 14px; font-size:13px; color:var(--gray); position:sticky; left:0; background:white; z-index:1; }
+.pl-pivot-resultado .pl-pivot-label { background:inherit; }
+.pl-pivot-label.bold { font-weight:700; }
+.pl-pivot-label.green { color:var(--g1); }
+.pl-pivot-val { text-align:right; padding:9px 10px; font-size:13px; font-weight:500; }
+.pl-pivot-total { text-align:right; padding:9px 14px; font-size:13px; font-weight:700; background:#ECEFF1; border-left:2px solid var(--border); }
+.pl-pivot-val.red,.pl-pivot-total.red { color:var(--red); }
+.pl-pivot-val.green,.pl-pivot-total.green { color:var(--g1); }
+.pl-pivot-val.muted,.pl-pivot-total.muted { color:var(--muted); font-size:12px; font-weight:400; }
 .pl-row-header td { background: var(--g3); color: #A7F3D0; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
 .pl-row-section td:first-child { font-weight: 700; color: var(--navy); padding-left: 14px; }
 .pl-row-item td:first-child { padding-left: 28px; color: var(--gray); font-size: 13px; }
@@ -1298,6 +1315,9 @@ td.dim { color: var(--muted); }
 
   /* P&L */
   .pl-table td { font-size: 12px; padding: 8px 10px; }
+  .pl-pivot-val, .pl-pivot-total { font-size: 11px; padding: 7px 6px; }
+  .pl-pivot-label { font-size: 11px; padding: 7px 10px; min-width: 120px; }
+  .pl-pivot-th, .pl-pivot-th-total, .pl-pivot-th-label { font-size: 10px; padding: 7px 6px; }
   .pl-row-result td { font-size: 13px; }
 
   /* Canales */
@@ -2260,290 +2280,171 @@ document.addEventListener('DOMContentLoaded', () => {
 
   <!-- ═══ SECCIÓN: P&L ═══ -->
   <section class="section" id="sec-pl">
-    <div class="section-title">P&L Operativo</div>
-    <div class="section-sub">Dos centros de costo — Marketplace Via Compras · MiVia & Recargas</div>
+    <div class="section-title">P&amp;L Operativo</div>
+    <div class="section-sub">Dos centros de costo — Marketplace Via Compras · MiVia &amp; Recargas · Ene–Oct 2026 · Actualizado 16 Nov 2026</div>
 
-    <!-- Period selector P&L -->
-    <div class="period-selector">
-      <div class="period-selector-row">
-        <div class="period-selector-label">Año</div>
-        <button class="period-btn active" onclick="setPeriodAll('ago',2026,this)">2026</button>
-      </div>
-      <div class="period-selector-row" id="monthsRow4">
-        <div class="period-selector-label">Período</div>
-        <button class="period-btn" onclick="setPeriodAll('ene',2026,this)">Ene</button>
-        <button class="period-btn" onclick="setPeriodAll('feb',2026,this)">Feb</button>
-        <button class="period-btn" onclick="setPeriodAll('mar',2026,this)">Mar</button>
-        <button class="period-btn" onclick="setPeriodAll('abr',2026,this)">Abr</button>
-        <button class="period-btn" onclick="setPeriodAll('may',2026,this)">May</button>
-        <button class="period-btn" onclick="setPeriodAll('jun',2026,this)">Jun</button>
-        <button class="period-btn" onclick="setPeriodAll('jul',2026,this)">Jul</button>
-        <button class="period-btn" onclick="setPeriodAll('ago',2026,this)">Ago</button>
-        <button class="period-btn" onclick="setPeriodAll('sep',2026,this)">Sep</button>
-        <button class="period-btn" onclick="setPeriodAll('oct',2026,this)">Oct</button>
-        <button class="period-btn active" onclick="setPeriodAll('nov',2026,this)">Nov</button>
-        <div class="period-sep"></div>
-        <button class="period-btn" onclick="setPeriodAll('q1',2026,this)">Q1</button>
-        <button class="period-btn" onclick="setPeriodAll('q2',2026,this)">Q2</button>
-        <button class="period-btn" onclick="setPeriodAll('q3',2026,this)">Q3</button>
-        <div class="period-sep"></div>
-        <button class="period-btn" onclick="setPeriodAll('acumulado',2026,this)">Acumulado</button>
-      </div>
-    </div>
-
-    <!-- ── CARDS RESULTADO POR CENTRO ── -->
+    <!-- ── KPIs YTD ── -->
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:28px">
-
-      <!-- Marketplace -->
       <div class="kpi-result positive" style="border:1px solid var(--border)">
         <div class="kpi-icon">🛒</div>
-        <div class="kpi-label" id="plMPLabel">Marketplace — Junio</div>
-        <div class="kpi-value" style="font-size:22px;color:var(--g1)" id="plMPResult">$14,0M</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:6px">Mes en curso · Vtex confirmado</div>
+        <div class="kpi-label">Marketplace — YTD Ene–Oct</div>
+        <div class="kpi-value" style="font-size:22px;color:var(--g1)">$397,4M</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">10 meses confirmados · Margen 93,7%</div>
         <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray)"><span>Ingresos</span><span style="font-weight:600;color:var(--navy)">$14,8M</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-top:4px"><span>Costos Vtex</span><span style="font-weight:600;color:var(--red)">-$0,8M</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray)"><span>Ventas</span><span style="font-weight:600;color:var(--navy)">$424,0M</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-top:4px"><span>Costo Vtex</span><span style="font-weight:600;color:var(--red)">-$26,6M</span></div>
         </div>
       </div>
-
-      <!-- MiVia -->
       <div class="kpi-result positive" style="border:1px solid var(--border)">
         <div class="kpi-icon">💳</div>
-        <div class="kpi-label" id="plMiViaLabel">MiVia — Resultado Junio</div>
-        <div class="kpi-value" style="font-size:22px" id="plMiViaResult">$81,7M</div>
-        <div class="kpi-tag up" style="font-size:11px;margin-top:4px" id="plMiViaMargen">Margen 86,7%</div>
-        <div class="margin-bar"><div class="margin-fill" style="width:88%"></div></div>
+        <div class="kpi-label">MiVia — YTD Ene–Oct</div>
+        <div class="kpi-value" style="font-size:22px">$4.896,1M</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">10 meses · Margen 97,3%</div>
         <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray)"><span>Ingresos</span><span style="font-weight:600;color:var(--navy)">$105,6M</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-top:4px"><span>Azure + Quickcomm</span><span style="font-weight:600;color:var(--red)">-$12,9M</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray)"><span>Recargas + Ing</span><span style="font-weight:600;color:var(--navy)">$5.030,0M</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-top:4px"><span>Azure + Quickcomm</span><span style="font-weight:600;color:var(--red)">-$133,9M</span></div>
         </div>
       </div>
-
-      <!-- Consolidado -->
-      <div class="kpi-result partial" style="border:1px solid #FFE082">
+      <div class="kpi-result positive" style="border:1px solid var(--border)">
         <div class="kpi-icon">💼</div>
-        <div class="kpi-label" id="plConsolidadoLabel">Consolidado — Junio</div>
-        <div class="kpi-value" style="font-size:22px;color:var(--g1)">$95,7M</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px">Resultado consolidado Junio (parcial)</div>
-        <div style="margin-top:10px;padding-top:10px;border-top:1px solid #FFE082">
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray)"><span>Total Ingresos</span><span style="font-weight:600;color:var(--navy)">$109,1M</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-top:4px"><span>Costos confirmados</span><span style="font-weight:600;color:var(--red)">-$13,4M</span></div>
+        <div class="kpi-label">Consolidado — YTD Ene–Oct</div>
+        <div class="kpi-value" style="font-size:22px;color:var(--g1)">$5.293,5M</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">Nov no disponible aún</div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray)"><span>Total Ingresos</span><span style="font-weight:600;color:var(--navy)">$5.454,0M</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-top:4px"><span>Costos confirmados</span><span style="font-weight:600;color:var(--red)">-$160,5M</span></div>
         </div>
       </div>
     </div>
 
-    <!-- ── TABLAS POR CENTRO DE COSTO ── -->
-    <div class="chart-grid" style="margin-bottom:20px">
-
-      <!-- CENTRO 1: MARKETPLACE -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title" style="color:#1565C0">🛒 Marketplace — Via Compras</span>
-          <span class="card-badge" style="background:#E3F2FD;color:#1565C0;border:1px solid #90CAF9">Vtex</span>
-        </div>
-        <table class="pl-table">
-          <!-- JUNIO (completo) -->
-          <tr class="pl-row-header"><td colspan="2">JUNIO 2026 · Mes completo · Vtex confirmado</td></tr>
-          <tr class="pl-row-item"><td>↑ Ventas Marketplace</td><td>$39.700.000</td></tr>
-          <tr class="pl-row-item"><td>↓ Vtex Plataforma (Fact. 26051 + 26109)</td><td style="color:var(--red)">-$1.063.158</td></tr>
-          <tr class="pl-row-item"><td>↓ Vtex Comisiones TakeRate (Fact. 25944)</td><td style="color:var(--red)">-$1.143.893</td></tr>
-          <tr class="pl-row-subtotal"><td>Resultado Junio (confirmado)</td><td style="color:var(--g1)">$37.492.949</td></tr>
-          <tr style="height:4px"><td colspan="2"></td></tr>
-
-          <!-- MAYO -->
-          <tr class="pl-row-header"><td colspan="2">MAYO 2026 · Mes completo</td></tr>
-          <tr class="pl-row-item"><td>↑ Ventas Marketplace</td><td>$36.820.927</td></tr>
-          <tr class="pl-row-item"><td>↓ Vtex (Plataforma + Comisiones)</td><td style="color:var(--red)">-$1.988.330</td></tr>
-          <tr class="pl-row-subtotal"><td>Resultado Mayo</td><td style="color:var(--g1)">$34.832.597</td></tr>
-          <tr style="height:4px"><td colspan="2"></td></tr>
-
-          <!-- ABRIL -->
-          <tr class="pl-row-header"><td colspan="2">ABRIL 2026 · USD $1.405</td></tr>
-          <tr class="pl-row-item"><td>↑ Ventas Marketplace</td><td>$64.377.589</td></tr>
-          <tr class="pl-row-item"><td>↓ Vtex (Plataforma + Comisiones)</td><td style="color:var(--red)">-$3.477.399</td></tr>
-          <tr class="pl-row-subtotal"><td>Resultado Abril</td><td style="color:var(--g1)">$60.900.190</td></tr>
-          <tr style="height:4px"><td colspan="2"></td></tr>
-
-          <!-- MARZO -->
-          <tr class="pl-row-header"><td colspan="2">MARZO 2026 · USD $1.415</td></tr>
-          <tr class="pl-row-item"><td>↑ Ventas Marketplace</td><td>$56.700.000</td></tr>
-          <tr class="pl-row-item"><td>↓ Vtex (Plataforma + Comisiones)</td><td style="color:var(--red)">-$3.477.399</td></tr>
-          <tr class="pl-row-subtotal"><td>Resultado Marzo</td><td style="color:var(--g1)">$53.222.601</td></tr>
-
-          <!-- FEBRERO -->
-          <tr class="pl-row-header"><td colspan="2">FEBRERO 2026 · USD $1.426</td></tr>
-          <tr class="pl-row-item"><td>↑ Ventas Marketplace</td><td>$48.300.000</td></tr>
-          <tr class="pl-row-item"><td>↓ Vtex Plataforma</td><td style="color:var(--red)">-$1.516.515</td></tr>
-          <tr class="pl-row-item"><td>↓ Vtex Comisiones</td><td style="color:var(--red)">-$1.242.011</td></tr>
-          <tr class="pl-row-subtotal"><td>Resultado Febrero</td><td style="color:var(--g1)">$45.541.474</td></tr>
-          <tr style="height:4px"><td colspan="2"></td></tr>
-
-          <!-- ENERO -->
-          <tr class="pl-row-header"><td colspan="2">ENERO 2026 · USD $1.465</td></tr>
-          <tr class="pl-row-item"><td>↑ Ventas Marketplace</td><td>$20.500.000</td></tr>
-          <tr class="pl-row-item" style="color:var(--red)"><td>↓ Vtex Plataforma</td><td style="color:var(--red)">-$1.291.415</td></tr>
-          <tr class="pl-row-item" style="color:var(--red)"><td>↓ Vtex Comisiones</td><td style="color:var(--red)">-$805.103</td></tr>
-          <tr class="pl-row-subtotal"><td>Resultado Enero</td><td style="color:var(--g1)">$18.403.482</td></tr>
-          <tr style="height:4px"><td colspan="2"></td></tr>
-
-          <tr class="pl-row-result positive"><td>💼 TOTAL MARKETPLACE Ene–Jun</td><td>$250,4M</td></tr>
-        </table>
-
-        <!-- Margen por mes -->
-        <div style="margin-top:16px">
-          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g1);margin-bottom:10px">Margen por mes</div>
-          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px">
-            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
-              <div style="font-size:10px;color:var(--gray)">Enero</div>
-              <div style="font-size:16px;font-weight:700;color:var(--g1)">89,8%</div>
-            </div>
-            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
-              <div style="font-size:10px;color:var(--gray)">Febrero</div>
-              <div style="font-size:16px;font-weight:700;color:var(--g1)">94,3%</div>
-            </div>
-            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
-              <div style="font-size:10px;color:var(--gray)">Marzo</div>
-              <div style="font-size:16px;font-weight:700;color:var(--g1)">93,9%</div>
-            </div>
-            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
-              <div style="font-size:10px;color:var(--gray)">Abril</div>
-              <div style="font-size:16px;font-weight:700;color:var(--g1)">94,6%</div>
-            </div>
-            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
-              <div style="font-size:10px;color:var(--gray)">Mayo</div>
-              <div style="font-size:16px;font-weight:700;color:var(--g1)">94,6%</div>
-            </div>
-            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
-              <div style="font-size:10px;color:var(--gray)">Jun</div>
-              <div style="font-size:16px;font-weight:700;color:var(--g1)">94,4%</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- CENTRO 2: MIVIA -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title" style="color:var(--g1)">💳 MiVia & Recargas</span>
-          <span class="card-badge">Azure · Quickcomm</span>
-        </div>
-        <table class="pl-table">
-          <!-- JUNIO (completo) -->
-          <tr class="pl-row-header"><td colspan="2">JUNIO 2026 · Mes completo · USD $1.365</td></tr>
-          <tr class="pl-row-item"><td>↑ Recargas</td><td>$526.000.000</td></tr>
-          <tr class="pl-row-item"><td>↑ Ingreso Marginal</td><td>$640.229</td></tr>
-          <tr class="pl-row-item"><td>↓ Azure (3.200 USD × $1.365)</td><td style="color:var(--red)">-$4.368.000</td></tr>
-          <tr class="pl-row-item"><td>↓ Quickcomm (6.000 USD × $1.365)</td><td style="color:var(--red)">-$8.190.000</td></tr>
-          <tr class="pl-row-subtotal"><td>Resultado Junio</td><td style="color:var(--g1)">$514.082.229</td></tr>
-          <tr style="height:4px"><td colspan="2"></td></tr>
-
-          <!-- MAYO -->
-          <tr class="pl-row-header"><td colspan="2">MAYO 2026 · Mes completo</td></tr>
-          <tr class="pl-row-item"><td>↑ Recargas</td><td>$528.169.640</td></tr>
-          <tr class="pl-row-item"><td>↑ Ingreso Marginal</td><td>$960.547</td></tr>
-          <tr class="pl-row-item"><td>↓ Azure (3.200 USD)</td><td style="color:var(--red)">-$4.432.000</td></tr>
-          <tr class="pl-row-item"><td>↓ Quickcomm (6.000 USD)</td><td style="color:var(--red)">-$8.310.000</td></tr>
-          <tr class="pl-row-subtotal"><td>Resultado Mayo</td><td style="color:var(--g1)">$516.388.187</td></tr>
-          <tr style="height:4px"><td colspan="2"></td></tr>
-
-          <!-- ABRIL -->
-          <tr class="pl-row-header"><td colspan="2">ABRIL 2026 · USD $1.405</td></tr>
-          <tr class="pl-row-item"><td>↑ Recargas</td><td>$407.946.985</td></tr>
-          <tr class="pl-row-item"><td>↑ Ingreso Marginal</td><td>$810.979</td></tr>
-          <tr class="pl-row-item"><td>↓ Azure (3.200 USD)</td><td style="color:var(--red)">-$4.496.000</td></tr>
-          <tr class="pl-row-item"><td>↓ Quickcomm (6.000 USD)</td><td style="color:var(--red)">-$8.430.000</td></tr>
-          <tr class="pl-row-subtotal"><td>Resultado Abril</td><td style="color:var(--g1)">$395.831.964</td></tr>
-          <tr style="height:4px"><td colspan="2"></td></tr>
-
-          <!-- MARZO -->
-          <tr class="pl-row-header"><td colspan="2">MARZO 2026 · USD $1.415</td></tr>
-          <tr class="pl-row-item"><td>↑ Recargas</td><td>$409.200.000</td></tr>
-          <tr class="pl-row-item"><td>↑ Ingreso Marginal</td><td>$787.443</td></tr>
-          <tr class="pl-row-item"><td>↓ Azure (3.205 USD)</td><td style="color:var(--red)">-$4.534.075</td></tr>
-          <tr class="pl-row-item"><td>↓ Quickcomm (6.000 USD)</td><td style="color:var(--red)">-$8.490.000</td></tr>
-          <tr class="pl-row-subtotal"><td>Resultado Marzo</td><td style="color:var(--g1)">$396.963.368</td></tr>
-
-          <!-- FEBRERO -->
-          <tr class="pl-row-header"><td colspan="2">FEBRERO 2026 · USD $1.426</td></tr>
-          <tr class="pl-row-item"><td>↑ Recargas</td><td>$332.180.000</td></tr>
-          <tr class="pl-row-item"><td>↓ Azure (3.492 USD)</td><td style="color:var(--red)">-$4.979.592</td></tr>
-          <tr class="pl-row-item"><td>↓ Quickcomm (6.000 USD)</td><td style="color:var(--red)">-$8.556.000</td></tr>
-          <tr class="pl-row-subtotal"><td>Resultado Febrero</td><td style="color:var(--g1)">$318.644.408</td></tr>
-          <tr style="height:4px"><td colspan="2"></td></tr>
-
-          <!-- ENERO -->
-          <tr class="pl-row-header"><td colspan="2">ENERO 2026 · USD $1.465</td></tr>
-          <tr class="pl-row-item"><td>↑ Recargas</td><td>$383.310.000</td></tr>
-          <tr class="pl-row-item"><td>↓ Azure (3.520 USD)</td><td style="color:var(--red)">-$5.156.800</td></tr>
-          <tr class="pl-row-item"><td>↓ Quickcomm (6.000 USD)</td><td style="color:var(--red)">-$8.790.000</td></tr>
-          <tr class="pl-row-subtotal"><td>Resultado Enero</td><td style="color:var(--g1)">$369.363.200</td></tr>
-          <tr style="height:4px"><td colspan="2"></td></tr>
-
-          <tr class="pl-row-result positive"><td>💼 TOTAL MIVIA Ene–Jun</td><td>$2.511,3M</td></tr>
-        </table>
-
-        <!-- Margen por mes -->
-        <div style="margin-top:16px">
-          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g1);margin-bottom:10px">Margen por mes</div>
-          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px">
-            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
-              <div style="font-size:10px;color:var(--gray)">Enero</div>
-              <div style="font-size:16px;font-weight:700;color:var(--g1)">96,4%</div>
-            </div>
-            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
-              <div style="font-size:10px;color:var(--gray)">Febrero</div>
-              <div style="font-size:16px;font-weight:700;color:var(--g1)">95,9%</div>
-            </div>
-            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
-              <div style="font-size:10px;color:var(--gray)">Marzo</div>
-              <div style="font-size:16px;font-weight:700;color:var(--g1)">96,2%</div>
-            </div>
-            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
-              <div style="font-size:10px;color:var(--gray)">Abril</div>
-              <div style="font-size:16px;font-weight:700;color:var(--g1)">96,8%</div>
-            </div>
-            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
-              <div style="font-size:10px;color:var(--gray)">Mayo</div>
-              <div style="font-size:16px;font-weight:700;color:var(--g1)">97,5%</div>
-            </div>
-            <div style="text-align:center;background:var(--g5);border-radius:8px;padding:10px">
-              <div style="font-size:10px;color:var(--gray)">Jun</div>
-              <div style="font-size:16px;font-weight:700;color:var(--g1)">97,6%</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── GRÁFICO CONSOLIDADO ── -->
-    <div class="card">
+    <!-- ── CHART RESULTADO MENSUAL ── -->
+    <div class="card" style="margin-bottom:20px">
       <div class="card-header">
-        <span class="card-title">Resultado por Centro de Costo</span>
-        <span class="card-badge">Ene–Jun 2026</span>
+        <span class="card-title">Resultado mensual por centro de costo</span>
+        <span style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><span style="width:12px;height:12px;background:#077C14;display:inline-block;border-radius:2px"></span>MiVia &amp; Recargas</span>
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><span style="width:12px;height:12px;background:#1565C0;display:inline-block;border-radius:2px"></span>Marketplace</span>
+        </span>
       </div>
-      <canvas id="chartPL" height="110"></canvas>
-      <div style="margin-top:16px;padding:14px;background:var(--g5);border-radius:var(--radius-sm);display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;text-align:center">
-        <div>
-          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:4px">Cotización Enero</div>
-          <div style="font-size:20px;font-weight:700;color:var(--navy)">$1.465</div>
-          <div style="font-size:10px;color:var(--muted)">BNA venta</div>
-        </div>
-        <div style="border-left:1px solid var(--border);border-right:1px solid var(--border)">
-          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:4px">Cotización Febrero</div>
-          <div style="font-size:20px;font-weight:700;color:var(--navy)">$1.426</div>
-          <div style="font-size:10px;color:var(--muted)">BNA venta</div>
-        </div>
-        <div style="border-right:1px solid var(--border)">
-          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:4px">Cotización Marzo</div>
-          <div style="font-size:20px;font-weight:700;color:var(--navy)">$1.415</div>
-          <div style="font-size:10px;color:var(--muted)">BNA venta</div>
-        </div>
-        <div>
-          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:4px">Cotización Abril*</div>
-          <div style="font-size:20px;font-weight:700;color:var(--amber)">$1.405</div>
-          <div style="font-size:10px;color:var(--muted)">Estimado · actualizar al cierre</div>
-        </div>
-      </div>
+      <canvas id="chartPL" height="100"></canvas>
+    </div>
+
+    <!-- ── TABLA PIVOT ── -->
+    <div class="card" style="overflow-x:auto;padding:0">
+      <table id="plPivotTable" style="width:100%;border-collapse:collapse;min-width:900px;font-size:13px">
+        <thead>
+          <tr style="background:#F5F5F5">
+            <th class="pl-pivot-th-label">Concepto</th>
+            <th class="pl-pivot-th">Ene</th>
+            <th class="pl-pivot-th">Feb</th>
+            <th class="pl-pivot-th">Mar</th>
+            <th class="pl-pivot-th">Abr</th>
+            <th class="pl-pivot-th">May</th>
+            <th class="pl-pivot-th">Jun</th>
+            <th class="pl-pivot-th">Jul</th>
+            <th class="pl-pivot-th">Ago</th>
+            <th class="pl-pivot-th">Sep</th>
+            <th class="pl-pivot-th">Oct</th>
+            <th class="pl-pivot-th-total">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- MARKETPLACE -->
+          <tr class="pl-pivot-section-hdr" style="background:#E3F2FD">
+            <td colspan="12" class="pl-pivot-section-label" style="color:#1565C0;background:#E3F2FD">🛒 MARKETPLACE — Via Compras</td>
+          </tr>
+          <tr class="pl-pivot-row">
+            <td class="pl-pivot-label">↑ Ventas</td>
+            <td class="pl-pivot-val">$20,5M</td><td class="pl-pivot-val">$48,3M</td><td class="pl-pivot-val">$56,7M</td><td class="pl-pivot-val">$64,4M</td>
+            <td class="pl-pivot-val">$36,8M</td><td class="pl-pivot-val">$39,7M</td><td class="pl-pivot-val">$52,5M</td><td class="pl-pivot-val">$41,0M</td>
+            <td class="pl-pivot-val">$36,2M</td><td class="pl-pivot-val">$27,9M</td>
+            <td class="pl-pivot-total">$424,0M</td>
+          </tr>
+          <tr class="pl-pivot-row">
+            <td class="pl-pivot-label">↓ Costo Vtex</td>
+            <td class="pl-pivot-val red">-$2,1M</td><td class="pl-pivot-val red">-$2,8M</td><td class="pl-pivot-val red">-$3,5M</td><td class="pl-pivot-val red">-$3,5M</td>
+            <td class="pl-pivot-val red">-$2,0M</td><td class="pl-pivot-val red">-$2,2M</td><td class="pl-pivot-val red">-$3,3M</td><td class="pl-pivot-val red">-$2,5M</td>
+            <td class="pl-pivot-val red">-$2,5M</td><td class="pl-pivot-val red">-$2,2M</td>
+            <td class="pl-pivot-total red">-$26,6M</td>
+          </tr>
+          <tr class="pl-pivot-resultado" style="background:#F1F8E9">
+            <td class="pl-pivot-label bold green">= Resultado MP</td>
+            <td class="pl-pivot-val green">$18,4M</td><td class="pl-pivot-val green">$45,5M</td><td class="pl-pivot-val green">$53,2M</td><td class="pl-pivot-val green">$60,9M</td>
+            <td class="pl-pivot-val green">$34,8M</td><td class="pl-pivot-val green">$37,5M</td><td class="pl-pivot-val green">$49,2M</td><td class="pl-pivot-val green">$38,5M</td>
+            <td class="pl-pivot-val green">$33,7M</td><td class="pl-pivot-val green">$25,7M</td>
+            <td class="pl-pivot-total green">$397,4M</td>
+          </tr>
+          <tr class="pl-pivot-row">
+            <td class="pl-pivot-label muted">Margen %</td>
+            <td class="pl-pivot-val muted">89,8%</td><td class="pl-pivot-val muted">94,3%</td><td class="pl-pivot-val muted">93,9%</td><td class="pl-pivot-val muted">94,6%</td>
+            <td class="pl-pivot-val muted">94,6%</td><td class="pl-pivot-val muted">94,4%</td><td class="pl-pivot-val muted">93,7%</td><td class="pl-pivot-val muted">93,9%</td>
+            <td class="pl-pivot-val muted">93,0%</td><td class="pl-pivot-val muted">92,1%</td>
+            <td class="pl-pivot-total muted">93,7%</td>
+          </tr>
+          <tr style="height:6px"><td colspan="12"></td></tr>
+
+          <!-- MIVIA -->
+          <tr class="pl-pivot-section-hdr" style="background:#E8F5E9">
+            <td colspan="12" class="pl-pivot-section-label" style="color:var(--g1);background:#E8F5E9">💳 MIVIA &amp; RECARGAS</td>
+          </tr>
+          <tr class="pl-pivot-row">
+            <td class="pl-pivot-label">↑ Recargas</td>
+            <td class="pl-pivot-val">$383,3M</td><td class="pl-pivot-val">$332,2M</td><td class="pl-pivot-val">$409,2M</td><td class="pl-pivot-val">$407,9M</td>
+            <td class="pl-pivot-val">$528,2M</td><td class="pl-pivot-val">$526,0M</td><td class="pl-pivot-val">$626,5M</td><td class="pl-pivot-val">$575,1M</td>
+            <td class="pl-pivot-val">$653,8M</td><td class="pl-pivot-val">$572,9M</td>
+            <td class="pl-pivot-total">$5.015,1M</td>
+          </tr>
+          <tr class="pl-pivot-row">
+            <td class="pl-pivot-label">↑ Ing. Marginal</td>
+            <td class="pl-pivot-val">$1,05M</td><td class="pl-pivot-val">$1,29M</td><td class="pl-pivot-val">$0,79M</td><td class="pl-pivot-val">$0,81M</td>
+            <td class="pl-pivot-val">$0,96M</td><td class="pl-pivot-val">$0,64M</td><td class="pl-pivot-val">$1,99M</td><td class="pl-pivot-val">$1,63M</td>
+            <td class="pl-pivot-val">$3,70M</td><td class="pl-pivot-val">$2,05M</td>
+            <td class="pl-pivot-total">$14,9M</td>
+          </tr>
+          <tr class="pl-pivot-row">
+            <td class="pl-pivot-label">↓ Azure + Quickcomm</td>
+            <td class="pl-pivot-val red">-$13,9M</td><td class="pl-pivot-val red">-$13,5M</td><td class="pl-pivot-val red">-$13,0M</td><td class="pl-pivot-val red">-$12,9M</td>
+            <td class="pl-pivot-val red">-$12,7M</td><td class="pl-pivot-val red">-$12,6M</td><td class="pl-pivot-val red">-$13,8M</td><td class="pl-pivot-val red">-$13,8M</td>
+            <td class="pl-pivot-val red">-$13,8M</td><td class="pl-pivot-val red">-$13,8M</td>
+            <td class="pl-pivot-total red">-$133,9M</td>
+          </tr>
+          <tr class="pl-pivot-resultado" style="background:#F1F8E9">
+            <td class="pl-pivot-label bold green">= Resultado MiVia</td>
+            <td class="pl-pivot-val green">$370,4M</td><td class="pl-pivot-val green">$319,9M</td><td class="pl-pivot-val green">$397,0M</td><td class="pl-pivot-val green">$395,8M</td>
+            <td class="pl-pivot-val green">$516,4M</td><td class="pl-pivot-val green">$514,1M</td><td class="pl-pivot-val green">$614,7M</td><td class="pl-pivot-val green">$562,9M</td>
+            <td class="pl-pivot-val green">$643,7M</td><td class="pl-pivot-val green">$561,1M</td>
+            <td class="pl-pivot-total green">$4.896,1M</td>
+          </tr>
+          <tr class="pl-pivot-row">
+            <td class="pl-pivot-label muted">Margen %</td>
+            <td class="pl-pivot-val muted">96,4%</td><td class="pl-pivot-val muted">95,9%</td><td class="pl-pivot-val muted">96,8%</td><td class="pl-pivot-val muted">96,8%</td>
+            <td class="pl-pivot-val muted">97,5%</td><td class="pl-pivot-val muted">97,6%</td><td class="pl-pivot-val muted">97,8%</td><td class="pl-pivot-val muted">97,6%</td>
+            <td class="pl-pivot-val muted">98,0%</td><td class="pl-pivot-val muted">97,6%</td>
+            <td class="pl-pivot-total muted">97,3%</td>
+          </tr>
+          <tr style="height:6px"><td colspan="12"></td></tr>
+
+          <!-- CONSOLIDADO -->
+          <tr class="pl-pivot-section-hdr" style="background:#EDE7F6">
+            <td colspan="12" class="pl-pivot-section-label" style="color:#512DA8;background:#EDE7F6">💼 CONSOLIDADO</td>
+          </tr>
+          <tr class="pl-pivot-resultado" style="background:#EDE7F6">
+            <td class="pl-pivot-label bold" style="color:#512DA8">= Resultado Total</td>
+            <td class="pl-pivot-val" style="color:#512DA8;font-weight:700">$388,8M</td>
+            <td class="pl-pivot-val" style="color:#512DA8;font-weight:700">$365,5M</td>
+            <td class="pl-pivot-val" style="color:#512DA8;font-weight:700">$450,2M</td>
+            <td class="pl-pivot-val" style="color:#512DA8;font-weight:700">$456,7M</td>
+            <td class="pl-pivot-val" style="color:#512DA8;font-weight:700">$551,2M</td>
+            <td class="pl-pivot-val" style="color:#512DA8;font-weight:700">$551,6M</td>
+            <td class="pl-pivot-val" style="color:#512DA8;font-weight:700">$663,9M</td>
+            <td class="pl-pivot-val" style="color:#512DA8;font-weight:700">$601,4M</td>
+            <td class="pl-pivot-val" style="color:#512DA8;font-weight:700">$677,4M</td>
+            <td class="pl-pivot-val" style="color:#512DA8;font-weight:700">$586,8M</td>
+            <td class="pl-pivot-total" style="color:#512DA8;font-weight:700">$5.293,5M</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="font-size:10px;color:var(--muted);padding:8px 16px">Jul–Oct Azure+Quickcomm estimado a $1.500/USD promedio · Nov no disponible</div>
     </div>
   </section>
 
@@ -3955,19 +3856,19 @@ const initTopSell = [{n:"COOPERATIVA DE TRABAJO PROFEGA",v:8.85,val:"$8,8M"},{n:
 new Chart(document.getElementById('chartPL').getContext('2d'), {
   type: 'bar',
   data: {
-    labels: ['Enero 2026', 'Febrero 2026', 'Marzo 2026', 'Abril 2026', 'Mayo 2026', 'Junio 2026'],
+    labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct'],
     datasets: [
       {
         label: 'MiVia & Recargas',
-        data: [369.4, 318.6, 397.0, 395.8, 516.4, 511.3],
-        backgroundColor: ['#077C14','#077C14','#077C14','#077C14','#077C14','#077C14'],
+        data: [370.4, 319.9, 397.0, 395.8, 516.4, 514.1, 614.7, 562.9, 643.7, 561.1],
+        backgroundColor: '#077C14',
         borderRadius: 6,
         stack: 'resultado'
       },
       {
-        label: 'Marketplace Via Compras',
-        data: [18.4, 45.5, 53.2, 60.9, 34.8, 37.5],
-        backgroundColor: ['#1565C0','#1565C0','#1565C0','#1565C0','#1565C0','#1565C0'],
+        label: 'Marketplace',
+        data: [18.4, 45.5, 53.2, 60.9, 34.8, 37.5, 49.2, 38.5, 33.7, 25.7],
+        backgroundColor: '#1565C0',
         borderRadius: 6,
         stack: 'resultado'
       }
